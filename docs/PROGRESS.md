@@ -671,3 +671,95 @@ These were created in an earlier session. Spot-check via curl:
       `docker compose -p odoo_mechanic logs --tail=200 odoo`.
 - [ ] Run `./scripts/agent_check.sh` (expect 0 failures).
 - [ ] Commit the changes and append final evidence to this log.
+
+## 2026-09-07 09:30 — SRE basic catalog: post-fix evidence
+
+The catalog work above is now live and verified. All evidence is
+captured in the `feat(catalog): SRE basic catalog` commit.
+
+### Live HTTP smoke (anonymous guest, no login)
+
+```
+/shop                                          => 200
+/shop?search=DMV-001                           => 200
+/shop?search=DemoBrand                         => 200
+/shop?search=valve                             => 200
+/shop/category/demo-catalog-demo-16            => 200
+/shop/category/valves-demo-17                  => 200
+/shop/category/pumps-demo-18                   => 200
+/shop/sre-demo-v-001-demo-valve-001-demo-56    => 200
+/shop/sre-demo-v-002-demo-valve-002-demo-57    => 200
+/shop/sre-demo-v-003-demo-valve-003-demo-58    => 200
+/shop/sre-demo-p-001-demo-pump-001-demo-59     => 200
+/shop/sre-demo-p-002-demo-pump-002-demo-60     => 200
+/shop/sre-demo-p-003-demo-pump-003-demo-61     => 200
+```
+
+### HTML content checks (detail page, V-001)
+
+| Check | Result |
+|---|---|
+| `<span t-field=... product.product_brand_id.name>` rendered | YES (DemoBrand A [DEMO]) |
+| `product.manufacturer_public_name` rendered | YES (DemoMfg A [DEMO]) |
+| `product.manufacturer_pref` rendered | YES (DMV-001) |
+| `product.default_code` rendered | YES (SRE-DEMO-V-001) |
+| `product.public_categ_ids` rendered | YES (Valves [DEMO]) |
+| `product.description` rendered | YES (Nominal size: DN50, ...) |
+| Illustrative-only banner present | YES |
+| `o_wsale_product_details_content_section_price` | NOT present (replaced) |
+| `o_wsale_product_details_content_section_cta` | NOT present (replaced) |
+| `<form>` inside `product_details` | NOT present (replaced with plain block) |
+| `js_add_cart` / "Add to Cart" | NOT present |
+| `monetary` widget on a product card | NOT present |
+| `res.partner` sensitive fields (email/phone/vat) | NOT present |
+| `standard_price` / supplierinfo | NOT present |
+
+### Headless Firefox screenshots (saved to `docs/sre_catalog_screenshots/`)
+
+| File | Width | Notes |
+|---|---|---|
+| `shop_desktop_1280.png` | 1280 | All 6 products, 3 per row, no price, no CTA |
+| `shop_mobile_375.png` | 375 | 2-column grid, same fields, no horizontal scroll |
+| `detail_desktop_1280.png` | 1280 | Identification table + description + illustrative banner |
+| `detail_mobile_375.png` | 375 | Identification table stacked, description below |
+| `cat_valves_desktop_1280.png` | 1280 | Category page: 3 demo valves |
+| `search_dmv_desktop_1280.png` | 1280 | `?search=DMV-001` returns Demo Valve 001 |
+| `search_brand_desktop_1280.png` | 1280 | `?search=DemoBrand` returns all 6 products |
+
+### DB privacy invariants (re-verified post-fix)
+
+- `product.brand` with `partner_id != False`: 0
+- `product.template` (demo) with `standard_price > 0`: 0
+- `product.template.manufacturer_public_name` populated for all 6
+  demo products (computed via `compute_sudo=True` so the public
+  user can see it without gaining broader access to `res.partner`)
+- `sre_demo.*` External IDs: 13 (no orphans, no duplicates)
+
+### Logs
+
+`docker compose -p odoo_mechanic logs --tail=200 odoo`:
+
+- 0 tracebacks in the current 200-line window (the two pre-fix
+  tracebacks at 09:25:33 — the 500 on the detail page caused by
+  the `partner_id` bug — are outside this window and are
+  documented in the previous section of this log).
+- 0 CRITICAL entries.
+- 0 `mechanic_workshop.*ERROR` entries.
+
+### `agent_check.sh`
+
+```
+Passed: 13  Failed: 0
+exit 0
+```
+
+### Git
+
+```
+0de8822 feat(catalog): SRE basic catalog — public list + detail, no price, no CTA
+aec4bd4 Initial commit: project bootstrap
+```
+
+Working tree clean. The pre-fix state is captured in the
+initial commit; the catalog work (fix + new field + new docs +
+screenshots) is in the second commit.
