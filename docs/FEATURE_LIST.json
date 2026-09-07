@@ -168,6 +168,12 @@
       ],
       "version": "19.0.1.1.1",
       "evidence": "Firefox: two add operations stay on detail; confirmation; count 2 persists on shop; visible mobile header opens two-line basket. 6 regression tests pass; agent_check 14/14. Screenshots docs/rfq_evidence/add-in-place-desktop.png and rfq-header-mobile.png."
+    },
+    {
+      "id": "rfq-header-icon",
+      "title": "RFQ document icon replaces cart access",
+      "status": "completed",
+      "evidence": "Firefox 1280/390: cart link absent from header, RFQ document icon/badge visible and clickable, no overflow. Module update and compose up succeeded; agent_check 14/14. Screenshots docs/rfq_evidence/rfq-icon-*.png."
     }
   ]
 }

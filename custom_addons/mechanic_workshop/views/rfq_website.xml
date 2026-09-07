@@ -1,9 +1,12 @@
 <odoo>
 <template id="rfq_header" inherit_id="website_sale.header_cart_link" name="Header RFQ access">
-<xpath expr="//li" position="after">
+<xpath expr="//li[contains(@t-attf-class, 'o_wsale_my_cart')]" position="attributes">
+<attribute name="t-if">False</attribute>
+</xpath>
+<xpath expr="//li[contains(@t-attf-class, 'o_wsale_my_cart')]" position="before">
 <li class="nav-item" t-nocache="RFQ quantity belongs to the current session">
-<a href="/rfq" class="nav-link text-nowrap sre-rfq-header" aria-label="View current RFQ" title="Number of different products in your RFQ">
-RFQ <span class="badge bg-primary sre-rfq-count" t-esc="len(request.session.get('sre_rfq_basket_%s' % request.website.id, {}))"/>
+<a href="/rfq" class="nav-link text-nowrap sre-rfq-header d-inline-flex align-items-center gap-2 rounded-pill border px-3 py-2" aria-label="View current RFQ" title="Number of different products in your RFQ">
+<i class="fa fa-file-text-o" aria-hidden="true"/><span>RFQ</span> <span class="badge bg-primary sre-rfq-count" t-esc="len(request.session.get('sre_rfq_basket_%s' % request.website.id, {}))"/>
 </a></li>
 </xpath></template>
 <template id="rfq_product" inherit_id="mechanic_workshop.sre_product_detail_inherit" name="Product RFQ">

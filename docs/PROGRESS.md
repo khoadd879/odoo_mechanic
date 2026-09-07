@@ -786,3 +786,7 @@ User authorized custom RFQ. Scope: session basket, guest contact/project form, C
 User requested Add to RFQ without leaving the product and a permanent way to open the current basket. Implemented AJAX form submission retaining CSRF/server validation; success/error live status, disabled submit while pending, no automatic retry on ambiguous network error. Added uncached per-session RFQ badge/link to shared website header (desktop and mobile); count is distinct variants. Standard form redirect remains a no-JavaScript fallback.
 
 Verification: module update 19.0.1.1.1 succeeded, service restarted, compose up succeeded. Six regression tests passed (0 failures/errors at 10:04:05 UTC). Firefox: add variant 56 then 57, remain on each detail page, show success; RFQ badge 1→2, persists after navigating to /shop, mobile header opens two-line basket, no horizontal overflow. Screenshots saved in docs/rfq_evidence/. No persistent RFQ submitted in browser smoke. agent_check: 14/14 PASS, no recent Odoo traceback/critical/module error. Guide updated.
+
+## 2026-09-07 — RFQ header icon
+
+User requested removal of cart and a clearer RFQ icon. Header cart is no longer rendered; RFQ uses a document icon, text, count badge and rounded outline. Native checkout routes are unchanged. Firefox desktop/mobile verified icon visibility, cart absence, working RFQ link and no overflow. Module update and compose up passed; agent_check 14/14 with clean recent Odoo logs. Evidence: docs/rfq_evidence/rfq-icon-1280.png and rfq-icon-390.png.
