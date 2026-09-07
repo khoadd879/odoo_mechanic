@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- =================================================================
+     SRE basic catalog — product detail page.
+     Inherits website_sale.product. Layout in code; data via backend.
+     Privacy: no price, no Add to Cart / Add to RFQ, no supplier info.
+     NOTE: Pre-catalog baseline. The Manufacturer row uses
+     `product.manufacturer_id.partner_id`, which fails at runtime
+     because `res.partner` has no `partner_id` field. Known bug —
+     fixed in the next commit (SRE basic catalog).
+     ================================================================= -->
+<template id="sre_product_detail_inherit"
+          inherit_id="website_sale.product"
+          name="SRE Catalog Detail"
+          active="True">
+
+    <xpath expr="//div[@id='o_wsale_product_details_content']"
+           position="inside">
+        <div class="o_wsale_product_details_content_section o_wsale_product_details_content_section_meta mb-4">
+            <table class="table table-sm o_wsale_product_meta_table mb-0">
+                <tbody>
+                    <tr t-if="product.product_brand_id">
+                        <th class="text-muted" scope="row" style="width: 12rem;">Brand</th>
+                        <td>
+                            <span t-field="product.product_brand_id.name"/>
+                        </td>
+                    </tr>
+                    <tr t-if="product.manufacturer_id and not product.manufacturer_id.partner_id == product.product_brand_id">
+                        <th class="text-muted" scope="row" style="width: 12rem;">Manufacturer</th>
+                        <td>
+                            <span t-field="product.manufacturer_id.display_name"/>
+                        </td>
+                    </tr>
+                    <tr t-if="product.manufacturer_pref">
+                        <th class="text-muted" scope="row" style="width: 12rem;">MPN</th>
+                        <td>
+                            <span t-field="product.manufacturer_pref"/>
+                        </td>
+                    </tr>
+                    <tr t-if="product.default_code">
+                        <th class="text-muted" scope="row" style="width: 12rem;">SKU</th>
+                        <td>
+                            <span t-field="product.default_code"/>
+                        </td>
+                    </tr>
+                    <tr t-if="product.public_categ_ids">
+                        <th class="text-muted" scope="row" style="width: 12rem;">Categories</th>
+                        <td>
+                            <t t-foreach="product.public_categ_ids" t-as="cat">
+                                <span t-field="cat.name"/>
+                                <t t-if="not cat_last">, </t>
+                            </t>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </xpath>
+
+    <xpath expr="//div[hasclass('o_wsale_product_details_content_section_price')]"
+           position="replace"/>
+
+    <xpath expr="//div[hasclass('o_wsale_product_details_content_section_cta')]"
+           position="replace"/>
+
+    <xpath expr="//div[@id='product_details']//form"
+           position="replace"/>
+
+    <xpath expr="//div[hasclass('o_wsale_product_details_content_section') and hasclass('o_wsale_product_details_content_section_meta')]"
+           position="after">
+        <div class="o_wsale_product_details_content_section o_wsale_product_details_content_section_description mb-4">
+            <h2 class="h5 text-muted">Description</h2>
+            <div class="o_wsale_product_description_render" t-field="product.description"/>
+            <p class="text-muted small mt-2">
+                <em>The technical specification above is illustrative data from the demo
+                import, not a completed technical filter set. Do not use for product
+                selection or equipment operation.</em>
+            </p>
+        </div>
+    </xpath>
+
+    <xpath expr="//div[@id='product_full_description']"
+           position="replace"/>
+
+</template>
+
+</odoo>

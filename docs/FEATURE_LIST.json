@@ -1,0 +1,58 @@
+{
+  "project": "mechanic_workshop",
+  "version": "19.0.1.0.0",
+  "features": [
+    {
+      "id": "oca-brand-mirror",
+      "title": "OCA brand repo mirror (19.0)",
+      "status": "installed",
+      "summary": "OCA/brand@19.0 cloned to ./oca_addons/brand; product_brand installed v19.0.1.0.0. Brand is the SINGLE source for product branding: product.template.product_brand_id (M2O product.brand). NO custom Brand on res.partner.industry.",
+      "repo": "https://github.com/OCA/brand",
+      "branch": "19.0",
+      "modules_installed": ["product_brand"],
+      "modules_available_not_installed": [
+        "brand",
+        "product_brand_mrp",
+        "product_brand_stock",
+        "product_brand_stock_account"
+      ],
+      "depends_on": ["sale"],
+      "models_exposed": {
+        "product.brand": ["name", "description", "partner_id", "logo", "product_ids", "products_count"],
+        "product.template.product_brand_id": "M2O product.brand, label 'Brand'"
+      },
+      "spec_alignment": {
+        "spec_file": "docs/superpowers/specs/2026-09-07-sre-commercial-design.md",
+        "plan_file": "docs/superpowers/plans/2026-09-07-sre-sprint1-foundation.md",
+        "brand_row_in_pim_mapping": "product.brand (OCA product_brand v19.0.1.0.0) — single source",
+        "res_partner_industry_brand_value": "REMOVED — manufacturer value retained only",
+        "search_clause_added": "('product_brand_id.name', 'ilike', term)",
+        "templates_updated": "category page Brand column + product page Brand label use product_brand_id"
+      },
+      "privacy_constraints": {
+        "product.brand.partner_id": "MUST stay NULL on every record (Risk #19)",
+        "enforced_via": "scripts/agent_check.sh brand_partner_id_leak check (deferred to Sprint 1)"
+      },
+      "pending_pim_v2": [
+        "BRAND column canonical names",
+        "BRAND logo asset pipeline",
+        "Brand VN/EN translation",
+        "Brand == Manufacturer? relationship",
+        "Manufacturer canonical list"
+      ],
+      "evidence": "docs/PROGRESS.md 2026-09-07 entries; ir.module.module.state=installed v19.0.1.0.0; registry loads 85 modules; product.brand partner_id leak check = 0."
+    },
+    {
+      "id": "oca-product-attribute-mirror",
+      "title": "OCA product-attribute repo mirror (19.0)",
+      "status": "available-not-installed",
+      "summary": "OCA/product-attribute@19.0 cloned to ./oca_addons/product-attribute; ~30 modules visible. product_manufacturer discovered (state=uninstalled, latest=19.0.1.0.0, depends=product). No spec change yet — see PROGRESS.md 2026-09-07 07:05 for the three approach options.",
+      "repo": "https://github.com/OCA/product-attribute",
+      "branch": "19.0",
+      "modules_available": "30+ (full list: product_attribute_archive, product_attribute_value_avoid_auto_fill, product_category_active, product_category_code, product_category_type, product_category_uom, product_class, product_code_mandatory, product_code_unique, product_company_default, product_customerinfo, product_dimension, product_drained_weight, product_logistics_uom, product_manufacturer, product_net_weight, product_origin, product_pricelist_item_list_view, product_pricelist_revision, product_pricelist_simulation, product_pricelist_supplierinfo, product_sale_team, product_secondary_unit, product_sequence, product_set, product_state, ...)",
+      "depends_on": ["product"],
+      "spec_alignment": "OPEN — product_manufacturer adds product.template.manufacturer_id (M2O res.partner) without industry filter. Spec §5 currently uses res.partner.industry='manufacturer' via sre.oem.pn. Three options A/B/C recorded in PROGRESS.md; awaiting user decision.",
+      "evidence": "docs/PROGRESS.md 2026-09-07 07:05; ir.module.module count 711→746 after update_list(); addons paths include /mnt/oca_addons/product-attribute."
+    }
+  ]
+}

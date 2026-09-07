@@ -1,0 +1,1 @@
+"""Mechanic Workshop module."""

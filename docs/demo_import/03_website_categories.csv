@@ -1,0 +1,4 @@
+id,name,parent_id/id
+sre_demo.public_cat_demo,"Demo Catalog [DEMO]",
+sre_demo.public_cat_demo_valves,"Valves [DEMO]",sre_demo.public_cat_demo
+sre_demo.public_cat_demo_pumps,"Pumps [DEMO]",sre_demo.public_cat_demo

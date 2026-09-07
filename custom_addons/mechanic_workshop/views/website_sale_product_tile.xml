@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- =================================================================
+     SRE basic catalog — product tile (used in /shop list + search).
+     Inherits website_sale.products_item. Layout in code; data via
+     backend. Privacy: no price, no Add to Cart / RFQ. Demo-only
+     fields (Brand via OCA product_brand, MPN via OCA product_manufacturer).
+     ================================================================= -->
+<template id="sre_products_item_inherit"
+          inherit_id="website_sale.products_item"
+          name="SRE Catalog Tile"
+          active="True">
+
+    <!-- 1) Add a technical-info block right after the product name.
+         Brand / MPN / SKU are read-only display. No prices. -->
+    <xpath expr="//h2[hasclass('o_wsale_products_item_title')]"
+           position="after">
+        <table class="o_wsale_product_tile_meta table table-sm table-borderless mb-2 mt-1 small">
+            <tbody>
+                <tr t-if="product.product_brand_id">
+                    <th class="text-muted ps-0" scope="row">Brand</th>
+                    <td class="pe-0">
+                        <span t-field="product.product_brand_id.name"/>
+                    </td>
+                </tr>
+                <tr t-if="product.manufacturer_pref">
+                    <th class="text-muted ps-0" scope="row">MPN</th>
+                    <td class="pe-0">
+                        <span t-field="product.manufacturer_pref"/>
+                    </td>
+                </tr>
+                <tr t-if="product.default_code">
+                    <th class="text-muted ps-0" scope="row">SKU</th>
+                    <td class="pe-0">
+                        <span t-field="product.default_code"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </xpath>
+
+    <!-- 2) Remove the price + CTA wrapper entirely. The parent wraps
+            both price AND the Add to Cart button (`o_wsale_product_btn`)
+            INSIDE `<div class="o_wsale_product_sub">`. Replacing this
+            single wrapper removes both price and CTA atomically; we
+            therefore do NOT need (and cannot) a separate xpath for
+            `o_wsale_product_btn`. Public catalog shows no prices and
+            no fake Add to Cart / Add to RFQ button. -->
+    <xpath expr="//div[hasclass('o_wsale_product_sub')]"
+           position="replace">
+        <!-- price + CTA hidden per project privacy rules (Risk #17, #18)
+             and no-RFQ policy (no Add to RFQ button until RFQ module). -->
+    </xpath>
+
+</template>
+
+</odoo>

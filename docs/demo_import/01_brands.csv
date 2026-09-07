@@ -1,0 +1,3 @@
+id,name,description
+sre_demo.brand_demo_a,"DemoBrand A [DEMO]","Demo brand for SRE catalog testing. Not a real brand. Not for production use. partner_id is intentionally empty per project privacy rule (Risk #19)."
+sre_demo.brand_demo_b,"DemoBrand B [DEMO]","Demo brand for SRE catalog testing. Not a real brand. Not for production use. partner_id is intentionally empty per project privacy rule (Risk #19)."

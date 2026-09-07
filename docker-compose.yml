@@ -1,0 +1,71 @@
+name: odoo_mechanic
+
+# Isolated Odoo stack for the Mechanic Workshop project.
+# Project name: odoo_mechanic  (NEVER reuse the legacy `odoo` or the
+# fashion `odoo_fashion` project names)
+# Host ports:  8080 (Odoo web), 8083 (longpolling), 5433 (postgres debug)
+
+services:
+  db:
+    image: ${POSTGRES_IMAGE:-postgres:15}
+    container_name: odoo_mechanic_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mechanic_local}
+      POSTGRES_DB: postgres
+    volumes:
+      # Project-scoped named volumes. Do NOT mount anything from
+      # /home/khoa/Company/odoo/ or /home/khoa/Company/odoo_testing/
+      # here — that would couple the projects.
+      - odoo_mechanic_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U odoo -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    # No host port binding by default. Uncomment `ports` only when you
+    # need to inspect the DB from the host (psql, IDE). Keeps the other
+    # projects' `5432` untouched.
+    # ports:
+    #   - "5433:5432"
+
+  odoo:
+    image: ${ODOO_IMAGE:-odoo:19.0}
+    container_name: odoo_mechanic_app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      HOST: db
+      USER: odoo
+      PASSWORD: ${POSTGRES_PASSWORD:-mechanic_local}
+    volumes:
+      # Project-scoped Odoo filestore. Independent from other projects.
+      - odoo_mechanic_data:/var/lib/odoo
+      # Project-scoped custom addons path. Only this repo's modules.
+      - ./custom_addons:/mnt/custom_addons:ro
+      # OCA addons (read-only mirror of upstream repos, branch 19.0).
+      - ./oca_addons:/mnt/oca_addons:ro
+      # Project-scoped config file.
+      - ./odoo.conf:/etc/odoo/odoo.conf:ro
+    ports:
+      - "8080:8069"   # Odoo web UI
+      - "8083:8072"   # longpolling / gevent
+    command:
+      - odoo
+      - --config=/etc/odoo/odoo.conf
+      - --db_password=${POSTGRES_PASSWORD:-mechanic_local}
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost:8069/web/login"]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+volumes:
+  odoo_mechanic_db:
+    name: odoo_mechanic_db
+  odoo_mechanic_data:
+    name: odoo_mechanic_data

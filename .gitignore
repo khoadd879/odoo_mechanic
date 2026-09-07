@@ -1,0 +1,81 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.eggs/
+*.egg-info/
+*.egg
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+.venv/
+venv/
+env/
+
+# ---- Odoo ----
+# Filestore and DB are owned by named volumes; never commit them.
+/var/lib/odoo/
+*.local
+odoo.log
+odoo.log.*
+*.odoo_session/
+
+# Per-developer Odoo config overrides
+odoo.local.conf
+
+# ---- Docker ----
+# Don't commit local compose overrides or unused env files.
+docker-compose.override.yml
+docker-compose.*.local.yml
+.env
+.env.local
+
+# ---- Node (only if we add a JS build later) ----
+node_modules/
+dist/
+.npm/
+.yarn/
+
+# ---- IDE / editor ----
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ---- OS ----
+.Trash-*
+
+# ---- Repo-specific ----
+# Keep custom_addons/.gitkeep tracked (it bootstraps an empty dir),
+# but ignore any built artifacts under it.
+custom_addons/**/*.pyc
+custom_addons/**/__pycache__/
+custom_addons/**/static/src/**/*.min.js
+custom_addons/**/static/src/**/*.min.css
+
+# OCA mirrors: cloned on demand from upstream, never committed.
+# See docs/PROGRESS.md for the clone procedure.
+oca_addons/*
+!oca_addons/.gitkeep
+oca_addons/**/*.pyc
+oca_addons/**/__pycache__/
+
+# Backups / scratch
+backups/
+*.dump
+*.sql.gz
+*.bak
+/tmp/
+
+# Logs
+*.log
+logs/

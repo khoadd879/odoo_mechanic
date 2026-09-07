@@ -1,0 +1,3 @@
+id,name,company_type,country_id/id
+sre_demo.partner_demo_mfg_a,"DemoMfg A [DEMO]",company,base.vn
+sre_demo.partner_demo_mfg_b,"DemoMfg B [DEMO]",company,base.vn

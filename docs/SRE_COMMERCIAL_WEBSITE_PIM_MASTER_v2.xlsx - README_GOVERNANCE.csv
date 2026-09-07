@@ -1,0 +1,13 @@
+Control Item,Controlled Definition
+SYSTEM,SRE COMMERCIAL WEBSITE PIM MASTER v1
+BUSINESS ROLE,"Công ty thương mại kỹ thuật: bán sản phẩm, spare parts và thiết bị HVAC/Boiler/thermal/industrial; giải pháp EPC và energy management thuộc công ty mẹ."
+PHASE 1,Boiler Parts; Pump; Valve; Heat Exchanger; HVAC & Instrument.
+EXTENSIBILITY,"Có thể mở rộng Cooling Tower, Compressed Air Components, Water Treatment Components, Electrical & Automation và MRO mà không phá Category Tree."
+SOURCE OF TRUTH,"PIM Master kiểm soát tên sản phẩm, SKU, thuộc tính, tài liệu, trạng thái xuất bản và SEO metadata."
+PRICING,B2B ưu tiên Request for Quote. Giá công khai chỉ khi được phê duyệt.
+DOCUMENT GOVERNANCE,Chỉ công khai tài liệu mà SRE có quyền sử dụng/phân phối; không tự động sao chép catalogue/manual có bản quyền của OEM.
+WORKFLOW,PIM → Data QA → Odoo Import Test → Website Preview → Technical/Commercial Approval → Publish.
+V2 UPGRADE,"Relational PIM governance: Attribute Profiles, Cross Reference, Compatibility, Brand/Supplier, Industry/Application matrices, Product Relationships and Technical RFQ Engine."
+ARCHITECTURE,PRODUCT → CATEGORY → PRODUCT FAMILY → ATTRIBUTE PROFILE → VARIANT → DOCUMENT / CROSS REFERENCE / COMPATIBILITY / RELATIONSHIPS.
+WEBSITE ROLE,Digital Product Distribution Platform: Search → Technical Discovery → RFQ → Sales → Procurement/Inventory → Delivery → Repeat Order.
+PRIVACY,"Supplier/source intelligence, internal supply status, cost and sourcing logic are internal/private and must not be exposed publicly."
