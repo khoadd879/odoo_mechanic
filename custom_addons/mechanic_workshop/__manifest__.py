@@ -19,6 +19,7 @@ feature as documented in ``docs/FEATURE_LIST.json``.
         "website_sale",
         "product",
         "product_brand",
+        "product_manufacturer",
     ],
     "data": [
         "views/website_sale_product_tile.xml",

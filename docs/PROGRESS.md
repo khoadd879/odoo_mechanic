@@ -528,3 +528,146 @@ Lessons:
 3. Trust the documented workflow (01 → 02 → 03 → 04). The
    "self-bootstrapping" workaround adds documentation overhead and
    surprise — the user should follow the documented order.
+
+## 2026-09-07 09:25 — SRE basic catalog: pre-coding data audit
+
+User confirmed the 4 demo CSVs have been imported. Before writing
+any code, full inventory of the live DB was taken via
+`odoo shell` against `mechanic_workshop` (read-only, no mutation).
+
+### Verified counts (live DB)
+
+| Model | Count | External IDs |
+|---|---|---|
+| `product.brand` | 2 | `sre_demo.brand_demo_a` (DemoBrand A [DEMO]), `sre_demo.brand_demo_b` (DemoBrand B [DEMO]) |
+| `res.partner` (Manufacturer) | 2 | `sre_demo.partner_demo_mfg_a` (DemoMfg A [DEMO], country=VN), `sre_demo.partner_demo_mfg_b` (DemoMfg B [DEMO], country=VN) |
+| `product.public.category` | 3 | `sre_demo.public_cat_demo` (root), `sre_demo.public_cat_demo_valves` (Valves [DEMO]), `sre_demo.public_cat_demo_pumps` (Pumps [DEMO]) |
+| `product.template` | 6 | 3 valves (`v_001..003`) + 3 pumps (`p_001..003`) — see table below |
+| `product.product` (variants) | 6 | one per template, no per-variant External ID |
+| `ir.model.data` where `module='sre_demo'` | 13 | matches INVENTORY expectation exactly |
+
+### Per-product inventory
+
+| External ID | SKU | Type | Brand | Manufacturer | MPN | eCom Cat | `is_published` | `list_price` | `standard_price` |
+|---|---|---|---|---|---|---|---|---|---|
+| `sre_demo.product_template_demo_v_001` | `SRE-DEMO-V-001` | consu | DemoBrand A | DemoMfg A | DMV-001 | Valves [DEMO] | True | 0.0 | 0.0 |
+| `sre_demo.product_template_demo_v_002` | `SRE-DEMO-V-002` | consu | DemoBrand A | DemoMfg B | DMV-002 | Valves [DEMO] | True | 0.0 | 0.0 |
+| `sre_demo.product_template_demo_v_003` | `SRE-DEMO-V-003` | consu | DemoBrand B | DemoMfg A | DMV-003 | Valves [DEMO] | True | 0.0 | 0.0 |
+| `sre_demo.product_template_demo_p_001` | `SRE-DEMO-P-001` | consu | DemoBrand A | DemoMfg A | DMP-001 | Pumps [DEMO] | True | 0.0 | 0.0 |
+| `sre_demo.product_template_demo_p_002` | `SRE-DEMO-P-002` | consu | DemoBrand B | DemoMfg B | DMP-002 | Pumps [DEMO] | True | 0.0 | 0.0 |
+| `sre_demo.product_template_demo_p_003` | `SRE-DEMO-P-003` | consu | DemoBrand B | DemoMfg A | DMP-003 | Pumps [DEMO] | True | 0.0 | 0.0 |
+
+### Privacy checks (PASS, before any code change)
+
+- `product.brand` records with `partner_id != False`: **0** (Risk #19)
+- `product.template` (demo) with `standard_price > 0`: **0**
+- `res.partner.industry` field: **does not exist on this DB**
+  (the `sre_commercial_pim` module is not installed; no filter
+  mismatch to worry about yet).
+- `product.template.public_price_approved`: **does not exist on this DB**
+  (the `sre_commercial_catalog` module is not installed; prices are
+  hidden unconditionally for now, matching the spec's default).
+- `product.template.family_id`: **does not exist on this DB**
+  (no technical-filter wiring yet; out of scope for this feature).
+
+### Missing data (report, do NOT auto-generate)
+
+- No `image_1920` / `image_1024` on any of the 6 demo templates. The
+  tile and detail pages will render the Odoo default image placeholder.
+  Decision: leave empty. The brief §08 says images are part of the
+  Document Governance workflow which is not yet built (Sprint 2).
+- No `ir.attachment` (datasheet, installation guide, etc.). Same
+  reason — out of scope this sprint.
+- No `categ_id` (internal) separation: all 6 use the built-in
+  `product.product_category_goods`. The website uses
+  `product.public.category` (already set) for navigation, not
+  `categ_id`. No action needed.
+
+### Duplicates (verified none)
+
+- SKU duplicates: 0 — all 6 `default_code` values are unique.
+- External ID duplicates within `sre_demo.*`: 0.
+- Brand-name duplicates (`ilike 'DemoBrand'`): 0.
+- Manufacturer-name duplicates (`ilike 'DemoMfg'`): 0.
+- Product-name duplicates (`ilike '[DEMO]'`): 0.
+
+### Current rendering state (before any catalog code from this session)
+
+The `mechanic_workshop` module is **already installed** at
+`19.0.1.0.0`. Its `__manifest__.data` already lists two view files:
+
+- `views/website_sale_product_tile.xml` (key
+  `mechanic_workshop.sre_products_item_inherit`, inheriting
+  `website_sale.products_item`, `active=True`, `mode=extension`)
+- `views/website_sale_product_detail.xml` (key
+  `mechanic_workshop.sre_product_detail_inherit`, inheriting
+  `website_sale.product`, `active=True`, `mode=extension`)
+
+These were created in an earlier session. Spot-check via curl:
+
+- `GET /shop` → **200**, 12 hits for `SRE-DEMO-` (6 products × 2: name
+  in `<a title>` and SKU in tile meta table). Brand label appears 6
+  times, MPN 6 times. `o_wsale_product_sub` (the price+CTA wrapper)
+  appears 0 times — confirming the tile template successfully removed
+  both the price and the Add-to-Cart button. The 6 `monetary` hits
+  in `/shop?search=*` are all from the `o_wsale_price_range_option`
+  sidebar widget, not from product cards.
+- `GET /shop?search=DMV-001` → **200**, returns Demo Valve 001 tile.
+  Match is via the MPN string inside the demo `description` HTML
+  (the default `website_sale` search domain is `name + description`).
+- `GET /shop?search=DemoBrand` → **200**, returns all 6 products.
+- `GET /shop/sre-demo-v-001-demo-valve-001-demo-56` (detail page) →
+  **500**. Root cause from `odoo.http` log:
+
+  ```
+  File ".../ir_qweb.py", line 773, in _render_iterall
+  AttributeError: 'res.partner' object has no attribute 'partner_id'
+  ```
+
+  The detail view's xpath for the Manufacturer row uses
+  `product.manufacturer_id.partner_id == product.product_brand_id`.
+  `res.partner` has no `partner_id` field — that field lives on
+  `product.brand`. QWeb evaluates the LHS, raises AttributeError,
+  and the whole page render fails. The intended comparison
+  (skip the manufacturer if it equals the brand's supplier partner)
+  is moot anyway, because (a) `product.brand.partner_id` is
+  intentionally NULL on every demo brand per Risk #19, and
+  (b) the manufacturer is a separate `res.partner`, not a brand.
+
+### Decision for this session
+
+1. **Keep the existing tile template unchanged.** It already hides
+   price + Add-to-Cart, displays Brand / MPN / SKU in a small meta
+   table after the product name, and links to the detail page. It
+   passes the read-only smoke test (no price / no CTA in HTML).
+2. **Fix the detail template.** Remove the broken `partner_id`
+   comparison. Make the Manufacturer row always render when a
+   manufacturer is set; render the public name (`display_name`) only.
+   Ensure the description block renders the demo HTML with a clear
+   "illustrative data, not a completed technical filter set" banner,
+   so that this catalog feature is NOT confused with a finished
+   technical-filter feature.
+3. **No new module, no new model, no new field.** This is purely
+   view-level. The data and privacy invariants are already in place
+   before this session.
+4. **Search uses the native `website_sale` controller.** Real
+   multi-field search (SKU / MPN / OEM / Brand / cross-ref / keyword)
+   is a separate feature (`sre_commercial_search`, Sprint 1). For the
+   current demo, the description HTML contains MPN + Brand strings,
+   so the default search incidentally finds them. Documented in
+   `FEATURE_LIST.json` under `sre-catalog-basic` → out_of_scope.
+5. **No Add-to-RFQ button.** No RFQ flow exists yet. Documented in
+   the same FEATURE_LIST entry.
+
+### Action items (this session)
+
+- [ ] Fix the detail template's `partner_id` reference.
+- [ ] Update module, restart, curl-verify detail page returns 200.
+- [ ] Curl-verify `/shop`, `/shop?search=*`, `/shop/category/*`, all
+      6 detail URLs.
+- [ ] Headless Firefox screenshot at 1280px (desktop) and 375px
+      (mobile) for the list and at least one detail page.
+- [ ] Confirm no `Traceback` / `CRITICAL` / module-level ERROR in
+      `docker compose -p odoo_mechanic logs --tail=200 odoo`.
+- [ ] Run `./scripts/agent_check.sh` (expect 0 failures).
+- [ ] Commit the changes and append final evidence to this log.

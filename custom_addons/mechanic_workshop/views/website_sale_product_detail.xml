@@ -5,16 +5,18 @@
      SRE basic catalog — product detail page.
      Inherits website_sale.product. Layout in code; data via backend.
      Privacy: no price, no Add to Cart / Add to RFQ, no supplier info.
-     NOTE: Pre-catalog baseline. The Manufacturer row uses
-     `product.manufacturer_id.partner_id`, which fails at runtime
-     because `res.partner` has no `partner_id` field. Known bug —
-     fixed in the next commit (SRE basic catalog).
      ================================================================= -->
 <template id="sre_product_detail_inherit"
           inherit_id="website_sale.product"
           name="SRE Catalog Detail"
           active="True">
 
+    <!-- 1) Insert an identification table right after the product
+         title block. Brand (OCA product_brand), Manufacturer (public
+         name only — not the partner_id of the brand, never the brand
+         itself if it would leak supplier), MPN (OCA
+         product_manufacturer.manufacturer_pref), SKU, and public
+         categories. -->
     <xpath expr="//div[@id='o_wsale_product_details_content']"
            position="inside">
         <div class="o_wsale_product_details_content_section o_wsale_product_details_content_section_meta mb-4">
@@ -26,10 +28,27 @@
                             <span t-field="product.product_brand_id.name"/>
                         </td>
                     </tr>
-                    <tr t-if="product.manufacturer_id and not product.manufacturer_id.partner_id == product.product_brand_id">
+                    <tr t-if="product.manufacturer_id">
                         <th class="text-muted" scope="row" style="width: 12rem;">Manufacturer</th>
                         <td>
-                            <span t-field="product.manufacturer_id.display_name"/>
+                            <span t-field="product.manufacturer_public_name"/>
+                            <!--
+                                Public manufacturer name only.
+                                We expose a `compute_sudo=True` field
+                                (`manufacturer_public_name`) instead of
+                                `product.manufacturer_id.display_name`
+                                because the default Odoo record rule
+                                for `res.partner` (`id child_of
+                                user.commercial_partner_id`) blocks the
+                                public user from reading any partner
+                                that is not in their own hierarchy.
+                                A superuser-computed field returns only
+                                the public name string and grants no
+                                broader access. `product.brand.partner_id`
+                                is intentionally NULL on every demo
+                                record per Risk #19, so the brand
+                                itself never leaks a supplier.
+                            -->
                         </td>
                     </tr>
                     <tr t-if="product.manufacturer_pref">
@@ -58,15 +77,34 @@
         </div>
     </xpath>
 
+    <!-- 2) Remove the price section (price block + base unit price).
+         Per spec: public price visibility = `public_price_approved`
+         AND user has assigned pricelist; demo products have
+         list_price=0 and no such flag exists yet. Hide entirely. -->
     <xpath expr="//div[hasclass('o_wsale_product_details_content_section_price')]"
            position="replace"/>
 
+    <!-- 3) Remove the CTA section (Add to Cart button + accessories).
+         No RFQ flow exists yet. Per project rule: do not create a fake
+         Add to RFQ button until the real RFQ module is implemented. -->
     <xpath expr="//div[hasclass('o_wsale_product_details_content_section_cta')]"
            position="replace"/>
 
+    <!-- 4) Replace the entire form wrapper (which only contained the
+         hidden price + CTA + variant selectors). With both removed the
+         form is meaningless and confusing; drop it down to a plain
+         block. The product_title sub-template is still rendered via
+         the form-less flow (`is_add_to_cart_possible=False`). -->
     <xpath expr="//div[@id='product_details']//form"
            position="replace"/>
 
+    <!-- 5) Show the demo technical description prominently.
+         This is the structured HTML placed in `description` by the demo
+         import. We render it below the identification table as the
+         primary "spec sheet" surface. We do NOT call this a "completed
+         technical filter" — it is informational display of demo
+         fields stored in the description HTML, with a clear
+         illustrative-only banner. -->
     <xpath expr="//div[hasclass('o_wsale_product_details_content_section') and hasclass('o_wsale_product_details_content_section_meta')]"
            position="after">
         <div class="o_wsale_product_details_content_section o_wsale_product_details_content_section_description mb-4">
@@ -80,8 +118,17 @@
         </div>
     </xpath>
 
+    <!-- 6) Replace the empty-website-description editor placeholder
+         block — it would otherwise display "DROP BUILDING BLOCKS HERE"
+         to public users. -->
     <xpath expr="//div[@id='product_full_description']"
            position="replace"/>
+
+    <!-- 7) No class manipulation needed; the parent `t-attf-class`
+         already excludes the price-discount branch via its `if/else`
+         logic and our removed price + CTA sections mean the classes
+         referencing those (`o_wsale_has_discount`, etc.) are no longer
+         styled. -->
 
 </template>
 
