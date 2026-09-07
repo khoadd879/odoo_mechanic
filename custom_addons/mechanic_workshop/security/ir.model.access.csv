@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rfq_sales,Customer RFQ sales,model_sre_rfq,sales_team.group_sale_salesman,1,1,1,0
+access_rfq_line_sales,Customer RFQ lines sales,model_sre_rfq_line,sales_team.group_sale_salesman,1,1,1,1

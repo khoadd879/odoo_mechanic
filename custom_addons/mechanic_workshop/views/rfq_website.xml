@@ -1,0 +1,31 @@
+<odoo>
+<template id="rfq_product" inherit_id="mechanic_workshop.sre_product_detail_inherit" name="Product RFQ">
+<xpath expr="//div[hasclass('o_wsale_product_details_content_section_meta')]" position="after">
+<form action="/rfq/add" method="post" class="mb-4 p-3 border rounded">
+<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+<label for="rfq_product" class="form-label">Product / variant</label>
+<select id="rfq_product" name="product_id" class="form-select mb-2" required="required"><t t-foreach="product.product_variant_ids" t-as="variant"><option t-att-value="variant.id"><t t-esc="variant.display_name"/></option></t></select>
+<label for="rfq_quantity" class="form-label">Quantity</label><input id="rfq_quantity" name="quantity" type="number" min="0.001" max="1000000" step="any" value="1" required="required" class="form-control mb-3"/>
+<button class="btn btn-primary" type="submit">Add to RFQ</button> <a href="/rfq" class="btn btn-outline-secondary">View RFQ</a>
+</form></xpath></template>
+<template id="rfq_basket" name="Request for quotation"><t t-call="website.layout"><div id="wrap" class="container py-5">
+<h1>Request for quotation</h1><p>No payment is required. Our team will review your request before preparing a quotation.</p>
+<a href="/shop" class="btn btn-outline-secondary mb-3">Continue browsing</a>
+<p t-if="removed" class="alert alert-warning">Unavailable products were removed from your RFQ list.</p>
+<p t-if="not lines">Your RFQ list is empty.</p>
+<t t-foreach="lines" t-as="line"><form action="/rfq/update" method="post" class="border rounded p-3 mb-3">
+<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/><input type="hidden" name="product_id" t-att-value="line[0].id"/>
+<h2 class="h5"><t t-esc="line[0].display_name"/></h2><label t-att-for="'qty_%s' % line[0].id">Quantity (<t t-esc="line[0].uom_id.name"/>)</label>
+<input t-att-id="'qty_%s' % line[0].id" class="form-control my-2" type="number" name="quantity" min="0.001" max="1000000" step="any" t-att-value="line[1]" required="required"/>
+<button class="btn btn-outline-primary" type="submit">Update quantity</button> <button class="btn btn-outline-danger" type="submit" name="remove" value="1" formnovalidate="formnovalidate">Remove</button>
+</form></t>
+<form t-if="lines" action="/rfq/submit" method="post" class="mt-4">
+<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/><input type="hidden" name="submission_key" t-att-value="submission_key"/>
+<t t-foreach="[('company_name','Company'),('contact_name','Contact name'),('email','Email'),('phone','Phone'),('project_name','Project / Plant'),('project_location','Project location')]" t-as="item">
+<div class="mb-3"><label t-att-for="item[0]" class="form-label"><t t-esc="item[1]"/><t t-if="item[0] in ['company_name','contact_name','email']"> *</t></label><input t-att-id="item[0]" t-att-name="item[0]" t-att-type="'email' if item[0] == 'email' else 'text'" t-att-required="item[0] in ['company_name','contact_name','email']" maxlength="250" class="form-control"/></div></t>
+<label for="delivery" class="form-label">Required delivery date</label><input id="delivery" type="date" name="required_delivery_date" class="form-control mb-3"/>
+<label for="notes" class="form-label">Additional requirements</label><textarea id="notes" name="notes" maxlength="4000" class="form-control mb-3"/>
+<button class="btn btn-primary btn-lg" type="submit">Submit RFQ</button></form>
+</div></t></template>
+<template id="rfq_thanks" name="RFQ received"><t t-call="website.layout"><div id="wrap" class="container py-5"><h1>Your RFQ has been received</h1><p>Reference: <strong t-esc="reference"/></p><p>Our team will review your request and contact you.</p><a href="/shop" class="btn btn-primary">Continue browsing</a></div></t></template>
+</odoo>

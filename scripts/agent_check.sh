@@ -64,6 +64,9 @@ check "database volume exists" volume_exists odoo_mechanic_db
 check "filestore volume exists" volume_exists odoo_mechanic_data
 check "no foreign project mount" no_foreign_mount
 
+section "Customer RFQ"
+check "RFQ page reachable" curl -fsS -o /dev/null --max-time 15 http://localhost:8080/rfq
+
 section "Recent logs"
 if docker compose -p odoo_mechanic logs --tail=200 odoo 2>/dev/null |
   grep -E "Traceback \(most recent call last\)|CRITICAL|mechanic_workshop.*ERROR" |

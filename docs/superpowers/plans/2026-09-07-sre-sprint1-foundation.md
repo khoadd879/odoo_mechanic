@@ -1,5 +1,7 @@
 # SRE Sprint 1 Foundation Implementation Plan
 
+> RFQ update 2026-09-07: the implemented foundation and verified scope are documented in `docs/RFQ_GUIDE.md` and feature `sre-rfq-basic`. Those supersede the RFQ examples below. Implementation stays in `mechanic_workshop`; guest contact details are not automatically matched to an existing partner. Staff choose the verified customer and explicitly create a native quotation.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Build Sprint 1 Foundation — multi-field search, 8-pillar

@@ -763,3 +763,20 @@ aec4bd4 Initial commit: project bootstrap
 Working tree clean. The pre-fix state is captured in the
 initial commit; the catalog work (fix + new field + new docs +
 screenshots) is in the second commit.
+
+## 2026-09-07 — Customer RFQ implementation started
+
+User authorized custom RFQ. Scope: session basket, guest contact/project form, CRM opportunity, staff-verified customer and native draft quotation. Guest email never grants customer identity. Dynamic fields, uploads and portal history deferred. Existing catalog and project identity preserved.
+
+### Customer RFQ — verification completed (2026-09-07)
+
+- Installed/updated `mechanic_workshop` 19.0.1.1.0; native Sales + sale_crm reused.
+- Added `sre.rfq`, `sre.rfq.line`, public session basket and form, CRM opportunity link and native draft quotation action. Staff select verified customer; no automatic identity matching by email.
+- Six Odoo post-install tests passed at 09:56:45 UTC: 0 failed, 0 errors. Covers basket of three products, update/remove/re-add, browsing persistence, double submit, CRM linkage, no automatic order/partner, verified-customer requirement, correct quotation quantities/UoM and repeated quotation action, public ACL, invalid quantity/CSRF, unpublished and other-company products, empty submission.
+- Initial quantity test failed because Odoo rounded NaN before the constraint. Fixed with early create/write validation; HTTP checks also reject nonfinite and subprecision values. Subsequent suite passed.
+- Browser: Firefox headless via Marionette, 1280 desktop and 390 mobile; added DEMO variant 56 with quantity 2, inspected form, removed line. No horizontal overflow. Screenshots: `docs/rfq_evidence/basket-desktop.png`, `basket-mobile.png`. Browser smoke did not submit a persistent RFQ; full submission tested transactionally in HttpCase.
+- Selenium driver download failed; Marionette fallback succeeded. Its Python 3.14 shutdown cleanup emitted a tooling-only deallocator warning after PASS, not an Odoo error.
+- `docker compose -p odoo_mechanic up -d`: succeeded; Odoo restarted after Python changes.
+- `./scripts/agent_check.sh`: 14 PASS, exit 0, including new `/rfq` health check; recent service logs have no traceback/critical/module error.
+- User guide: `docs/RFQ_GUIDE.md`. Attachments, family-driven fields, RFQ history and automatic email remain outside this foundation feature; full customer MVP is not completed.
+- This implementation supersedes the old Sprint 1 plan's RFQ code examples: single project addon retained, proper CSRF/session validation, no email-based partner association, explicit RFQ-line to quotation mapping.

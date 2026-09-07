@@ -1,5 +1,7 @@
 # SRE Commercial — Odoo 19 CE Digital Product Distribution Platform
 
+> RFQ update 2026-09-07: the implemented foundation and verified scope are documented in `docs/RFQ_GUIDE.md` and feature `sre-rfq-basic`. Those supersede the RFQ examples below. Implementation stays in `mechanic_workshop`; guest contact details are not automatically matched to an existing partner. Staff choose the verified customer and explicitly create a native quotation.
+
 **Status:** Design — pending user review
 **Date:** 2026-09-07
 **Author:** Brainstorming session with user

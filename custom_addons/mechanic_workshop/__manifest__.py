@@ -1,20 +1,21 @@
 {
     "name": "Mechanic Workshop",
-    "version": "19.0.1.0.0",
-    "category": "Tools",
-    "summary": "Mechanic workshop scaffold built on native Odoo 19 modules.",
+    "version": "19.0.1.1.0",
+    "category": "Sales",
+    "summary": "SRE technical catalog and customer RFQ on native Odoo Sales.",
     "description": """
 Mechanic Workshop
 =================
 
-Empty starter addon for the Mechanic Workshop project. The module
-ships with no models, views, or data so it can be filled feature by
-feature as documented in ``docs/FEATURE_LIST.json``.
+Technical catalog, public RFQ basket, CRM intake and staff-controlled
+quotation creation. Native Odoo owns all sales and operational flows.
     """,
     "author": "Mechanic Workshop",
     "license": "LGPL-3",
     "depends": [
         "base",
+        "sale_management",
+        "sale_crm",
         "website",
         "website_sale",
         "product",
@@ -22,8 +23,11 @@ feature as documented in ``docs/FEATURE_LIST.json``.
         "product_manufacturer",
     ],
     "data": [
+        "security/ir.model.access.csv",
+        "views/rfq_backend.xml",
         "views/website_sale_product_tile.xml",
         "views/website_sale_product_detail.xml",
+        "views/rfq_website.xml",
     ],
     "installable": True,
     "application": True,

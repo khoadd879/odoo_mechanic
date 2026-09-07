@@ -9,16 +9,27 @@
       "summary": "OCA/brand@19.0 cloned to ./oca_addons/brand; product_brand installed v19.0.1.0.0. Brand is the SINGLE source for product branding: product.template.product_brand_id (M2O product.brand). NO custom Brand on res.partner.industry.",
       "repo": "https://github.com/OCA/brand",
       "branch": "19.0",
-      "modules_installed": ["product_brand"],
+      "modules_installed": [
+        "product_brand"
+      ],
       "modules_available_not_installed": [
         "brand",
         "product_brand_mrp",
         "product_brand_stock",
         "product_brand_stock_account"
       ],
-      "depends_on": ["sale"],
+      "depends_on": [
+        "sale"
+      ],
       "models_exposed": {
-        "product.brand": ["name", "description", "partner_id", "logo", "product_ids", "products_count"],
+        "product.brand": [
+          "name",
+          "description",
+          "partner_id",
+          "logo",
+          "product_ids",
+          "products_count"
+        ],
         "product.template.product_brand_id": "M2O product.brand, label 'Brand'"
       },
       "spec_alignment": {
@@ -50,7 +61,9 @@
       "repo": "https://github.com/OCA/product-attribute",
       "branch": "19.0",
       "modules_available": "30+ (full list: product_attribute_archive, product_attribute_value_avoid_auto_fill, product_category_active, product_category_code, product_category_type, product_category_uom, product_class, product_code_mandatory, product_code_unique, product_company_default, product_customerinfo, product_dimension, product_drained_weight, product_logistics_uom, product_manufacturer, product_net_weight, product_origin, product_pricelist_item_list_view, product_pricelist_revision, product_pricelist_simulation, product_pricelist_supplierinfo, product_sale_team, product_secondary_unit, product_sequence, product_set, product_state, ...)",
-      "depends_on": ["product"],
+      "depends_on": [
+        "product"
+      ],
       "spec_alignment": "OPEN — product_manufacturer adds product.template.manufacturer_id (M2O res.partner) without industry filter. Spec §5 currently uses res.partner.industry='manufacturer' via sre.oem.pn. Three options A/B/C recorded in PROGRESS.md; awaiting user decision.",
       "evidence": "docs/PROGRESS.md 2026-09-07 07:05; ir.module.module count 711→746 after update_list(); addons paths include /mnt/oca_addons/product-attribute."
     },
@@ -59,14 +72,35 @@
       "title": "SRE basic catalog (public-facing, no price, no CTA)",
       "status": "implemented-locally",
       "summary": "Public-facing catalog extension of website_sale for SRE Commercial, built inside mechanic_workshop. Inherits website_sale.products_item (tile in /shop list + search results) and website_sale.product (detail page). Shows: name, image (if any), Brand (OCA product_brand), Manufacturer (public name only, never the brand's partner_id), MPN, SKU, public categories, demo description (clearly labeled illustrative-only). HIDES: list_price, base unit price, Add to Cart, Add to RFQ, supplier / cost / source information, product.brand.partner_id. No new models, no new fields. Demo data: 2 brands + 2 manufacturers + 3 website categories + 6 products (3 valves + 3 pumps) + 6 variants, all sre_demo.* External IDs. Privacy: 0 brands with partner_id, 0 demo products with standard_price>0.",
-      "depends_on": ["base", "website", "website_sale", "product", "product_brand", "product_manufacturer"],
+      "depends_on": [
+        "base",
+        "website",
+        "website_sale",
+        "product",
+        "product_brand",
+        "product_manufacturer"
+      ],
       "modules_extended": {
         "tile": "website_sale.products_item (inherited via mechanic_workshop.sre_products_item_inherit)",
         "detail": "website_sale.product (inherited via mechanic_workshop.sre_product_detail_inherit)"
       },
       "data_inputs_required_from_backend": {
-        "per_product": ["name", "default_code (SKU)", "is_published", "sale_ok", "list_price=0 for catalog", "product_brand_id (M2O product.brand)", "manufacturer_id (M2O res.partner) + manufacturer_pref (MPN)", "public_categ_ids (M2M product.public.category)", "description (HTML — demo description rendered as spec sheet placeholder with illustrative-only banner)"],
-        "no_data_inputs_for": ["price (always hidden)", "supplier info (never shown)", "RFQ flow (out of scope for this feature)"]
+        "per_product": [
+          "name",
+          "default_code (SKU)",
+          "is_published",
+          "sale_ok",
+          "list_price=0 for catalog",
+          "product_brand_id (M2O product.brand)",
+          "manufacturer_id (M2O res.partner) + manufacturer_pref (MPN)",
+          "public_categ_ids (M2M product.public.category)",
+          "description (HTML — demo description rendered as spec sheet placeholder with illustrative-only banner)"
+        ],
+        "no_data_inputs_for": [
+          "price (always hidden)",
+          "supplier info (never shown)",
+          "RFQ flow (out of scope for this feature)"
+        ]
       },
       "layout_decisions": "Layout is in code, content via backend. No template-time toggle for the demo description. Adding a new product requires backend form; the tile and detail page pick up fields automatically.",
       "acceptance_criteria": [
@@ -96,6 +130,31 @@
         "Mobile menu, homepage hero, navigation pillars — those are part of sre_commercial_website (Sprint 1)."
       ],
       "evidence": "docs/PROGRESS.md 2026-09-07 catalog section; data inventory above; module version 19.0.1.0.0; brand partner_id leak = 0; standard_price leak = 0; HTTP 200 for /shop, /shop?search=*, /shop/<slug>, /shop/category/<slug>; headless Firefox screenshots saved to docs/sre_catalog_screenshots/."
+    },
+    {
+      "id": "sre-rfq-basic",
+      "title": "Customer RFQ website to native quotation",
+      "status": "completed",
+      "acceptance_criteria": [
+        "Session basket: add multiple variants, update quantity, remove and continue browsing",
+        "Guest POST with CSRF creates one RFQ and one CRM opportunity; duplicate submission does not duplicate records",
+        "Only published saleable products of current website/company accepted; positive finite quantities",
+        "Sales staff select verified customer and create one native draft quotation with correct products, quantities and UoM",
+        "No public/portal model access; company rules; browser and automated verification"
+      ],
+      "out_of_scope": [
+        "Dynamic family fields",
+        "Attachments",
+        "Portal RFQ history",
+        "Automatic emails"
+      ],
+      "version": "19.0.1.1.0",
+      "evidence": "docs/RFQ_GUIDE.md; docs/PROGRESS.md RFQ verification; docs/rfq_evidence/",
+      "verification": {
+        "automated_tests": "6 tests, 0 failures, 0 errors (Odoo 19 post-install)",
+        "browser": "Firefox desktop 1280 and mobile 390: add, quantity 2, remove; no horizontal overflow",
+        "agent_check": "14 PASS, exit 0"
+      }
     }
   ]
 }
