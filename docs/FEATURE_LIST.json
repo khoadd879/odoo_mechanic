@@ -155,6 +155,19 @@
         "browser": "Firefox desktop 1280 and mobile 390: add, quantity 2, remove; no horizontal overflow",
         "agent_check": "14 PASS, exit 0"
       }
+    },
+    {
+      "id": "rfq-add-in-place",
+      "status": "completed",
+      "title": "Add to RFQ without navigation and global RFQ counter",
+      "acceptance_criteria": [
+        "Add stays on product page with confirmation",
+        "Header RFQ opens current list on desktop and mobile",
+        "Counter counts distinct product lines and persists across pages",
+        "CSRF and server validation preserved"
+      ],
+      "version": "19.0.1.1.1",
+      "evidence": "Firefox: two add operations stay on detail; confirmation; count 2 persists on shop; visible mobile header opens two-line basket. 6 regression tests pass; agent_check 14/14. Screenshots docs/rfq_evidence/add-in-place-desktop.png and rfq-header-mobile.png."
     }
   ]
 }

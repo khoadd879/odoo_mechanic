@@ -68,6 +68,8 @@ class CustomerRfq(http.Controller):
             request.session.pop(self._basket_key() + "_reference", None)
         basket[str(product_id)] = self._quantity(basket.get(str(product_id), 0) + self._quantity(quantity))
         request.session[self._basket_key()] = basket
+        if kw.get("ajax") == "1":
+            return request.make_json_response({"line_count": len(basket)})
         return request.redirect("/rfq")
 
     @http.route("/rfq/update", type="http", auth="public", website=True, methods=["POST"])

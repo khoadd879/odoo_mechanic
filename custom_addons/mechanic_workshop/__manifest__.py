@@ -1,6 +1,6 @@
 {
     "name": "Mechanic Workshop",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.1.1",
     "category": "Sales",
     "summary": "SRE technical catalog and customer RFQ on native Odoo Sales.",
     "description": """
@@ -29,6 +29,7 @@ quotation creation. Native Odoo owns all sales and operational flows.
         "views/website_sale_product_detail.xml",
         "views/rfq_website.xml",
     ],
+    "assets": {"web.assets_frontend": ["mechanic_workshop/static/src/js/rfq.js"]},
     "installable": True,
     "application": True,
     "auto_install": False,

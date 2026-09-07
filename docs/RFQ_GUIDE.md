@@ -5,8 +5,8 @@ Triển khai trong `mechanic_workshop`, Odoo 19 CE. Giữ nguyên `odoo_mechanic
 ## Khách gửi yêu cầu
 
 1. Mở http://localhost:8080/shop và chọn sản phẩm đã xuất bản.
-2. Chọn variant và quantity, bấm **Add to RFQ**.
-3. Trang `/rfq` cho sửa số lượng (**Update quantity**), **Remove**, **Continue browsing**.
+2. Chọn variant và quantity, bấm **Add to RFQ**. Trang không chuyển; thông báo xác nhận hiện ngay dưới nút. Bạn có thể tiếp tục tìm sản phẩm khác.
+3. Bấm **RFQ** trên đầu website (desktop/mobile) hoặc **View RFQ** cạnh nút thêm hàng để mở danh sách. Số trên badge là số loại sản phẩm, không phải tổng quantity. Trang `/rfq` cho sửa số lượng (**Update quantity**), **Remove**, **Continue browsing**.
 4. Thêm nhiều hàng. Nhập Company, Contact name, Email; điền Phone, Project / Plant, Project location, Required delivery date, Additional requirements khi cần.
 5. Bấm **Submit RFQ**, nhận mã `RFQ-xxxxxx`.
 
@@ -44,3 +44,5 @@ docker compose -p odoo_mechanic exec -T odoo odoo -d mechanic_workshop \
 ```
 
 Tests tạo dữ liệu trong transaction và rollback; không cần dùng dữ liệu khách thật. Sau đổi Python, restart service Odoo để worker nạp code mới. Website XML được nạp bằng module update.
+
+Nếu trình duyệt tắt JavaScript, form vẫn thêm được hàng và chuyển tới `/rfq` như phương án dự phòng.

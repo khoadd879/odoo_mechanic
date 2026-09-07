@@ -1,12 +1,20 @@
 <odoo>
+<template id="rfq_header" inherit_id="website_sale.header_cart_link" name="Header RFQ access">
+<xpath expr="//li" position="after">
+<li class="nav-item" t-nocache="RFQ quantity belongs to the current session">
+<a href="/rfq" class="nav-link text-nowrap sre-rfq-header" aria-label="View current RFQ" title="Number of different products in your RFQ">
+RFQ <span class="badge bg-primary sre-rfq-count" t-esc="len(request.session.get('sre_rfq_basket_%s' % request.website.id, {}))"/>
+</a></li>
+</xpath></template>
 <template id="rfq_product" inherit_id="mechanic_workshop.sre_product_detail_inherit" name="Product RFQ">
 <xpath expr="//div[hasclass('o_wsale_product_details_content_section_meta')]" position="after">
-<form action="/rfq/add" method="post" class="mb-4 p-3 border rounded">
+<form action="/rfq/add" method="post" class="sre-rfq-add mb-4 p-3 border rounded">
 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 <label for="rfq_product" class="form-label">Product / variant</label>
 <select id="rfq_product" name="product_id" class="form-select mb-2" required="required"><t t-foreach="product.product_variant_ids" t-as="variant"><option t-att-value="variant.id"><t t-esc="variant.display_name"/></option></t></select>
 <label for="rfq_quantity" class="form-label">Quantity</label><input id="rfq_quantity" name="quantity" type="number" min="0.001" max="1000000" step="any" value="1" required="required" class="form-control mb-3"/>
 <button class="btn btn-primary" type="submit">Add to RFQ</button> <a href="/rfq" class="btn btn-outline-secondary">View RFQ</a>
+<div class="sre-rfq-feedback mt-3" role="status" aria-live="polite" data-success="Added to your RFQ. You can continue browsing." data-error="Could not confirm the addition. Please check your RFQ before trying again."/>
 </form></xpath></template>
 <template id="rfq_basket" name="Request for quotation"><t t-call="website.layout"><div id="wrap" class="container py-5">
 <h1>Request for quotation</h1><p>No payment is required. Our team will review your request before preparing a quotation.</p>
