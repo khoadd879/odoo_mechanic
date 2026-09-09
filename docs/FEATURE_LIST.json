@@ -174,6 +174,60 @@
       "title": "RFQ document icon replaces cart access",
       "status": "completed",
       "evidence": "Firefox 1280/390: cart link absent from header, RFQ document icon/badge visible and clickable, no overflow. Module update and compose up succeeded; agent_check 14/14. Screenshots docs/rfq_evidence/rfq-icon-*.png."
+    },
+    {
+      "id": "sre-homepage-and-redirect",
+      "title": "SRE homepage (brief §19) + /shop, /shop/pillar/*, /shop/family/* 301 → /sre/catalog",
+      "status": "implemented",
+      "summary": "New homepage at / renders the 8 blocks from brief §19 (hero, search, 8 pillars, 4 industries, 3 applications, featured tiles, technical resources, RFQ CTA). The legacy /shop, /shop/pillar/<slug>, /shop/family/<slug> routes return HTTP 301 to the matching /sre/catalog[...] URL preserving the query string. The broken views/website_sale_products.xml inherit was removed from the manifest; the canonical catalog route at /sre/catalog and its McMaster-Carr template are unchanged. Top-nav links point to /sre/catalog/pillar/<slug>; logo links to /.",
+      "depends_on": [
+        "sre-pillar-nav-search-category",
+        "sre-mcmaster-catalog"
+      ],
+      "spec_alignment": {
+        "brief_section_04": "Top-nav links re-point to /sre/catalog/pillar/<slug>; the 8 pillars iterate over sre.navigation.pillar records (no hard-coded names).",
+        "brief_section_06": "/sre/catalog is the only catalog page; /shop, /shop/pillar/*, /shop/family/* are 301 redirects to it.",
+        "brief_section_14_15": "Homepage tile blocks for 4 industries + 3 applications; landing pages belong to Sprint 3.",
+        "brief_section_19": "Homepage renders all 8 blocks from the brief."
+      },
+      "routes_added": [
+        "/",
+        "/shop",
+        "/shop/page/<int:page>",
+        "/shop/pillar/<slug>",
+        "/shop/pillar/<slug>/page/<int:page>",
+        "/shop/family/<slug>",
+        "/shop/family/<slug>/page/<int:page>"
+      ],
+      "routes_redirected": [
+        "/shop -> /sre/catalog",
+        "/shop/pillar/<slug> -> /sre/catalog/pillar/<slug>",
+        "/shop/family/<slug> -> /sre/catalog/family/<slug>"
+      ],
+      "files_added": [
+        "controllers/home.py",
+        "views/sre_home.xml",
+        "data/sre_home_seed.xml",
+        "static/src/scss/sre_home.scss"
+      ],
+      "acceptance_criteria": [
+        "AC-1 GET / returns 200 with all 8 blocks rendered.",
+        "AC-2 GET /shop returns 301 Location /sre/catalog; GET /shop?search=DMV-001 returns 301 Location /sre/catalog?search=DMV-001.",
+        "AC-3 GET /shop/pillar/<slug> returns 301 Location /sre/catalog/pillar/<slug>.",
+        "AC-4 GET /shop/family/<slug> returns 301 Location /sre/catalog/family/<slug>.",
+        "AC-5 GET /sre/catalog/pillar/valves returns 200 with McMaster rows (no regression).",
+        "AC-6 GET /sre/catalog?search=DMV-001 returns 200 with Demo Valve 001 first.",
+        "AC-7 GET /shop/search_suggest?term=... returns JSON (no regression).",
+        "AC-8 GET /rfq returns 200; submit path still works (no regression).",
+        "AC-9 Guest access: no redirect to /web/login.",
+        "AC-10 Top-nav active state tracks the pillar on both /sre/catalog/pillar/<slug> and the post-redirect /shop/pillar/<slug>.",
+        "AC-11 views/website_sale_products.xml removed from manifest; module update succeeds; no traceback.",
+        "AC-12 Three new screenshots saved: home.png, home_mobile.png, redirect_pillar_boiler.png.",
+        "AC-13 ./scripts/agent_check.sh exits 0 (15/15 PASS).",
+        "AC-14 Privacy: product.brand.partner_id stays NULL; standard_price stays 0; no supplier / cost field read on /."
+      ],
+      "evidence": "docs/PROGRESS.md 2026-09-08 entry; docs/sre_visual_evidence/before/home.png, home_mobile.png, redirect_pillar_boiler.png; agent_check 15/15 PASS exit 0.",
+      "version": "19.0.1.7.1"
     }
   ]
 }

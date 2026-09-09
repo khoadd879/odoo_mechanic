@@ -790,3 +790,54 @@ Verification: module update 19.0.1.1.1 succeeded, service restarted, compose up 
 ## 2026-09-07 — RFQ header icon
 
 User requested removal of cart and a clearer RFQ icon. Header cart is no longer rendered; RFQ uses a document icon, text, count badge and rounded outline. Native checkout routes are unchanged. Firefox desktop/mobile verified icon visibility, cart absence, working RFQ link and no overflow. Module update and compose up passed; agent_check 14/14 with clean recent Odoo logs. Evidence: docs/rfq_evidence/rfq-icon-1280.png and rfq-icon-390.png.
+
+## 2026-09-08 — Sprint 1 finalize: homepage + /shop redirect
+
+User asked for the public storefront to consistently look like the
+McMaster-Carr visual already shipped at `/sre/catalog`. Two parallel
+catalog routes had shipped: `/sre/catalog` (clean) and
+`/shop/pillar/<slug>` (broken Odoo Bootstrap 3-col grid). The top nav
+still pointed to `/shop/pillar/<slug>`, so the broken route was what
+guests saw.
+
+Decisions:
+
+- `/sre/catalog` is the canonical catalog route.
+- `/shop`, `/shop/pillar/<slug>`, `/shop/family/<slug>` return HTTP 301
+  to the matching `/sre/catalog[...]` URL, preserving the query
+  string.
+- The broken `views/website_sale_products.xml` inherit is removed
+  from `__manifest__.py` data.
+- Top nav links re-point to `/sre/catalog/pillar/<slug>`; logo to `/`.
+- A new homepage at `/` renders the 8 blocks from brief §19:
+  hero, search bar, 8 pillars (Quick Access), 4 industries
+  (Shop by Industry), 3 applications (Shop by Application), featured
+  product tiles, technical resources, RFQ CTA.
+- Boiler Part Finder stays in Sprint 3.
+
+Files added:
+
+- `controllers/home.py`
+- `views/sre_home.xml`
+- `data/sre_home_seed.xml` (4 industries + 3 applications)
+- `static/src/scss/sre_home.scss`
+
+Files modified:
+
+- `__manifest__.py` (bump 19.0.1.7.1; remove broken inherit; add new
+  view / data / scss)
+- `controllers/shop.py` (SreWebsiteSale.shop becomes a 301 redirect;
+  legacy search/domain overrides removed)
+- `controllers/catalog.py` (accept ?industry / ?application query)
+- `views/website_sale_header.xml` (nav links → /sre/catalog)
+- `scripts/agent_check.sh` (homepage 200 check; 15/15 PASS)
+- `docs/FEATURE_LIST.json` (feature `sre-homepage-and-redirect`)
+- 3 screenshots: `home.png`, `home_mobile.png`,
+  `redirect_pillar_boiler.png`
+
+Verification:
+
+- All 14 acceptance criteria pass.
+- `./scripts/agent_check.sh` → 15/15 PASS exit 0.
+- No traceback / CRITICAL in
+  `docker compose -p odoo_mechanic logs --tail=200 odoo`.
