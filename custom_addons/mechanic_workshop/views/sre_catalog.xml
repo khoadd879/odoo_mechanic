@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--
+    SRE catalog page — full HTML document.
+
+    We do not call ``website.layout`` because that layout
+    expects a ``main_object`` record (res.partner, product.template,
+    etc.) and the catalog is a free-form listing. We ship our
+    own <head> with the SRE stylesheet and a minimal
+    <body> wrapping the McMaster-Carr rows.
+-->
+<template id="sre_catalog_page" name="SRE Catalog Page">
+    <div t-att-lang="request.env.user.lang or 'en_US'" id="sre-catalog-root" class="o_wsale_products_page">
+        <div t-att-class="'sre-head'" id="sre-catalog-head">
+            <meta charset="utf-8"/>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <title>
+                <t t-if="family" t-esc="family.name"/>
+                <t t-if="not family and pillar"
+                   t-esc="pillar.short_label or pillar.name"/>
+                <t t-if="not family and not pillar">All products</t>
+                | SRE Commercial
+            </title>
+            <t t-call-assets="web.assets_frontend" t-js="false"/>
+        </div>
+        <div class="o_wsale_products_page">
+            <!-- 8-pillar top navigation. -->
+            <nav class="sre-pillars-nav" aria-label="Business pillars">
+                <div class="container">
+                    <ul class="sre-pillars-nav__list">
+                        <li t-foreach="visible_pillars" t-as="p_nav"
+                            t-attf-class="sre-pillars-nav__item #{'active' if p_nav.id == (pillar.id if pillar else (family.pillar_id.id if family else False)) else ''}">
+                            <a t-att-href="'/sre/catalog/pillar/%s' % p_nav.slug"
+                               class="sre-pillars-nav__link"
+                               t-esc="p_nav.short_label or p_nav.name"/>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="container py-4">
+                <header class="sre-page-header">
+                    <div class="sre-page-header__row">
+                        <div>
+                            <h1 class="sre-page-header__title">
+                                <t t-if="family" t-esc="family.name"/>
+                                <t t-if="not family and pillar"
+                                   t-esc="pillar.short_label or pillar.name"/>
+                                <t t-if="not family and not pillar">All products</t>
+                            </h1>
+                            <p class="sre-page-header__meta">
+                                <strong t-esc="search_count"/> products
+                                <t t-if="family">in <strong t-esc="family.name"/></t>
+                                <t t-if="not family and pillar">in <strong t-esc="pillar.name"/></t>
+                            </p>
+                        </div>
+                        <div class="sre-page-header__sort">
+                            <label for="sre-sort-select">Sort</label>
+                            <select id="sre-sort-select" onchange="window.location.href=this.value">
+                                <option value="?order=name asc">Name (A–Z)</option>
+                                <option value="?order=name desc">Name (Z–A)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <p class="sre-page-header__desc">Browse the SRE Commercial catalog of industrial HVAC, boiler, pump, valve, instrumentation and control products. All prices on request — submit an RFQ and our engineering team will respond with a quotation, lead time and stock availability.</p>
+                </header>
+
+                <div class="d-flex justify-content-end mb-3">
+                    <nav class="sre-layout-toggle" role="group" aria-label="View mode">
+                        <span class="sre-layout-toggle__label">View</span>
+                        <a t-att-href="'?layout_mode=grid'" t-att-class="'sre-layout-toggle__option ' + ('is-active' if layout_mode == 'grid' else '')">Grid</a>
+                        <a t-att-href="'?layout_mode=list'" t-att-class="'sre-layout-toggle__option ' + ('is-active' if layout_mode == 'list' else '')">List</a>
+                        <a t-att-href="'?layout_mode=table'" t-att-class="'sre-layout-toggle__option ' + ('is-active' if layout_mode == 'table' else '')">Table</a>
+                    </nav>
+                </div>
+
+                <t t-if="layout_mode == 'table'">
+                    <table class="sre-products-table">
+                        <thead><tr><th>Product</th><th>Brand</th><th>MPN</th><th>SKU</th><th>Family</th></tr></thead>
+                        <tbody>
+                            <tr t-foreach="products" t-as="product">
+                                <td><a t-att-href="product.website_url" class="fw-semibold" t-esc="product.name"/></td>
+                                <td><span t-if="product.product_brand_id" t-field="product.product_brand_id.name"/></td>
+                                <td><span t-if="product.manufacturer_pref" t-esc="product.manufacturer_pref"/></td>
+                                <td><code t-if="product.default_code" t-esc="product.default_code"/></td>
+                                <td><span t-if="product.family_id" t-field="product.family_id.name"/></td>
+                            </tr>
+                            <tr t-if="not products">
+                                <td colspan="5" class="text-center text-muted py-4">No products match the current filters.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+                <t t-if="layout_mode != 'table'">
+                    <div class="sre-catalog">
+                        <t t-foreach="products" t-as="product">
+                            <a t-att-href="product.website_url" class="sre-tile">
+                                <div class="sre-tile__primary">
+                                    <div class="sre-tile__head">
+                                        <t t-if="product.default_code">
+                                            <span class="sre-tile__sku sre-mono" t-esc="product.default_code"/>
+                                        </t>
+                                        <t t-if="product.product_brand_id">
+                                            <span class="sre-tile__brand sre-mono" t-esc="product.product_brand_id.name"/>
+                                        </t>
+                                    </div>
+                                    <h3 class="sre-tile__name"><t t-esc="product.name"/></h3>
+                                    <t t-if="product.manufacturer_pref">
+                                        <div class="sre-tile__mpn sre-mono">
+                                            <span class="sre-tile__mpn-label">MPN</span>
+                                            <span t-esc="product.manufacturer_pref"/>
+                                        </div>
+                                    </t>
+                                </div>
+                                <dl class="sre-tile__specs">
+                                    <t t-if="product.family_id"><dt>Family</dt><dd t-esc="product.family_id.name"/></t>
+                                    <t t-if="product.manufacturer_public_name"><dt>Mfr</dt><dd t-esc="product.manufacturer_public_name"/></t>
+                                    <t t-if="product.sre_oem_pn_ids"><dt>OEM PN</dt><dd t-esc="product.sre_oem_pn_ids[0].oem_part_number"/></t>
+                                </dl>
+                                <div class="sre-tile__meta">
+                                    <div class="sre-tile__meta-row"><span class="dot"></span><span>Request quote</span></div>
+                                    <div class="sre-tile__meta-row sre-mono" style="color:var(--sre-fg-faint);">5-7 day lead</div>
+                                </div>
+                                <div class="sre-tile__cta">View details</div>
+                            </a>
+                        </t>
+                    </div>
+                </t>
+
+                <div class="sre-pager">
+                    <div class="sre-pager__label">Showing <strong>1-<t t-esc="search_count"/></strong> of <strong t-esc="search_count"/> products</div>
+                    <div class="sre-pager__per-page">Per page
+                        <select onchange="window.location.href=this.value">
+                            <option>12</option><option>24</option><option>48</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="sre-lead">
+                    <div>
+                        <h2 class="sre-lead__title">Need help specifying the right part?</h2>
+                        <p class="sre-lead__body">Our engineering team can review your application - operating pressure, fluid, temperature, connection standard - and recommend a verified part number. Submit an RFQ and we will respond within one business day.</p>
+                    </div>
+                    <a class="sre-lead__cta" href="/rfq">Request a quote</a>
+                </div>
+            </main>
+
+            <t t-call-assets="web.assets_frontend" t-css="false"/>
+        </div>
+    </div>
+</template>
+</odoo>
