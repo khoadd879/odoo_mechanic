@@ -69,6 +69,7 @@ check "RFQ page reachable" curl -fsS -o /dev/null --max-time 15 http://localhost
 
 section "Homepage"
 check "homepage returns 200" curl -fsS -o /dev/null --max-time 15 http://localhost:8080/
+check "homepage renders sre-home__hero markup" bash -c "curl -fsS --max-time 15 http://localhost:8080/ | grep -qF 'sre-home__hero'"
 
 section "Recent logs"
 if docker compose -p odoo_mechanic logs --tail=200 odoo 2>/dev/null |
