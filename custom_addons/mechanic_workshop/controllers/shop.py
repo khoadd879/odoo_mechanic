@@ -32,6 +32,9 @@ class SreWebsiteSale(http.Controller):
             target = f"/sre/catalog/pillar/{pillar_slug}"
         elif family_slug:
             target = f"/sre/catalog/family/{family_slug}"
+        # ``page=0`` is the default for non-paginated requests, so
+        # the falsy guard skips appending ``?page=0`` while still
+        # forwarding any user-supplied page number >= 1.
         if page:
             target = f"{target}?page={page}"
         qs = request.httprequest.query_string.decode("utf-8")
