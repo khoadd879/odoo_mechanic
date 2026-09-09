@@ -8,22 +8,23 @@ Privacy:
 - Reads only `is_published=True sale_ok=True` products.
 - Never reads `standard_price`, `product.brand.partner_id`, supplier
   info, or any cost field.
+
+Precedence:
+- ``SreHome`` subclasses ``odoo.addons.website.controllers.main.Website``
+  and overrides ``index`` so it replaces the default Odoo homepage
+  handler at ``/``. Two independent ``@http.route('/')`` declarations
+  are not reliable in Odoo 19 — the parent-class override is the
+  idiomatic fix and ensures the SRE template wins regardless of
+  controller registration order.
 """
 from __future__ import annotations
 
-from odoo import http
+from odoo.addons.website.controllers.main import Website
 from odoo.http import request
 
 
-class SreHome(http.Controller):
-    @http.route(
-        "/",
-        type="http",
-        auth="public",
-        website=True,
-        sitemap=True,
-    )
-    def home(self, **kw):
+class SreHome(Website):
+    def index(self, **kw):
         pillars = request.website.sre_visible_pillars
         industries = (
             request.env["sre.industry"]
