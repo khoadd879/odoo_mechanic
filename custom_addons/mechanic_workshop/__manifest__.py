@@ -35,6 +35,7 @@ Sprint 1 visual (McMaster-Carr reference):
     ],
     "data": [
         "security/ir.model.access.csv",
+        "data/sre_home_seed.xml",
         "data/sre_pim_seed.xml",
         "views/sre_navigation_pillar_views.xml",
         "views/sre_product_family_views.xml",
