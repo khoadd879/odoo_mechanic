@@ -24,7 +24,12 @@ class SreCatalog(http.Controller):
         website=True,
         sitemap=False,
     )
-    def catalog(self, pillar_slug=None, family_slug=None, **kw):
+    def catalog(
+        self,
+        pillar_slug: str | None = None,
+        family_slug: str | None = None,
+        **kw: object,
+    ) -> http.Response:
         Pillar = request.env["sre.navigation.pillar"].sudo()
         Family = request.env["sre.product.family"].sudo()
         pillar = Pillar
@@ -52,6 +57,20 @@ class SreCatalog(http.Controller):
             base.append(("family_id", "=", family.id))
         elif pillar:
             base.append(("family_id.pillar_id", "=", pillar.id))
+        industry_slug = (kw.get("industry") or "").strip()
+        application_slug = (kw.get("application") or "").strip()
+        if industry_slug:
+            ind = request.env["sre.industry"].sudo().search(
+                [("slug", "=", industry_slug)], limit=1
+            )
+            if ind:
+                base.append(("industry_ids", "in", ind.id))
+        if application_slug:
+            app = request.env["sre.application"].sudo().search(
+                [("slug", "=", application_slug)], limit=1
+            )
+            if app:
+                base.append(("application_ids", "in", app.id))
 
         products = Product.search(base, limit=200, order="name asc")
         products_count = len(products)
