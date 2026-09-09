@@ -22,7 +22,7 @@ class SreCatalog(http.Controller):
         type="http",
         auth="public",
         website=True,
-        sitemap=False,
+        sitemap=True,
     )
     def catalog(
         self,
