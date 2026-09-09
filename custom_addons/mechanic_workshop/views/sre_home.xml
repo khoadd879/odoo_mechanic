@@ -1,33 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="sre_home_page" name="SRE Homepage">
+    <template id="sre_home_page" name="SRE Commercial homepage">
         <t t-call="website.layout">
-            <div class="sre-home">
-                <section class="sre-home__hero"><div class="container">
-                    <h1>Industrial HVAC, Boiler &amp; Process Equipment</h1>
-                    <p>Components. Spare Parts. Controls. Instrumentation.</p>
-                    <div class="sre-home__search"><form action="/sre/catalog" method="get" role="search">
-                        <input type="search" name="search" placeholder="Search by Part Number, Model, Brand or Product" aria-label="Search catalog"/>
-                        <button type="submit">Search</button>
-                    </form></div>
-                </div></section>
-                <section class="sre-home__pillars"><div class="container"><h2>Quick Access</h2><div class="sre-home__pillars-grid">
-                    <a t-foreach="pillars" t-as="pillar" t-att-href="'/sre/catalog/pillar/%s' % pillar.slug" t-esc="pillar.short_label or pillar.name"/>
-                </div></div></section>
-                <section class="sre-home__taxonomy"><div class="container"><h2>Shop by Industry</h2>
-                    <t t-if="industries"><div class="sre-home__taxonomy-grid"><a t-foreach="industries" t-as="industry" t-att-href="'/sre/catalog?industry=%s' % industry.slug"><span class="name" t-esc="industry.name"/><span class="count"><t t-esc="industry.product_count"/> products</span></a></div></t>
-                    <div t-if="not industries" class="sre-home__taxonomy--empty">No industries seeded yet.</div>
-                </div></section>
-                <section class="sre-home__taxonomy"><div class="container"><h2>Shop by Application</h2>
-                    <t t-if="applications"><div class="sre-home__taxonomy-grid sre-home__taxonomy-grid--three"><a t-foreach="applications" t-as="application" t-att-href="'/sre/catalog?application=%s' % application.slug"><span class="name" t-esc="application.name"/><span class="count"><t t-esc="application.product_count"/> products</span></a></div></t>
-                    <div t-if="not applications" class="sre-home__taxonomy--empty">No applications seeded yet.</div>
-                </div></section>
-                <t t-if="featured_products"><section class="sre-home__featured"><div class="container"><h2>Featured Categories</h2><div class="sre-catalog">
-                    <a t-foreach="featured_products" t-as="product" t-att-href="product.website_url" class="sre-tile"><div class="sre-tile__primary"><div class="sre-tile__head"><span t-if="product.default_code" class="sre-tile__sku sre-mono" t-esc="product.default_code"/><span t-if="product.product_brand_id" class="sre-tile__brand sre-mono" t-esc="product.product_brand_id.name"/></div><h3 class="sre-tile__name" t-esc="product.name"/><div class="sre-tile__mpn sre-mono"><t t-if="product.manufacturer_pref"><span class="sre-tile__mpn-label">MPN</span><span t-esc="product.manufacturer_pref"/></t></div></div><dl class="sre-tile__specs"><t t-if="product.family_id"><dt>Family</dt><dd t-esc="product.family_id.name"/></t><t t-if="product.manufacturer_public_name"><dt>Mfr</dt><dd t-esc="product.manufacturer_public_name"/></t></dl><div class="sre-tile__meta"><div class="sre-tile__meta-row"><span class="dot"/><span>Request quote</span></div><div class="sre-tile__meta-row sre-mono">5-7 day lead</div></div><div class="sre-tile__cta">View details</div></a>
-                </div></div></section></t>
-                <section class="sre-home__resources"><div class="container"><h2>Technical Resources</h2><div class="sre-home__resources-grid"><a href="/sre/catalog"><span class="name">Browse Catalog</span><span class="hint">Search by SKU, MPN, Brand or keyword across 8 pillars.</span></a><a href="/rfq"><span class="name">Submit an RFQ</span><span class="hint">Engineering team responds within one business day.</span></a></div></div></section>
-                <section class="sre-home__cta"><div class="container"><div class="sre-lead"><div><h2 class="sre-lead__title">Need help specifying the right part?</h2><p class="sre-lead__body">Our engineering team can review your application — operating pressure, fluid, temperature, connection standard — and recommend a verified part number. Submit an RFQ and we will respond within one business day.</p></div><a class="sre-lead__cta" href="/rfq">Request a quote</a></div></div></section>
-                <footer class="sre-home__footer"><div class="container">SRE Commercial © 2026 — Industrial Product Distribution Platform</div></footer>
+            <t t-set="additional_title">Industrial HVAC, Boiler &amp; Process Equipment</t>
+            <div id="wrap" class="sre-home">
+                <section class="sre-home-hero">
+                    <div class="container sre-home-hero__grid">
+                        <div class="sre-home-hero__content">
+                            <span class="sre-kicker">Technical distribution · Vietnam &amp; international projects</span>
+                            <h1>Industrial HVAC, Boiler &amp; Process Equipment</h1>
+                            <p class="sre-home-hero__lead">Components. Spare Parts. Controls. Instrumentation.</p>
+                            <p class="sre-home-hero__copy">Find parts by exact technical identity, compare engineering data and build one multi-product request for quotation.</p>
+                            <div class="sre-home-hero__search">
+                                <t t-call="mechanic_workshop.sre_search_form">
+                                    <t t-set="search_action">/sre/catalog</t>
+                                    <t t-set="search_value" t-value="''"/>
+                                </t>
+                                <span>Exact part numbers are ranked first.</span>
+                            </div>
+                        </div>
+                        <aside class="sre-home-hero__panel">
+                            <div class="sre-home-hero__panel-head"><span>Engineering search protocol</span><strong>01 / IDENTIFY</strong></div>
+                            <dl>
+                                <div><dt>Known part</dt><dd>SKU · MPN · OEM PN</dd></div>
+                                <div><dt>Product type</dt><dd>Family · Brand · Specification</dd></div>
+                                <div><dt>Application</dt><dd>Industry · System · Duty</dd></div>
+                            </dl>
+                            <a href="/sre/catalog" class="sre-link-arrow">Open technical catalog</a>
+                        </aside>
+                    </div>
+                </section>
+
+                <section class="sre-confidence-strip" aria-label="Service principles">
+                    <div class="container">
+                        <div><span class="fa fa-search"/><strong>Part-number search</strong><small>SKU, MPN, OEM and brand</small></div>
+                        <div><span class="fa fa-check-square-o"/><strong>Engineering review</strong><small>Specifications checked before quote</small></div>
+                        <div><span class="fa fa-files-o"/><strong>Multi-product RFQ</strong><small>One request, multiple line items</small></div>
+                        <div><span class="fa fa-lock"/><strong>Controlled data</strong><small>No supplier or cost exposure</small></div>
+                    </div>
+                </section>
+
+                <section class="sre-home-section sre-home-section--quick">
+                    <div class="container">
+                        <div class="sre-section-heading"><div><span class="sre-kicker">Quick access</span><h2>Browse by equipment group</h2></div><a href="/sre/catalog" class="sre-link-arrow">View all products</a></div>
+                        <div class="sre-pillar-grid">
+                            <a t-foreach="pillars" t-as="pillar" t-att-href="'/sre/catalog/pillar/%s' % pillar.slug">
+                                <span class="sre-pillar-grid__number">0<t t-esc="pillar_index + 1"/></span>
+                                <span class="sre-pillar-grid__name" t-esc="pillar.name"/>
+                                <span t-if="pillar.product_count" class="sre-pillar-grid__meta"><t t-esc="pillar.product_count"/> catalog products</span>
+                                <span t-else="" class="sre-pillar-grid__meta">PIM classification pending</span>
+                                <span class="sre-pillar-grid__arrow">↗</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="industries" class="sre-home-section sre-home-section--muted">
+                    <div class="container">
+                        <div class="sre-section-heading"><div><span class="sre-kicker">Shop by industry</span><h2>Equipment for demanding operating environments</h2></div></div>
+                        <div t-if="industries" class="sre-taxonomy-grid">
+                            <a t-foreach="industries" t-as="industry" t-att-href="'/sre/catalog?industry=%s' % industry.slug">
+                                <span class="sre-taxonomy-grid__index" t-esc="'%02d' % (industry_index + 1)"/>
+                                <strong t-esc="industry.name"/>
+                                <small t-if="industry.product_count"><t t-esc="industry.product_count"/> mapped products</small>
+                                <small t-else="">Explore solutions</small>
+                                <span>View catalog →</span>
+                            </a>
+                        </div>
+                        <p t-else="" class="sre-empty-inline">Industry taxonomy is ready for governed PIM data.</p>
+                    </div>
+                </section>
+
+                <section id="applications" class="sre-home-section">
+                    <div class="container sre-home-split">
+                        <div class="sre-home-split__intro"><span class="sre-kicker">Shop by application</span><h2>Start from the system problem</h2><p>When the exact part is unknown, browse by application or describe the duty to our engineering team.</p><a href="/rfq" class="sre-button">Discuss an application</a></div>
+                        <div class="sre-application-list">
+                            <a t-foreach="applications" t-as="application" t-att-href="'/sre/catalog?application=%s' % application.slug">
+                                <span t-esc="'%02d' % (application_index + 1)"/>
+                                <strong t-esc="application.name"/>
+                                <small t-if="application.product_count"><t t-esc="application.product_count"/> products</small>
+                                <small t-else="">Engineering selection</small>
+                                <i>→</i>
+                            </a>
+                            <p t-if="not applications" class="sre-empty-inline">Application taxonomy is ready for governed PIM data.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section t-if="featured_products" class="sre-home-section sre-home-section--featured">
+                    <div class="container">
+                        <div class="sre-section-heading"><div><span class="sre-kicker">Featured product categories</span><h2>Recently prioritized technical products</h2></div><a href="/sre/catalog" class="sre-link-arrow">Browse full catalog</a></div>
+                        <div class="sre-product-results sre-product-results--featured">
+                            <t t-foreach="featured_products" t-as="product">
+                                <t t-call="mechanic_workshop.sre_product_card">
+                                    <t t-set="card_layout" t-value="'featured'"/>
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="technical-resources" class="sre-home-section sre-home-section--dark">
+                    <div class="container">
+                        <div class="sre-section-heading"><div><span class="sre-kicker">Technical resources</span><h2>Move from identification to quotation</h2></div></div>
+                        <div class="sre-resource-grid">
+                            <a href="/sre/catalog"><span>01</span><div><strong>Technical catalog</strong><p>Search product identity and review public specifications.</p></div><i>↗</i></a>
+                            <a href="/sre/catalog"><span>02</span><div><strong>Part-number lookup</strong><p>Find SKU, MPN, OEM and brand references in one search.</p></div><i>↗</i></a>
+                            <a href="/rfq"><span>03</span><div><strong>Engineering RFQ</strong><p>Submit quantities, project context and delivery requirements.</p></div><i>↗</i></a>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="sre-home-quote">
+                    <div class="container sre-home-quote__inner">
+                        <div><span class="sre-kicker">Request a quote</span><h2>Have a part list or an engineering requirement?</h2><p>Build a multi-product RFQ. No payment is taken online; our team verifies product fit, availability and commercial terms before preparing a native Odoo quotation.</p></div>
+                        <div class="sre-home-quote__actions"><a href="/rfq" class="sre-button sre-button--light">Open RFQ list</a><a href="/sre/catalog" class="sre-link-arrow sre-link-arrow--light">Continue browsing</a></div>
+                    </div>
+                </section>
             </div>
         </t>
     </template>

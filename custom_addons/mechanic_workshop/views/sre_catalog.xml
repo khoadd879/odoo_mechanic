@@ -1,153 +1,248 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<!--
-    SRE catalog page — full HTML document.
+    <template id="sre_product_card" name="SRE technical product card">
+        <article t-att-class="'sre-product-card sre-product-card--%s' % (card_layout or 'list')"
+                 itemscope="itemscope"
+                 itemtype="https://schema.org/Product">
+            <a t-att-href="product.website_url" class="sre-product-card__media" tabindex="-1">
+                <img t-if="product.image_128"
+                     t-att-src="'/web/image/product.template/%s/image_256' % product.id"
+                     t-att-alt="product.name"
+                     loading="lazy"/>
+                <span t-else="" class="sre-product-card__placeholder" aria-hidden="true">
+                    <span class="fa fa-cogs"/>
+                </span>
+            </a>
+            <div class="sre-product-card__identity">
+                <div class="sre-product-card__eyebrow">
+                    <span t-if="product.default_code" class="sre-mono" itemprop="sku" t-esc="product.default_code"/>
+                    <span t-if="product.product_brand_id" t-esc="product.product_brand_id.name"/>
+                </div>
+                <h2>
+                    <a t-att-href="product.website_url" itemprop="url">
+                        <span itemprop="name" t-esc="product.name"/>
+                    </a>
+                </h2>
+                <p t-if="product.manufacturer_pref" class="sre-product-card__mpn">
+                    <span>MPN</span>
+                    <strong t-esc="product.manufacturer_pref"/>
+                </p>
+            </div>
+            <dl class="sre-product-card__specs">
+                <t t-if="product.family_id">
+                    <dt>Family</dt><dd t-esc="product.family_id.name"/>
+                </t>
+                <t t-if="product.manufacturer_public_name">
+                    <dt>Manufacturer</dt><dd t-esc="product.manufacturer_public_name"/>
+                </t>
+                <t t-if="product.sre_public_oem_part_numbers">
+                    <dt>OEM PN</dt><dd t-esc="product.sre_public_oem_part_numbers"/>
+                </t>
+                <t t-if="len(product.product_variant_ids) &gt; 1">
+                    <dt>Options</dt><dd><t t-esc="len(product.product_variant_ids)"/> variants</dd>
+                </t>
+            </dl>
+            <div class="sre-product-card__commercial">
+                <span class="sre-status"><i aria-hidden="true"/>Availability on request</span>
+                <small>No public price</small>
+            </div>
+            <div class="sre-product-card__actions">
+                <a t-att-href="product.website_url" class="sre-link-arrow">Technical details</a>
+                <a t-att-href="product.website_url + '#sre-rfq-panel'" class="sre-button sre-button--compact">Configure RFQ</a>
+            </div>
+        </article>
+    </template>
 
-    We do not call ``website.layout`` because that layout
-    expects a ``main_object`` record (res.partner, product.template,
-    etc.) and the catalog is a free-form listing. We ship our
-    own <head> with the SRE stylesheet and a minimal
-    <body> wrapping the McMaster-Carr rows.
--->
-<template id="sre_catalog_page" name="SRE Catalog Page">
-    <div t-att-lang="request.env.user.lang or 'en_US'" id="sre-catalog-root" class="o_wsale_products_page">
-        <div t-att-class="'sre-head'" id="sre-catalog-head">
-            <meta charset="utf-8"/>
-            <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-            <meta name="viewport" content="width=device-width, initial-scale=1"/>
-            <title>
+    <template id="sre_catalog_page" name="SRE technical catalog">
+        <t t-call="website.layout">
+            <t t-set="additional_title">
                 <t t-if="family" t-esc="family.name"/>
-                <t t-if="not family and pillar"
-                   t-esc="pillar.short_label or pillar.name"/>
-                <t t-if="not family and not pillar">All products</t>
-                | SRE Commercial
-            </title>
-            <t t-call-assets="web.assets_frontend" t-js="false"/>
-        </div>
-        <div class="o_wsale_products_page">
-            <!-- 8-pillar top navigation. -->
-            <nav class="sre-pillars-nav" aria-label="Business pillars">
-                <div class="container">
-                    <ul class="sre-pillars-nav__list">
-                        <li t-foreach="visible_pillars" t-as="p_nav"
-                            t-attf-class="sre-pillars-nav__item #{'active' if p_nav.id == (pillar.id if pillar else (family.pillar_id.id if family else False)) else ''}">
-                            <a t-att-href="'/sre/catalog/pillar/%s' % p_nav.slug"
-                               class="sre-pillars-nav__link"
-                               t-esc="p_nav.short_label or p_nav.name"/>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
-            <main class="container py-4">
-                <header class="sre-page-header">
-                    <div class="sre-page-header__row">
-                        <div>
-                            <h1 class="sre-page-header__title">
-                                <t t-if="family" t-esc="family.name"/>
-                                <t t-if="not family and pillar"
-                                   t-esc="pillar.short_label or pillar.name"/>
-                                <t t-if="not family and not pillar">All products</t>
-                            </h1>
-                            <p class="sre-page-header__meta">
-                                <strong t-esc="search_count"/> products
-                                <t t-if="family">in <strong t-esc="family.name"/></t>
-                                <t t-if="not family and pillar">in <strong t-esc="pillar.name"/></t>
-                            </p>
+                <t t-elif="pillar" t-esc="pillar.name"/>
+                <t t-elif="search">Search results</t>
+                <t t-else="">Technical product catalog</t>
+            </t>
+            <div id="wrap" class="sre-catalog-page">
+                <section class="sre-catalog-hero">
+                    <div class="container">
+                        <nav class="sre-breadcrumb" aria-label="Breadcrumb">
+                            <a href="/">Home</a><span>/</span>
+                            <a href="/sre/catalog">Catalog</a>
+                            <t t-if="pillar"><span>/</span><span t-esc="pillar.short_label or pillar.name"/></t>
+                            <t t-if="family"><span>/</span><span t-esc="family.name"/></t>
+                        </nav>
+                        <div class="sre-catalog-hero__row">
+                            <div>
+                                <span class="sre-kicker">SRE technical distribution</span>
+                                <h1>
+                                    <t t-if="family" t-esc="family.name"/>
+                                    <t t-elif="pillar" t-esc="pillar.name"/>
+                                    <t t-elif="industry" t-esc="industry.name"/>
+                                    <t t-elif="application" t-esc="application.name"/>
+                                    <t t-elif="search">Search results</t>
+                                    <t t-else="">Technical product catalog</t>
+                                </h1>
+                                <p>
+                                    Search verified identity fields and compare technical product data.
+                                    Pricing, availability and lead time are confirmed through RFQ.
+                                </p>
+                            </div>
+                            <div class="sre-catalog-hero__count">
+                                <strong t-esc="products_count"/>
+                                <span>matching products</span>
+                            </div>
                         </div>
-                        <div class="sre-page-header__sort">
-                            <label for="sre-sort-select">Sort</label>
-                            <select id="sre-sort-select" onchange="window.location.href=this.value">
-                                <option value="?order=name asc">Name (A–Z)</option>
-                                <option value="?order=name desc">Name (Z–A)</option>
-                            </select>
+                        <div class="sre-catalog-hero__search">
+                            <t t-call="mechanic_workshop.sre_search_form">
+                                <t t-set="search_action" t-value="base_path"/>
+                                <t t-set="search_value" t-value="search"/>
+                            </t>
+                            <p>Search priority: exact SKU → MPN → OEM part number → brand → keyword.</p>
                         </div>
                     </div>
-                    <p class="sre-page-header__desc">Browse the SRE Commercial catalog of industrial HVAC, boiler, pump, valve, instrumentation and control products. All prices on request — submit an RFQ and our engineering team will respond with a quotation, lead time and stock availability.</p>
-                </header>
+                </section>
 
-                <div class="d-flex justify-content-end mb-3">
-                    <nav class="sre-layout-toggle" role="group" aria-label="View mode">
-                        <span class="sre-layout-toggle__label">View</span>
-                        <a t-att-href="'?layout_mode=grid'" t-att-class="'sre-layout-toggle__option ' + ('is-active' if layout_mode == 'grid' else '')">Grid</a>
-                        <a t-att-href="'?layout_mode=list'" t-att-class="'sre-layout-toggle__option ' + ('is-active' if layout_mode == 'list' else '')">List</a>
-                        <a t-att-href="'?layout_mode=table'" t-att-class="'sre-layout-toggle__option ' + ('is-active' if layout_mode == 'table' else '')">Table</a>
-                    </nav>
-                </div>
+                <div class="container sre-catalog-shell">
+                    <aside class="sre-catalog-filters" aria-label="Catalog filters">
+                        <div class="sre-catalog-filters__head">
+                            <div><span>Refine results</span><strong t-esc="products_count"/></div>
+                            <a t-att-href="query_url(brand=None, attr=None, page=None)">Clear</a>
+                        </div>
 
-                <t t-if="layout_mode == 'table'">
-                    <table class="sre-products-table">
-                        <thead><tr><th>Product</th><th>Brand</th><th>MPN</th><th>SKU</th><th>Family</th></tr></thead>
-                        <tbody>
-                            <tr t-foreach="products" t-as="product">
-                                <td><a t-att-href="product.website_url" class="fw-semibold" t-esc="product.name"/></td>
-                                <td><span t-if="product.product_brand_id" t-field="product.product_brand_id.name"/></td>
-                                <td><span t-if="product.manufacturer_pref" t-esc="product.manufacturer_pref"/></td>
-                                <td><code t-if="product.default_code" t-esc="product.default_code"/></td>
-                                <td><span t-if="product.family_id" t-field="product.family_id.name"/></td>
-                            </tr>
-                            <tr t-if="not products">
-                                <td colspan="5" class="text-center text-muted py-4">No products match the current filters.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </t>
-                <t t-if="layout_mode != 'table'">
-                    <div class="sre-catalog">
-                        <t t-foreach="products" t-as="product">
-                            <a t-att-href="product.website_url" class="sre-tile">
-                                <div class="sre-tile__primary">
-                                    <div class="sre-tile__head">
-                                        <t t-if="product.default_code">
-                                            <span class="sre-tile__sku sre-mono" t-esc="product.default_code"/>
-                                        </t>
-                                        <t t-if="product.product_brand_id">
-                                            <span class="sre-tile__brand sre-mono" t-esc="product.product_brand_id.name"/>
-                                        </t>
-                                    </div>
-                                    <h3 class="sre-tile__name"><t t-esc="product.name"/></h3>
-                                    <t t-if="product.manufacturer_pref">
-                                        <div class="sre-tile__mpn sre-mono">
-                                            <span class="sre-tile__mpn-label">MPN</span>
-                                            <span t-esc="product.manufacturer_pref"/>
-                                        </div>
-                                    </t>
-                                </div>
-                                <dl class="sre-tile__specs">
-                                    <t t-if="product.family_id"><dt>Family</dt><dd t-esc="product.family_id.name"/></t>
-                                    <t t-if="product.manufacturer_public_name"><dt>Mfr</dt><dd t-esc="product.manufacturer_public_name"/></t>
-                                    <t t-if="product.sre_oem_pn_ids"><dt>OEM PN</dt><dd t-esc="product.sre_oem_pn_ids[0].oem_part_number"/></t>
-                                </dl>
-                                <div class="sre-tile__meta">
-                                    <div class="sre-tile__meta-row"><span class="dot"></span><span>Request quote</span></div>
-                                    <div class="sre-tile__meta-row sre-mono" style="color:var(--sre-fg-faint);">5-7 day lead</div>
-                                </div>
-                                <div class="sre-tile__cta">View details</div>
+                        <section t-if="pillar and families" class="sre-filter-group">
+                            <h2>Product family</h2>
+                            <a t-att-href="'/sre/catalog/pillar/%s' % pillar.slug"
+                               t-att-class="'sre-filter-link ' + ('is-active' if not family else '')">All <t t-esc="pillar.short_label or pillar.name"/></a>
+                            <a t-foreach="families"
+                               t-as="family_option"
+                               t-att-href="'/sre/catalog/family/%s' % family_option.slug"
+                               t-att-class="'sre-filter-link ' + ('is-active' if family and family.id == family_option.id else '')">
+                                <span t-esc="family_option.name"/>
+                                <small t-esc="family_option.product_count"/>
                             </a>
+                        </section>
+
+                        <form t-att-action="base_path" method="get" class="sre-filter-form">
+                            <input t-if="search" type="hidden" name="search" t-att-value="search"/>
+                            <input type="hidden" name="layout_mode" t-att-value="layout_mode"/>
+                            <input type="hidden" name="order" t-att-value="sort_key"/>
+                            <input type="hidden" name="per_page" t-att-value="per_page"/>
+                            <input t-if="industry" type="hidden" name="industry" t-att-value="industry.slug"/>
+                            <input t-if="application" type="hidden" name="application" t-att-value="application.slug"/>
+
+                            <section t-if="brands" class="sre-filter-group">
+                                <label for="sre-brand-filter">Brand</label>
+                                <select id="sre-brand-filter" name="brand">
+                                    <option value="">All brands</option>
+                                    <option t-foreach="brands"
+                                            t-as="brand_option"
+                                            t-att-value="brand_option.id"
+                                            t-att-selected="brand and brand.id == brand_option.id"
+                                            t-esc="brand_option.name"/>
+                                </select>
+                            </section>
+
+                            <section t-foreach="filter_lines" t-as="filter_line" class="sre-filter-group">
+                                <h2 t-esc="filter_line['attribute'].name"/>
+                                <label t-foreach="filter_line['values']" t-as="filter_value" class="sre-filter-check">
+                                    <input type="checkbox"
+                                           name="attr"
+                                           t-att-value="'%s-%s' % (filter_line['attribute'].id, filter_value.id)"
+                                           t-att-checked="'%s-%s' % (filter_line['attribute'].id, filter_value.id) in selected_attribute_keys"/>
+                                    <span t-esc="filter_value.name"/>
+                                </label>
+                            </section>
+                            <button type="submit" class="sre-button sre-button--full">Apply filters</button>
+                        </form>
+
+                        <div class="sre-catalog-filters__help">
+                            <span class="fa fa-wrench" aria-hidden="true"/>
+                            <div><strong>Not sure which specification?</strong><a href="/rfq">Ask engineering</a></div>
+                        </div>
+                    </aside>
+
+                    <main class="sre-catalog-results">
+                        <div t-if="search or industry or application or brand or selected_attribute_keys" class="sre-active-filters">
+                            <span>Active:</span>
+                            <a t-if="search" t-att-href="query_url(search=None, page=None)">Search: “<t t-esc="search"/>” ×</a>
+                            <a t-if="industry" t-att-href="query_url(industry=None, page=None)">Industry: <t t-esc="industry.name"/> ×</a>
+                            <a t-if="application" t-att-href="query_url(application=None, page=None)">Application: <t t-esc="application.name"/> ×</a>
+                            <a t-if="brand" t-att-href="query_url(brand=None, page=None)">Brand: <t t-esc="brand.name"/> ×</a>
+                        </div>
+
+                        <div class="sre-catalog-toolbar">
+                            <p>Showing <strong><t t-esc="page_start"/>–<t t-esc="page_end"/></strong> of <strong t-esc="products_count"/></p>
+                            <div class="sre-catalog-toolbar__controls">
+                                <label>Sort
+                                    <select onchange="window.location.href=this.value">
+                                        <option t-att-value="query_url(order='relevance', page=None)" t-att-selected="sort_key == 'relevance'">Relevance</option>
+                                        <option t-att-value="query_url(order='name_asc', page=None)" t-att-selected="sort_key == 'name_asc'">Name A–Z</option>
+                                        <option t-att-value="query_url(order='name_desc', page=None)" t-att-selected="sort_key == 'name_desc'">Name Z–A</option>
+                                    </select>
+                                </label>
+                                <div class="sre-view-switch" role="group" aria-label="View mode">
+                                    <a t-att-href="query_url(layout_mode='grid', page=None)" t-att-class="'fa fa-th-large ' + ('is-active' if layout_mode == 'grid' else '')" aria-label="Grid view"/>
+                                    <a t-att-href="query_url(layout_mode='list', page=None)" t-att-class="'fa fa-list ' + ('is-active' if layout_mode == 'list' else '')" aria-label="List view"/>
+                                    <a t-att-href="query_url(layout_mode='table', page=None)" t-att-class="'fa fa-table ' + ('is-active' if layout_mode == 'table' else '')" aria-label="Technical table view"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <t t-if="products">
+                            <div t-if="layout_mode != 'table'" t-att-class="'sre-product-results sre-product-results--%s' % layout_mode">
+                                <t t-foreach="products" t-as="product">
+                                    <t t-call="mechanic_workshop.sre_product_card">
+                                        <t t-set="card_layout" t-value="layout_mode"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div t-else="" class="sre-table-wrap">
+                                <table class="sre-products-table">
+                                    <thead><tr><th>Product</th><th>Brand</th><th>MPN</th><th>OEM PN</th><th>Availability</th><th/></tr></thead>
+                                    <tbody>
+                                        <tr t-foreach="products" t-as="product">
+                                            <td><a t-att-href="product.website_url" t-esc="product.name"/><code t-if="product.default_code" t-esc="product.default_code"/></td>
+                                            <td t-esc="product.product_brand_id.name or '—'"/>
+                                            <td class="sre-mono" t-esc="product.manufacturer_pref or '—'"/>
+                                            <td class="sre-mono" t-esc="product.sre_public_oem_part_numbers or '—'"/>
+                                            <td><span class="sre-status"><i/>On request</span></td>
+                                            <td><a t-att-href="product.website_url" class="sre-link-arrow">Details</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </t>
-                    </div>
-                </t>
+                        <div t-else="" class="sre-empty-state">
+                            <span class="fa fa-search" aria-hidden="true"/>
+                            <h2>No matching product found</h2>
+                            <p>Check the part number, remove a filter, or send the identifier to our engineering team.</p>
+                            <div><a t-att-href="base_path" class="sre-button sre-button--secondary">Clear search</a><a href="/rfq" class="sre-button">Ask engineering</a></div>
+                        </div>
 
-                <div class="sre-pager">
-                    <div class="sre-pager__label">Showing <strong>1-<t t-esc="search_count"/></strong> of <strong t-esc="search_count"/> products</div>
-                    <div class="sre-pager__per-page">Per page
-                        <select onchange="window.location.href=this.value">
-                            <option>12</option><option>24</option><option>48</option>
-                        </select>
-                    </div>
+                        <nav t-if="total_pages &gt; 1" class="sre-pagination" aria-label="Catalog pages">
+                            <a t-if="current_page &gt; 1" t-att-href="query_url(page=current_page - 1)" aria-label="Previous page">←</a>
+                            <a t-foreach="pager_pages" t-as="page_number"
+                               t-att-href="query_url(page=page_number)"
+                               t-att-class="'is-active' if page_number == current_page else ''"
+                               t-esc="page_number"/>
+                            <a t-if="current_page &lt; total_pages" t-att-href="query_url(page=current_page + 1)" aria-label="Next page">→</a>
+                            <label>Per page
+                                <select onchange="window.location.href=this.value">
+                                    <option t-foreach="page_sizes"
+                                            t-as="page_size"
+                                            t-att-value="query_url(per_page=page_size, page=None)"
+                                            t-att-selected="page_size == per_page"
+                                            t-esc="page_size"/>
+                                </select>
+                            </label>
+                        </nav>
+
+                        <section class="sre-engineering-cta">
+                            <div><span class="sre-kicker">Application support</span><h2>Need help specifying the right part?</h2><p>Send operating pressure, medium, temperature and connection standard. We will review the application before quoting.</p></div>
+                            <a href="/rfq" class="sre-button sre-button--light">Start an RFQ</a>
+                        </section>
+                    </main>
                 </div>
-
-                <div class="sre-lead">
-                    <div>
-                        <h2 class="sre-lead__title">Need help specifying the right part?</h2>
-                        <p class="sre-lead__body">Our engineering team can review your application - operating pressure, fluid, temperature, connection standard - and recommend a verified part number. Submit an RFQ and we will respond within one business day.</p>
-                    </div>
-                    <a class="sre-lead__cta" href="/rfq">Request a quote</a>
-                </div>
-            </main>
-
-            <t t-call-assets="web.assets_frontend" t-css="false"/>
-        </div>
-    </div>
-</template>
+            </div>
+        </t>
+    </template>
 </odoo>

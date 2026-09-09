@@ -1,0 +1,321 @@
+/* SRE Product Tile — McMaster-Carr 4-column row.
+   We force the tile to a single, predictable grid regardless of
+   what the parent ``website_sale.products`` does. */
+
+.sre-catalog {
+    border-top: var(--sre-rule-w) solid var(--sre-rule);
+    border-bottom: var(--sre-rule-w) solid var(--sre-rule);
+    background: #ffffff;
+    display: block;
+    width: 100%;
+}
+
+.sre-tile {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 16px 20px;
+    border-bottom: var(--sre-rule-w-thin) solid var(--sre-border);
+    transition: background-color 0.08s linear;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    float: none;
+    position: static;
+}
+
+.sre-tile:hover,
+.sre-tile:focus {
+    background: var(--sre-row-hover);
+    text-decoration: none;
+    color: inherit;
+}
+
+@media (min-width: 768px) {
+    .sre-tile {
+        grid-template-columns: 4.5fr 3fr 1.5fr 1fr;
+        column-gap: 24px;
+        align-items: start;
+        padding: 18px 22px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .sre-tile {
+        grid-template-columns: 5fr 3fr 1.5fr 1fr;
+    }
+}
+
+.sre-tile__primary {
+    min-width: 0;
+    display: block;
+}
+
+.sre-tile__head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    column-gap: 10px;
+    row-gap: 2px;
+    margin-bottom: 4px;
+    font-family: var(--sre-font-mono);
+    font-size: 12px;
+    color: var(--sre-fg-muted);
+    text-transform: none;
+    letter-spacing: 0;
+    white-space: normal;
+}
+
+.sre-tile__sku {
+    color: var(--sre-fg);
+    font-weight: 700;
+}
+
+.sre-tile__brand {
+    color: var(--sre-fg-muted);
+}
+
+.sre-tile__brand::before {
+    content: "\00B7";
+    margin: 0 6px;
+    color: var(--sre-fg-faint);
+    font-weight: 700;
+}
+
+.sre-tile__name {
+    display: block;
+    margin: 0 0 4px 0;
+    font-family: var(--sre-font-sans);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--sre-fg);
+    line-height: 1.3;
+}
+
+.sre-tile__name a,
+.sre-tile__name span {
+    color: var(--sre-fg);
+    text-decoration: none;
+}
+
+.sre-tile:hover .sre-tile__name a,
+.sre-tile:focus .sre-tile__name a {
+    color: var(--sre-accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+}
+
+.sre-tile__mpn {
+    display: block;
+    font-family: var(--sre-font-mono);
+    font-size: 12px;
+    color: var(--sre-fg-muted);
+    margin-top: 2px;
+}
+
+.sre-tile__mpn-label {
+    color: var(--sre-fg-faint);
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+    margin-right: 4px;
+}
+
+.sre-tile__specs {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 8px;
+    row-gap: 4px;
+    margin: 0;
+    font-size: 12px;
+    color: var(--sre-fg);
+    align-content: start;
+    min-width: 0;
+}
+
+.sre-tile__specs dt {
+    color: var(--sre-fg-muted);
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.sre-tile__specs dd {
+    margin: 0;
+    color: var(--sre-fg);
+    font-family: var(--sre-font-mono);
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+.sre-tile__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-family: var(--sre-font-mono);
+    font-size: 12px;
+    color: var(--sre-fg-muted);
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+    min-width: 0;
+}
+
+.sre-tile__meta-row {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sre-tile__meta-row .dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sre-ok);
+    margin-right: 6px;
+    flex-shrink: 0;
+}
+
+.sre-tile__meta-row .dot--warn { background: var(--sre-warn); }
+.sre-tile__meta-row .dot--err  { background: var(--sre-err); }
+.sre-tile__meta-row .dot--idle { background: var(--sre-fg-faint); }
+
+.sre-tile__cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+    color: var(--sre-accent);
+    white-space: nowrap;
+}
+
+.sre-tile__cta::after {
+    content: " \2192";
+}
+
+/* Hide the original Odoo tile visuals. */
+.o_wsale_products_item_title,
+.o_wsale_product_sub,
+.o_wsale_product_btn,
+.o_wsale_product_image {
+    display: none !important;
+}
+
+.o_wsale_products_list_view .sre-tile {
+    grid-template-columns: 5fr 3fr 1fr;
+}
+
+@media (max-width: 767px) {
+    .sre-tile {
+        padding: 14px 16px;
+    }
+    .sre-tile__name {
+        font-size: 15px;
+    }
+}
+
+/* Force SRE tile to fill its Odoo wrapper.
+   The Odoo category page wraps each product in
+   ``<div class="oe_product g-col-6 g-col-md-4 g-col-lg-4">``
+   with an inner ``<div class="o_wsale_product_grid_wrapper">``.
+   We override the wrapper layout so the tile always shows the
+   McMaster 4-column row regardless of the Odoo Bootstrap grid. */
+.o_wsale_products_page .oe_product,
+.o_wsale_products_page .o_wsale_product_grid_wrapper {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    flex: 0 0 100%;
+    height: auto !important;
+    padding: 0;
+}
+
+.o_wsale_products_page .o_wsale_product_grid_wrapper {
+    border: none;
+    background: transparent;
+}
+
+.o_wsale_products_page .sre-catalog {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    border-top: var(--sre-rule-w) solid var(--sre-rule);
+    border-bottom: var(--sre-rule-w) solid var(--sre-rule);
+}
+
+@media (min-width: 768px) {
+    .o_wsale_products_page .sre-catalog {
+        grid-template-columns: 1fr;
+    }
+}
+
+.o_wsale_products_page .o_wsale_products_grid_view {
+    display: contents;
+}
+
+.o_wsale_products_page .o_wsale_products_grid_view > .oe_product {
+    grid-column: 1 / -1;
+}
+
+/* Force each Odoo product wrapper to span the full width so the
+   SRE tile can use its native grid without the Bootstrap
+   ``g-col-md-4`` truncation. The McMaster-Carr list is single-
+   column on every breakpoint. */
+.o_wsale_products_page .o_wsale_products_grid_view .oe_product,
+.o_wsale_products_page .o_wsale_products_grid_view > .oe_product {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+}
+
+.o_wsale_products_page .o_wsale_products_grid_view {
+    display: block !important;
+}
+
+/* ==== Hard reset: force the SRE category page to a single column
+   list regardless of Odoo's Bootstrap grid. The McMaster-Carr
+   list is single-column on every breakpoint; we do not want
+   Odoo's 3-col card grid. ==== */
+.o_wsale_products_page .o_wsale_products_grid_view {
+    display: block !important;
+    grid-template-columns: none !important;
+    gap: 0 !important;
+}
+
+.o_wsale_products_page .oe_product {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.o_wsale_products_page .oe_product,
+.o_wsale_products_page .oe_product.g-col-6,
+.o_wsale_products_page .oe_product.g-col-md-4,
+.o_wsale_products_page .oe_product.g-col-lg-4 {
+    grid-column: auto !important;
+}
+
+.o_wsale_products_page .o_wsale_product_grid_wrapper {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: none !important;
+}

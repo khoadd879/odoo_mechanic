@@ -19,12 +19,15 @@ Precedence:
 """
 from __future__ import annotations
 
+from odoo import http
 from odoo.addons.website.controllers.main import Website
 from odoo.http import request
 
 
 class SreHome(Website):
-    def index(self, **kw):
+    @http.route()
+    def index(self, **kw: object) -> http.Response:
+        del kw
         pillars = request.website.sre_visible_pillars
         industries = (
             request.env["sre.industry"]
@@ -36,14 +39,10 @@ class SreHome(Website):
             .sudo()
             .search([("active", "=", True)], order="sequence, name", limit=3)
         )
-        featured_products = (
-            request.env["product.template"]
-            .sudo()
-            .search(
-                [("is_published", "=", True), ("sale_ok", "=", True)],
-                order="website_sequence asc, name asc",
-                limit=3,
-            )
+        featured_products = request.env["product.template"].search(
+            request.website.sale_product_domain(),
+            order="website_sequence asc, name asc",
+            limit=3,
         )
         return request.render(
             "mechanic_workshop.sre_home_page",

@@ -841,3 +841,85 @@ Verification:
 - `./scripts/agent_check.sh` → 15/15 PASS exit 0.
 - No traceback / CRITICAL in
   `docker compose -p odoo_mechanic logs --tail=200 odoo`.
+
+## 2026-09-09 — Connected industrial storefront (19.0.1.8.0)
+
+The public website has been consolidated into one RFQ-first technical
+sales journey. This pass supersedes the disconnected basic catalog and
+the first homepage presentation; it does not claim the unbuilt Sprint
+2–4 capabilities in the brief.
+
+Implemented:
+
+- Rebuilt the shared desktop/mobile header and footer around the SRE
+  Commercial identity. All product-group links use the canonical
+  `/sre/catalog` route, Account uses the native `/my` portal entry, and
+  the RFQ list remains visible globally.
+- Reworked the homepage into a professional industrial distributor
+  presentation: prominent part-number search, 8 data-driven equipment
+  pillars, service principles, industries, applications, featured
+  products, technical resources and an engineering RFQ CTA.
+- Made catalog search functional across name, internal/variant
+  reference, barcode, MPN, public manufacturer, OCA Brand, public OEM
+  PN and descriptions. Exact identity matches are listed before fuzzy
+  matches; `/sre/search_suggest` returns tiered public suggestions.
+- Added real server-side Brand/family/profile filters, name/relevance
+  sorting, 12/24/48 page sizes, pagination and grid/list/technical-table
+  rendering. Invalid route/filter values fail closed or fall back to a
+  safe default.
+- Rebuilt catalog rows, product detail and RFQ pages with one restrained
+  navy/blue/orange industrial design. Removed the fabricated 5–7 day
+  lead-time text and kept price, stock, MOQ and lead time explicitly
+  subject to quotation.
+- Added the stored `sre_public_oem_part_numbers` projection so templates
+  and public search can use approved identifier text without granting
+  public access to internal OEM records or notes.
+- Migrated custom uniqueness declarations to Odoo 19
+  `models.Constraint`; fixed translated-field trigram indexes and route
+  override declarations. The module update no longer emits those model
+  or controller warnings.
+- Extended `scripts/agent_check.sh` from a reachability smoke check to a
+  30-check acceptance suite. `scripts/update-module.sh` now waits until
+  the restarted public website is ready.
+
+Fresh verification:
+
+- `./scripts/update-module.sh mechanic_workshop` → exit 0; all manifest
+  XML loaded, frontend asset cache invalidated, container restarted and
+  the public website became ready.
+- `docker compose -p odoo_mechanic up -d` → exit 0. The app and database
+  returned healthy/running status.
+- Odoo post-install tests run in an isolated compose runner with the app
+  stopped: **6 tests, 0 failed, 0 errors**. This covers public ACL
+  denial, quantity constraints, verified-customer quotation creation,
+  guest submission/replay protection, company scope, product scope and
+  CSRF rejection.
+- Guest-session smoke test: add Demo Valve 001 with quantity 2, update
+  to 3.5, remove, then verify the RFQ list is empty → pass. No persistent
+  RFQ was created by this smoke test.
+- Search evidence: exact SKU `SRE-DEMO-V-001`, MPN `DMV-001`, and OEM PN
+  `OEM-PN-COLLISION` return Demo Valve 001; the exact MPN query returns
+  one result despite a separate description-collision record; unknown
+  identity renders the empty state.
+- Privacy evidence: Brand records with `partner_id != NULL` = 0; demo
+  products with `standard_price != 0` = 0; public permissions on
+  attribute profiles, profile lines and internal OEM PN records are all
+  false.
+- `./scripts/agent_check.sh` → **30 PASS, 0 FAIL**, exit 0.
+- Recent app logs after page/search/RFQ traffic contain no traceback,
+  CRITICAL or `mechanic_workshop` error.
+- Visual evidence: `docs/sre_visual_evidence/after/home-desktop.png`,
+  `home-mobile.png`, `catalog-desktop.png`, `catalog-mobile.png`,
+  `product-desktop.png`, and `rfq-desktop.png`.
+
+Remaining brief scope / data dependency:
+
+- PIM V2 has not supplied governed product-to-Family, Industry and
+  Application assignments. The current demo products therefore remain
+  unassigned and pillar cards explicitly show “PIM classification
+  pending”; the implementation does not infer taxonomy from product
+  names or website categories.
+- Approved documents and rights governance, verified compatibility and
+  related-product relationships, family-driven RFQ fields/uploads,
+  Boiler Part Finder, industry/application landing content and portal
+  history/saved-list/re-order workflows remain for Sprints 2–4.

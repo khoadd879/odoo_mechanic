@@ -1,0 +1,24 @@
+<odoo>
+    <!-- =================================================================
+         SRE searchbox — placeholder per brief §19:
+         "Search by Part Number, Model, Brand or Product".
+
+         The native search input in ``website.website_search_box``
+         uses ``t-att-placeholder="placeholder if placeholder else
+         search_placeholder"``. The ``placeholder`` template
+         variable is normally unset (falls back to
+         ``search_placeholder = "Search..."``). We set
+         ``search_placeholder`` to the SRE copy.
+         ================================================================= -->
+    <template id="sre_search_inherit"
+              inherit_id="website.website_search_box"
+              name="SRE Search Box"
+              active="True">
+        <xpath expr="//input[@name='search']" position="before">
+            <t t-set="search_placeholder">Search by Part Number, Model, Brand or Product</t>
+        </xpath>
+        <xpath expr="//input[@name='search']" position="attributes">
+            <attribute name="aria-label">Search the SRE catalog</attribute>
+        </xpath>
+    </template>
+</odoo>

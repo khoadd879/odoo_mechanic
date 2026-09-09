@@ -1,42 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<template id="rfq_header" inherit_id="website_sale.header_cart_link" name="Header RFQ access">
-<xpath expr="//li[contains(@t-attf-class, 'o_wsale_my_cart')]" position="attributes">
-<attribute name="t-if">False</attribute>
-</xpath>
-<xpath expr="//li[contains(@t-attf-class, 'o_wsale_my_cart')]" position="before">
-<li class="nav-item" t-nocache="RFQ quantity belongs to the current session">
-<a href="/rfq" class="nav-link text-nowrap sre-rfq-header d-inline-flex align-items-center gap-2 rounded-pill border px-3 py-2" aria-label="View current RFQ" title="Number of different products in your RFQ">
-<i class="fa fa-file-text-o" aria-hidden="true"/><span>RFQ</span> <span class="badge bg-primary sre-rfq-count" t-esc="len(request.session.get('sre_rfq_basket_%s' % request.website.id, {}))"/>
-</a></li>
-</xpath></template>
-<template id="rfq_product" inherit_id="mechanic_workshop.sre_product_detail_inherit" name="Product RFQ">
-<xpath expr="//div[hasclass('o_wsale_product_details_content_section_meta')]" position="after">
-<form action="/rfq/add" method="post" class="sre-rfq-add mb-4 p-3 border rounded">
-<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-<label for="rfq_product" class="form-label">Product / variant</label>
-<select id="rfq_product" name="product_id" class="form-select mb-2" required="required"><t t-foreach="product.product_variant_ids" t-as="variant"><option t-att-value="variant.id"><t t-esc="variant.display_name"/></option></t></select>
-<label for="rfq_quantity" class="form-label">Quantity</label><input id="rfq_quantity" name="quantity" type="number" min="0.001" max="1000000" step="any" value="1" required="required" class="form-control mb-3"/>
-<button class="btn btn-primary" type="submit">Add to RFQ</button> <a href="/rfq" class="btn btn-outline-secondary">View RFQ</a>
-<div class="sre-rfq-feedback mt-3" role="status" aria-live="polite" data-success="Added to your RFQ. You can continue browsing." data-error="Could not confirm the addition. Please check your RFQ before trying again."/>
-</form></xpath></template>
-<template id="rfq_basket" name="Request for quotation"><t t-call="website.layout"><div id="wrap" class="container py-5">
-<h1>Request for quotation</h1><p>No payment is required. Our team will review your request before preparing a quotation.</p>
-<a href="/shop" class="btn btn-outline-secondary mb-3">Continue browsing</a>
-<p t-if="removed" class="alert alert-warning">Unavailable products were removed from your RFQ list.</p>
-<p t-if="not lines">Your RFQ list is empty.</p>
-<t t-foreach="lines" t-as="line"><form action="/rfq/update" method="post" class="border rounded p-3 mb-3">
-<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/><input type="hidden" name="product_id" t-att-value="line[0].id"/>
-<h2 class="h5"><t t-esc="line[0].display_name"/></h2><label t-att-for="'qty_%s' % line[0].id">Quantity (<t t-esc="line[0].uom_id.name"/>)</label>
-<input t-att-id="'qty_%s' % line[0].id" class="form-control my-2" type="number" name="quantity" min="0.001" max="1000000" step="any" t-att-value="line[1]" required="required"/>
-<button class="btn btn-outline-primary" type="submit">Update quantity</button> <button class="btn btn-outline-danger" type="submit" name="remove" value="1" formnovalidate="formnovalidate">Remove</button>
-</form></t>
-<form t-if="lines" action="/rfq/submit" method="post" class="mt-4">
-<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/><input type="hidden" name="submission_key" t-att-value="submission_key"/>
-<t t-foreach="[('company_name','Company'),('contact_name','Contact name'),('email','Email'),('phone','Phone'),('project_name','Project / Plant'),('project_location','Project location')]" t-as="item">
-<div class="mb-3"><label t-att-for="item[0]" class="form-label"><t t-esc="item[1]"/><t t-if="item[0] in ['company_name','contact_name','email']"> *</t></label><input t-att-id="item[0]" t-att-name="item[0]" t-att-type="'email' if item[0] == 'email' else 'text'" t-att-required="item[0] in ['company_name','contact_name','email']" maxlength="250" class="form-control"/></div></t>
-<label for="delivery" class="form-label">Required delivery date</label><input id="delivery" type="date" name="required_delivery_date" class="form-control mb-3"/>
-<label for="notes" class="form-label">Additional requirements</label><textarea id="notes" name="notes" maxlength="4000" class="form-control mb-3"/>
-<button class="btn btn-primary btn-lg" type="submit">Submit RFQ</button></form>
-</div></t></template>
-<template id="rfq_thanks" name="RFQ received"><t t-call="website.layout"><div id="wrap" class="container py-5"><h1>Your RFQ has been received</h1><p>Reference: <strong t-esc="reference"/></p><p>Our team will review your request and contact you.</p><a href="/shop" class="btn btn-primary">Continue browsing</a></div></t></template>
+    <template id="rfq_header" inherit_id="website_sale.header_cart_link" name="Header RFQ access">
+        <xpath expr="//li[contains(@t-attf-class, 'o_wsale_my_cart')]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//li[contains(@t-attf-class, 'o_wsale_my_cart')]" position="before">
+            <li class="nav-item">
+                <a href="/rfq" class="sre-rfq-header" aria-label="View current RFQ" title="Products in your RFQ">
+                    <i class="fa fa-file-text-o" aria-hidden="true"/>
+                    <span>RFQ</span>
+                    <strong class="sre-rfq-count" t-esc="len(request.session.get('sre_rfq_basket_%s' % request.website.id, {}))"/>
+                </a>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="rfq_product" inherit_id="mechanic_workshop.sre_product_detail_inherit" name="Product RFQ">
+        <xpath expr="//div[hasclass('o_wsale_product_details_content_section_meta')]" position="after">
+            <form id="sre-rfq-panel" action="/rfq/add" method="post" class="sre-rfq-add">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div class="sre-rfq-add__head"><div><span class="sre-kicker">Commercial request</span><h2>Add to RFQ</h2></div><span class="fa fa-file-text-o" aria-hidden="true"/></div>
+                <label for="rfq_product">Product / variant</label>
+                <select id="rfq_product" name="product_id" required="required">
+                    <option t-foreach="product.product_variant_ids" t-as="variant" t-att-value="variant.id" t-esc="variant.display_name"/>
+                </select>
+                <div class="sre-rfq-add__quantity">
+                    <div><label for="rfq_quantity">Quantity</label><input id="rfq_quantity" name="quantity" type="number" min="0.001" max="1000000" step="any" value="1" required="required"/></div>
+                    <button class="sre-button" type="submit">Add to RFQ</button>
+                </div>
+                <a href="/rfq" class="sre-link-arrow">View current RFQ list</a>
+                <div class="sre-rfq-feedback" role="status" aria-live="polite" data-success="Added to your RFQ. You can continue browsing." data-error="Could not confirm the addition. Please check your RFQ before trying again."/>
+            </form>
+        </xpath>
+    </template>
+
+    <template id="rfq_basket" name="Request for quotation">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Request for quotation</t>
+            <div id="wrap" class="sre-rfq-page">
+                <section class="sre-rfq-hero"><div class="container"><span class="sre-kicker">RFQ-first procurement</span><h1>Request for quotation</h1><p>Build one technical request with multiple products. No payment is taken online.</p></div></section>
+                <div class="container">
+                    <nav class="sre-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/sre/catalog">Catalog</a><span>/</span><span>RFQ</span></nav>
+                    <p t-if="removed" class="sre-alert">Unavailable products were removed from your RFQ list.</p>
+
+                    <div t-if="not lines" class="sre-rfq-empty">
+                        <span class="fa fa-file-text-o" aria-hidden="true"/>
+                        <h2>Your RFQ list is empty</h2>
+                        <p>Search the technical catalog and add the products or variants you need.</p>
+                        <a href="/sre/catalog" class="sre-button">Browse technical catalog</a>
+                    </div>
+
+                    <div t-if="lines" class="sre-rfq-layout">
+                        <main>
+                            <div class="sre-rfq-section-head"><div><span class="sre-kicker">Step 01</span><h2>Review products</h2></div><strong><t t-esc="len(lines)"/> line items</strong></div>
+                            <div class="sre-rfq-lines">
+                                <form t-foreach="lines" t-as="line" action="/rfq/update" method="post" class="sre-rfq-line">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="product_id" t-att-value="line[0].id"/>
+                                    <div class="sre-rfq-line__media">
+                                        <img t-if="line[0].product_tmpl_id.image_128" t-att-src="'/web/image/product.product/%s/image_128' % line[0].id" t-att-alt="line[0].display_name"/>
+                                        <span t-else="" class="fa fa-cogs" aria-hidden="true"/>
+                                    </div>
+                                    <div class="sre-rfq-line__identity">
+                                        <code t-esc="line[0].default_code or 'NO SKU'"/>
+                                        <h3 t-esc="line[0].display_name"/>
+                                        <small t-if="line[0].product_tmpl_id.product_brand_id" t-esc="line[0].product_tmpl_id.product_brand_id.name"/>
+                                    </div>
+                                    <div class="sre-rfq-line__quantity">
+                                        <label t-att-for="'qty_%s' % line[0].id">Quantity (<t t-esc="line[0].uom_id.name"/>)</label>
+                                        <input t-att-id="'qty_%s' % line[0].id" type="number" name="quantity" min="0.001" max="1000000" step="any" t-att-value="line[1]" required="required"/>
+                                    </div>
+                                    <div class="sre-rfq-line__actions"><button class="sre-link-button" type="submit">Update</button><button class="sre-link-button sre-link-button--danger" type="submit" name="remove" value="1" formnovalidate="formnovalidate">Remove</button></div>
+                                </form>
+                            </div>
+                            <a href="/sre/catalog" class="sre-link-arrow">Continue browsing</a>
+                        </main>
+
+                        <aside>
+                            <form action="/rfq/submit" method="post" class="sre-rfq-contact">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="submission_key" t-att-value="submission_key"/>
+                                <div class="sre-rfq-section-head"><div><span class="sre-kicker">Step 02</span><h2>Project details</h2></div></div>
+                                <p>Fields marked * are required. Customer identity is verified by staff before quotation creation.</p>
+                                <t t-foreach="[('company_name','Company'),('contact_name','Contact name'),('email','Business email'),('phone','Phone'),('project_name','Project / Plant'),('project_location','Project location')]" t-as="item">
+                                    <div class="sre-field"><label t-att-for="item[0]"><t t-esc="item[1]"/><t t-if="item[0] in ['company_name','contact_name','email']"> *</t></label><input t-att-id="item[0]" t-att-name="item[0]" t-att-type="'email' if item[0] == 'email' else 'text'" t-att-required="item[0] in ['company_name','contact_name','email']" maxlength="250"/></div>
+                                </t>
+                                <div class="sre-field"><label for="delivery">Required delivery date</label><input id="delivery" type="date" name="required_delivery_date"/></div>
+                                <div class="sre-field"><label for="notes">Technical / commercial requirements</label><textarea id="notes" name="notes" maxlength="4000" rows="5" placeholder="Operating conditions, target model, connection standard, required documents…"/></div>
+                                <button class="sre-button sre-button--full" type="submit">Submit RFQ for review</button>
+                                <small class="sre-rfq-contact__privacy"><span class="fa fa-lock"/> Supplier, cost and source information remain private.</small>
+                            </form>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="rfq_thanks" name="RFQ received">
+        <t t-call="website.layout">
+            <t t-set="additional_title">RFQ received</t>
+            <div id="wrap" class="sre-rfq-page">
+                <div class="container sre-rfq-thanks">
+                    <span class="sre-rfq-thanks__icon fa fa-check" aria-hidden="true"/>
+                    <span class="sre-kicker">Submission confirmed</span>
+                    <h1>Your RFQ has been received</h1>
+                    <p>Reference <strong class="sre-mono" t-esc="reference"/>. Our team will review the product list and contact details before preparing a quotation.</p>
+                    <div><a href="/sre/catalog" class="sre-button">Continue browsing</a><a href="/rfq" class="sre-button sre-button--secondary">View RFQ</a></div>
+                </div>
+            </div>
+        </t>
+    </template>
 </odoo>

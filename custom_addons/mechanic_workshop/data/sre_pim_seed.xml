@@ -1,0 +1,72 @@
+<odoo>
+    <data noupdate="1">
+        <!-- Navigation pillars per brief §04.
+             Slug is what the URL uses: /shop/pillar/<slug>.
+             The brief forbids hard-coding the list (§22 #7), so the
+             template iterates over these records. No product family
+             is seeded — that decision belongs to PIM V2. -->
+        <record id="sre_pillar_hvac_building" model="sre.navigation.pillar">
+            <field name="name">HVAC &amp; Building</field>
+            <field name="slug">hvac-building</field>
+            <field name="short_label">HVAC</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="sre_pillar_boiler_thermal" model="sre.navigation.pillar">
+            <field name="name">Boiler &amp; Thermal</field>
+            <field name="slug">boiler-thermal</field>
+            <field name="short_label">Boiler</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="sre_pillar_pumps" model="sre.navigation.pillar">
+            <field name="name">Pumps</field>
+            <field name="slug">pumps</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="sre_pillar_valves" model="sre.navigation.pillar">
+            <field name="name">Valves</field>
+            <field name="slug">valves</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="sre_pillar_heat_exchangers" model="sre.navigation.pillar">
+            <field name="name">Heat Exchangers</field>
+            <field name="slug">heat-exchangers</field>
+            <field name="short_label">Heat Exch.</field>
+            <field name="sequence">50</field>
+        </record>
+        <record id="sre_pillar_instrumentation" model="sre.navigation.pillar">
+            <field name="name">Instrumentation</field>
+            <field name="slug">instrumentation</field>
+            <field name="sequence">60</field>
+        </record>
+        <record id="sre_pillar_controls_automation" model="sre.navigation.pillar">
+            <field name="name">Controls &amp; Automation</field>
+            <field name="slug">controls-automation</field>
+            <field name="short_label">Controls</field>
+            <field name="sequence">70</field>
+        </record>
+        <record id="sre_pillar_spare_parts" model="sre.navigation.pillar">
+            <field name="name">Industrial Spare Parts</field>
+            <field name="slug">industrial-spare-parts</field>
+            <field name="short_label">Spare Parts</field>
+            <field name="sequence">80</field>
+        </record>
+
+        <!-- Attribute profiles per brief §07. The three families that
+             have enumerated filter sets in the brief are seeded
+             without attributes; staff will attach native
+             product.attribute rows once the PIM V2 master arrives.
+             No product family is seeded either. -->
+        <record id="sre_profile_valve" model="sre.attribute.profile">
+            <field name="name">Valve profile</field>
+            <field name="note">Per brief §07: Brand, Valve Type, Nominal Size, Connection, Pressure Class, Material, Actuation, Control Signal.</field>
+        </record>
+        <record id="sre_profile_pump" model="sre.attribute.profile">
+            <field name="name">Pump profile</field>
+            <field name="note">Per brief §07: Brand, Pump Type, Flow, Head, Motor Power, Connection, Material, Fluid/Application.</field>
+        </record>
+        <record id="sre_profile_hvac_instrument" model="sre.attribute.profile">
+            <field name="name">HVAC Instrument profile</field>
+            <field name="note">Per brief §07: Brand, Instrument Type, Sensor Type, Control Signal, Measuring Range, Connection.</field>
+        </record>
+    </data>
+</odoo>

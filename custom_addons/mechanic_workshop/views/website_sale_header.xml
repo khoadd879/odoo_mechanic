@@ -1,54 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- =================================================================
-         SRE public top navigation — 8 business pillars (brief §04).
+    <template id="sre_search_form" name="SRE global search form">
+        <form t-att-action="search_action or '/sre/catalog'"
+              method="get"
+              role="search"
+              class="sre-global-search"
+              data-suggest-url="/sre/search_suggest">
+            <div class="sre-global-search__control">
+                <span class="sre-global-search__icon fa fa-search" aria-hidden="true"/>
+                <input type="search"
+                       name="search"
+                       t-att-value="search_value or ''"
+                       placeholder="Search SKU, MPN, OEM part, brand or product"
+                       autocomplete="off"
+                       aria-label="Search the SRE technical catalog"/>
+                <button type="submit">Search</button>
+            </div>
+            <div class="sre-search-suggestions"
+                 role="listbox"
+                 aria-label="Product suggestions"
+                 hidden="hidden"/>
+        </form>
+    </template>
 
-         The 8 pillars are data-driven: the template iterates over
-         ``request.website.sre_visible_pillars`` so we do not hard-code
-         the names (brief §22 #7). Links point to ``/sre/catalog/pillar/<slug>``
-         so the canonical route in ``controllers/catalog.py`` picks the slug up
-         as a path parameter. The McMaster-style industrial band is
-         styled by ``static/src/scss/sre_topnav.scss``.
-         ================================================================= -->
-    <template id="sre_pillars_nav"
+    <template id="sre_desktop_header"
               inherit_id="website_sale.template_header_default"
-              name="SRE 8-Pillar Top Nav"
-              active="True">
-        <xpath expr="//header" position="inside">
-            <nav class="sre-pillars-nav"
-                 aria-label="Business pillars">
-                <div class="container">
-                    <ul class="sre-pillars-nav__list">
-                        <li t-foreach="request.website.sre_visible_pillars"
-                            t-as="pillar"
-                            t-attf-class="sre-pillars-nav__item #{pillar.slug == request.httprequest.path.split('/')[-1] and 'active' or ''}">
-                            <a t-att-href="'/sre/catalog/pillar/%s' % pillar.slug"
-                               class="sre-pillars-nav__link"
-                               t-esc="pillar.short_label or pillar.name"/>
-                        </li>
-                    </ul>
+              name="SRE professional desktop header"
+              priority="90">
+        <xpath expr="//div[@id='o_main_nav']" position="replace">
+            <div id="o_main_nav" class="o_main_nav container sre-header__desktop">
+                <a href="/" class="sre-brand" aria-label="SRE Commercial home">
+                    <span class="sre-brand__mark" aria-hidden="true">SRE</span>
+                    <span class="sre-brand__copy">
+                        <strong>SRE Commercial</strong>
+                        <small>Industrial engineering supply</small>
+                    </span>
+                </a>
+                <div class="sre-header__search">
+                    <t t-call="mechanic_workshop.sre_search_form">
+                        <t t-set="search_action">/sre/catalog</t>
+                        <t t-set="search_value" t-value="request.params.get('search', '')"/>
+                    </t>
+                </div>
+                <div class="sre-header__actions">
+                    <div class="sre-header__support">
+                        <span>Engineering desk</span>
+                        <strong>Technical sourcing support</strong>
+                    </div>
+                    <a href="/my" class="sre-header__account">
+                        <span class="fa fa-user-o" aria-hidden="true"/>
+                        <span>Account</span>
+                    </a>
+                    <a href="/rfq"
+                       class="sre-header__rfq">
+                        <span class="fa fa-file-text-o" aria-hidden="true"/>
+                        <span>RFQ list</span>
+                        <strong t-esc="len(request.session.get('sre_rfq_basket_%s' % request.website.id, {}))"/>
+                    </a>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//t[@t-call='website.template_header_mobile']" position="after">
+            <nav class="sre-primary-nav d-none d-lg-block" aria-label="Technical catalogue navigation">
+                <div class="container sre-primary-nav__inner">
+                    <a href="/sre/catalog"
+                       t-att-class="'sre-primary-nav__all ' + ('is-active' if request.httprequest.path == '/sre/catalog' else '')">
+                        <span class="fa fa-th-list" aria-hidden="true"/>
+                        All products
+                    </a>
+                    <div class="sre-primary-nav__pillars">
+                        <a t-foreach="request.website.sre_visible_pillars"
+                           t-as="pillar"
+                           t-att-href="'/sre/catalog/pillar/%s' % pillar.slug"
+                           t-att-class="'sre-primary-nav__link ' + ('is-active' if request.httprequest.path.startswith('/sre/catalog/pillar/%s' % pillar.slug) else '')"
+                           t-esc="pillar.short_label or pillar.name"/>
+                    </div>
+                    <div class="sre-primary-nav__more">
+                        <a href="/#industries">Industries</a>
+                        <a href="/#applications">Applications</a>
+                        <a href="/#technical-resources">Resources</a>
+                    </div>
                 </div>
             </nav>
         </xpath>
     </template>
 
-    <template id="sre_pillars_nav_mobile"
-              inherit_id="website.template_header_mobile"
-              name="SRE 8-Pillar Mobile Drawer"
-              active="True">
-        <xpath expr="//div[@id='top_menu_collapse_mobile']//div[hasclass('offcanvas-body')]"
-               position="inside">
-            <div class="sre-pillars-nav__mobile">
-                <h2>Browse by category</h2>
-                <ul class="nav flex-column">
-                    <li t-foreach="request.website.sre_visible_pillars"
-                        t-as="pillar"
-                        class="nav-item">
-                        <a t-att-href="'/sre/catalog/pillar/%s' % pillar.slug"
-                           class="nav-link"
-                           t-esc="pillar.short_label or pillar.name"/>
-                    </li>
-                </ul>
-            </div>
+    <template id="sre_mobile_header"
+              inherit_id="website_sale.template_header_mobile"
+              name="SRE professional mobile header"
+              priority="90">
+        <xpath expr="//t[@t-call='website.placeholder_header_brand']" position="replace">
+            <a href="/" class="sre-brand sre-brand--mobile" aria-label="SRE Commercial home">
+                <span class="sre-brand__mark" aria-hidden="true">SRE</span>
+                <span class="sre-brand__copy"><strong>SRE Commercial</strong></span>
+            </a>
+        </xpath>
+        <xpath expr="//t[@t-call='website.placeholder_header_search_box']" position="replace">
+            <t t-call="mechanic_workshop.sre_search_form">
+                <t t-set="search_action">/sre/catalog</t>
+                <t t-set="search_value" t-value="request.params.get('search', '')"/>
+            </t>
+        </xpath>
+        <xpath expr="//li[t[@t-call='website.navbar_nav']]" position="replace">
+            <li class="sre-mobile-menu">
+                <a href="/sre/catalog" class="sre-mobile-menu__all">All products</a>
+                <span class="sre-mobile-menu__label">Product groups</span>
+                <a t-foreach="request.website.sre_visible_pillars"
+                   t-as="pillar"
+                   t-att-href="'/sre/catalog/pillar/%s' % pillar.slug"
+                   t-esc="pillar.name"/>
+                <span class="sre-mobile-menu__label">Browse by</span>
+                <a href="/#industries">Industries</a>
+                <a href="/#applications">Applications</a>
+                <a href="/#technical-resources">Technical resources</a>
+                <a href="/rfq">Request for quotation</a>
+            </li>
+        </xpath>
+        <xpath expr="//t[@t-call='website.placeholder_header_text_element']" position="replace"/>
+        <xpath expr="//t[@t-call='website.placeholder_header_social_links']" position="replace"/>
+        <xpath expr="//t[@t-call='website.header_call_to_action_large']" position="replace"/>
+    </template>
+
+    <template id="sre_site_footer"
+              inherit_id="website.layout"
+              name="SRE professional footer"
+              priority="95">
+        <xpath expr="//footer" position="replace">
+            <footer t-if="not no_footer" id="footer" class="sre-footer">
+                <div class="container sre-footer__grid">
+                    <div class="sre-footer__brand">
+                        <span class="sre-brand__mark" aria-hidden="true">SRE</span>
+                        <div>
+                            <strong>SRE Commercial</strong>
+                            <p>Industrial HVAC, boiler, process equipment and technical spare parts.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>Catalogue</h2>
+                        <a href="/sre/catalog">All products</a>
+                        <a href="/#industries">Industries</a>
+                        <a href="/#applications">Applications</a>
+                    </div>
+                    <div>
+                        <h2>Technical support</h2>
+                        <a href="/rfq">Submit an RFQ</a>
+                        <a href="/#technical-resources">Technical resources</a>
+                        <a href="/contactus">Contact engineering</a>
+                    </div>
+                    <div class="sre-footer__standard">
+                        <span>RFQ-first B2B supply</span>
+                        <strong>Part-number accuracy.<br/>Engineering-led review.</strong>
+                    </div>
+                </div>
+                <div class="sre-footer__bottom">
+                    <div class="container">
+                        <span>© 2026 SRE Commercial</span>
+                        <span>Prices and availability confirmed by quotation.</span>
+                    </div>
+                </div>
+            </footer>
         </xpath>
     </template>
 </odoo>

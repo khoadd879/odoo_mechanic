@@ -1,0 +1,128 @@
+/* =============================================================
+   SRE Design Tokens — McMaster-Carr polish
+   Pure minimal: white/black/grey + 1 industrial-blue accent
+   No gradient, no shadow, no border-radius, no marketing.
+   ============================================================= */
+
+:root {
+    --sre-bg: #ffffff;
+    --sre-bg-alt: #f6f6f6;
+    --sre-bg-page: #fafafa;
+    --sre-fg: #111111;
+    --sre-fg-muted: #555555;
+    --sre-fg-faint: #888888;
+    --sre-border: #d4d4d4;
+    --sre-border-soft: #ebebeb;
+    --sre-border-strong: #1a1a1a;
+    --sre-accent: #003c71;
+    --sre-accent-hover: #002a52;
+    --sre-accent-soft: #f0f4f9;
+    --sre-row-hover: #f4f7fb;
+    --sre-table-head: #ebebeb;
+    --sre-rule: #1a1a1a;
+
+    /* Status — used sparingly on availability dots and CTA. */
+    --sre-ok: #1a7f37;
+    --sre-warn: #b8770a;
+    --sre-err: #b1271b;
+
+    --sre-font-sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+    --sre-font-mono: "JetBrains Mono", "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    --sre-fs-xs: 11px;
+    --sre-fs-sm: 12px;
+    --sre-fs-md: 13px;
+    --sre-fs-base: 14px;
+    --sre-fs-lg: 16px;
+    --sre-fs-xl: 20px;
+    --sre-fs-2xl: 26px;
+    --sre-lh-tight: 1.2;
+    --sre-lh-base: 1.45;
+
+    --sre-rule-w: 2px;
+    --sre-rule-w-thin: 1px;
+    --sre-shadow: none;
+    --sre-radius: 0;
+    --sre-container: 1320px;
+    --sre-tracked: 0.05em;
+    --sre-tracked-wide: 0.12em;
+
+    --bs-border-radius: 0;
+    --bs-border-radius-sm: 0;
+    --bs-border-radius-lg: 0;
+    --bs-border-radius-xl: 0;
+    --bs-border-radius-2xl: 0;
+    --bs-border-radius-pill: 0;
+}
+
+body, .o_wsale_products_page, .o_wsale_products_main_row {
+    font-family: var(--sre-font-sans);
+    color: var(--sre-fg);
+    background: var(--sre-bg-page);
+    font-size: var(--sre-fs-base);
+    line-height: var(--sre-lh-base);
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.o_wsale_category_title,
+.o_wsale_shop_title {
+    font-family: var(--sre-font-sans);
+    color: var(--sre-fg);
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: var(--sre-lh-tight);
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
+
+h1, .h1 { font-size: var(--sre-fs-2xl); font-weight: 700; }
+h2, .h2 { font-size: var(--sre-fs-xl); }
+h3, .h3 { font-size: var(--sre-fs-lg); }
+h4, .h4 { font-size: var(--sre-fs-base); font-weight: 600; }
+h5, .h5 { font-size: var(--sre-fs-md); font-weight: 600; }
+h6, .h6 { font-size: var(--sre-fs-sm); font-weight: 600; }
+
+.sre-mono {
+    font-family: var(--sre-font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+}
+
+.sre-uppercase {
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked-wide);
+}
+
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-outline-primary,
+.btn-outline-secondary,
+.form-control,
+.form-select,
+.input-group-text,
+.card,
+.dropdown-menu,
+.alert,
+.badge,
+.nav-link,
+.page-link,
+.list-group-item,
+.modal-content,
+.tooltip-inner,
+.popover {
+    border-radius: var(--sre-radius) !important;
+    box-shadow: var(--sre-shadow) !important;
+}
+
+a, a:hover, a:focus {
+    color: var(--sre-accent);
+    text-decoration: none;
+}
+a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+::selection {
+    background: var(--sre-accent);
+    color: #fff;
+}

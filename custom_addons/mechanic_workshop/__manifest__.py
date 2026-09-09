@@ -1,6 +1,6 @@
 {
     "name": "Mechanic Workshop",
-    "version": "19.0.1.7.1",
+    "version": "19.0.1.8.0",
     "category": "Sales",
     "summary": "SRE technical catalog and customer RFQ on native Odoo Sales.",
     "description": """
@@ -54,9 +54,7 @@ Sprint 1 visual (McMaster-Carr reference):
     "assets": {
         "web.assets_frontend": [
             "mechanic_workshop/static/src/js/rfq.js",
-            "mechanic_workshop/static/src/js/sre_rewrite_cards.js",
-            "mechanic_workshop/static/src/js/sre_assets.js",
-            "mechanic_workshop/static/src/js/sre_view_mode_toggle.js",
+            "mechanic_workshop/static/src/js/sre_search.js",
             "mechanic_workshop/static/src/scss/sre_tokens.scss",
             "mechanic_workshop/static/src/scss/sre_topnav.scss",
             "mechanic_workshop/static/src/scss/sre_tile.scss",
@@ -64,6 +62,7 @@ Sprint 1 visual (McMaster-Carr reference):
             "mechanic_workshop/static/src/scss/sre_home.scss",
             "mechanic_workshop/static/src/scss/sre_search.scss",
             "mechanic_workshop/static/src/scss/sre_section.scss",
+            "mechanic_workshop/static/src/scss/sre_site.scss",
         ]
     },
     "installable": True,

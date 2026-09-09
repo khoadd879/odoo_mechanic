@@ -1,6 +1,6 @@
 {
   "project": "mechanic_workshop",
-  "version": "19.0.1.0.0",
+  "version": "19.0.1.8.0",
   "features": [
     {
       "id": "oca-brand-mirror",
@@ -70,7 +70,7 @@
     {
       "id": "sre-catalog-basic",
       "title": "SRE basic catalog (public-facing, no price, no CTA)",
-      "status": "implemented-locally",
+      "status": "superseded",
       "summary": "Public-facing catalog extension of website_sale for SRE Commercial, built inside mechanic_workshop. Inherits website_sale.products_item (tile in /shop list + search results) and website_sale.product (detail page). Shows: name, image (if any), Brand (OCA product_brand), Manufacturer (public name only, never the brand's partner_id), MPN, SKU, public categories, demo description (clearly labeled illustrative-only). HIDES: list_price, base unit price, Add to Cart, Add to RFQ, supplier / cost / source information, product.brand.partner_id. No new models, no new fields. Demo data: 2 brands + 2 manufacturers + 3 website categories + 6 products (3 valves + 3 pumps) + 6 variants, all sre_demo.* External IDs. Privacy: 0 brands with partner_id, 0 demo products with standard_price>0.",
       "depends_on": [
         "base",
@@ -178,7 +178,7 @@
     {
       "id": "sre-homepage-and-redirect",
       "title": "SRE homepage (brief §19) + /shop, /shop/pillar/*, /shop/family/* 301 → /sre/catalog",
-      "status": "implemented",
+      "status": "superseded",
       "summary": "New homepage at / renders the 8 blocks from brief §19 (hero, search, 8 pillars, 4 industries, 3 applications, featured tiles, technical resources, RFQ CTA). The legacy /shop, /shop/pillar/<slug>, /shop/family/<slug> routes return HTTP 301 to the matching /sre/catalog[...] URL preserving the query string. The broken views/website_sale_products.xml inherit was removed from the manifest; the canonical catalog route at /sre/catalog and its McMaster-Carr template are unchanged. Top-nav links point to /sre/catalog/pillar/<slug>; logo links to /.",
       "depends_on": [
         "sre-pillar-nav-search-category",
@@ -228,6 +228,48 @@
       ],
       "evidence": "docs/PROGRESS.md 2026-09-08 entry; docs/sre_visual_evidence/before/home.png, home_mobile.png, redirect_pillar_boiler.png; agent_check 15/15 PASS exit 0.",
       "version": "19.0.1.7.1"
+    },
+    {
+      "id": "sre-connected-industrial-storefront",
+      "title": "Connected RFQ-first industrial storefront",
+      "status": "completed",
+      "version": "19.0.1.8.0",
+      "summary": "Supersedes the disconnected basic catalog and first homepage pass. The homepage, shared desktop/mobile header, exact-identity search, technical catalog, product detail and RFQ basket now form one coherent public flow. The interface uses a restrained navy/blue/orange industrial design inspired by dense technical distributors, while native Odoo remains responsible for publication, products, CRM and quotations.",
+      "brief_alignment": {
+        "sections_03_04_19": "Shared professional header/footer, large homepage search, 8 data-driven navigation pillars, industries, applications, featured products, resources and RFQ CTA.",
+        "section_05": "Real multi-field search over product name, SKU/internal reference, variant reference, barcode, MPN, public manufacturer, Brand, public OEM PN and descriptions; exact identifiers are rendered before fuzzy matches; public tiered suggestions are available.",
+        "sections_06_07": "Canonical /sre/catalog has working brand/family/attribute facets, sort, 12/24/48 page sizes, pagination and grid/list/table modes. Family-specific attributes remain data-driven.",
+        "section_08": "Technical product page shows public identity, specification data, document/compatibility/cross-reference states and a connected Add to RFQ form without inventing unavailable data.",
+        "sections_09_10": "Existing session basket, quantity update/removal, guest project form, CRM intake and staff-controlled native quotation flow are retained and restyled.",
+        "section_17": "No public price, supplier, source, cost or brand-partner data is rendered; internal attribute-profile and OEM models have no public ACL.",
+        "section_22": "Native website publication domain and Odoo product/CRM/quotation flows are reused; no Odoo core patch and no parallel retail catalog implementation."
+      },
+      "acceptance_criteria": [
+        "AC-1 Anonymous GET /, /sre/catalog, a product detail and /rfq return 200 with one shared SRE header/footer.",
+        "AC-2 Homepage search submits to /sre/catalog and /shop?search=DMV-001 returns 301 to the same canonical search URL.",
+        "AC-3 Search by SKU SRE-DEMO-V-001, MPN DMV-001 and OEM-PN-COLLISION returns Demo Valve 001; an unknown identity renders the empty state.",
+        "AC-4 Exact MPN DMV-001 returns one product despite a separate description collision; autocomplete returns the matching MPN item.",
+        "AC-5 Brand filter, name sorting and grid/list/table controls change the server-rendered result set/layout; invalid options fall back safely.",
+        "AC-6 Product detail displays public technical identity and adds a selected variant to the RFQ; a guest session can update quantity and remove it.",
+        "AC-7 No fabricated price or lead time is shown: commercial state reads availability/price confirmed by RFQ.",
+        "AC-8 Desktop 1440px and mobile 390px screenshots have no stylesheet fallback or horizontal layout break.",
+        "AC-9 product.brand.partner_id leak count=0, demo standard_price>0 count=0, and sensitive public ACL permissions are all false.",
+        "AC-10 Odoo module upgrade succeeds, 6 existing post-install RFQ tests report 0 failed/0 errors, agent_check reports 30 PASS/0 FAIL, and recent Odoo logs contain no new traceback/critical/module error."
+      ],
+      "evidence": {
+        "screenshots": "docs/sre_visual_evidence/after/ (home/catalog/product/RFQ desktop plus home/catalog mobile)",
+        "module_update": "./scripts/update-module.sh mechanic_workshop exit 0; Odoo website ready after asset invalidation/restart",
+        "odoo_tests": "6 post-install tests, 0 failed, 0 errors on 2026-09-09",
+        "agent_check": "30 PASS, 0 FAIL on 2026-09-09",
+        "runtime": "docker compose -p odoo_mechanic up -d succeeded; app and database healthy; recent logs clean"
+      },
+      "remaining_brief_scope": [
+        "Real PIM V2 product-to-Family, Industry and Application assignments; current demo products are deliberately not auto-classified from names/categories.",
+        "Approved technical documents and document-rights workflow.",
+        "Verified compatibility and alternative/replacement/accessory relationship engine.",
+        "Family-driven dynamic RFQ fields and file uploads.",
+        "Boiler Part Finder, industry/application landing content, customer portal RFQ history, saved lists and repeat-order features."
+      ]
     }
   ]
 }

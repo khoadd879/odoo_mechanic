@@ -1,3 +1,17 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_rfq_sales,Customer RFQ sales,model_sre_rfq,sales_team.group_sale_salesman,1,1,1,0
 access_rfq_line_sales,Customer RFQ lines sales,model_sre_rfq_line,sales_team.group_sale_salesman,1,1,1,1
+access_sre_pillar_public,SRE Pillar public,model_sre_navigation_pillar,base.group_public,1,0,0,0
+access_sre_pillar_sales,SRE Pillar sales,model_sre_navigation_pillar,sales_team.group_sale_salesman,1,1,1,0
+access_sre_family_public,SRE Family public,model_sre_product_family,base.group_public,1,0,0,0
+access_sre_family_sales,SRE Family sales,model_sre_product_family,sales_team.group_sale_salesman,1,1,1,0
+access_sre_attr_profile_public,SRE Attribute Profile public disabled,model_sre_attribute_profile,base.group_public,0,0,0,0
+access_sre_attr_profile_sales,SRE Attribute Profile sales,model_sre_attribute_profile,sales_team.group_sale_salesman,1,1,1,0
+access_sre_attr_profile_line_public,SRE Attribute Profile Line public disabled,model_sre_attribute_profile_attribute,base.group_public,0,0,0,0
+access_sre_attr_profile_line_sales,SRE Attribute Profile Line sales,model_sre_attribute_profile_attribute,sales_team.group_sale_salesman,1,1,1,0
+access_sre_industry_public,SRE Industry public,model_sre_industry,base.group_public,1,0,0,0
+access_sre_industry_sales,SRE Industry sales,model_sre_industry,sales_team.group_sale_salesman,1,1,1,0
+access_sre_application_public,SRE Application public,model_sre_application,base.group_public,1,0,0,0
+access_sre_application_sales,SRE Application sales,model_sre_application,sales_team.group_sale_salesman,1,1,1,0
+access_sre_oem_pn_public,SRE OEM PN public disabled,model_sre_oem_pn,base.group_public,0,0,0,0
+access_sre_oem_pn_sales,SRE OEM PN sales,model_sre_oem_pn,sales_team.group_sale_salesman,1,1,1,0

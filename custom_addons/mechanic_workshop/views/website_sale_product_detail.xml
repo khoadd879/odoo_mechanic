@@ -1,135 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <template id="sre_product_detail_inherit"
+              inherit_id="website_sale.product"
+              name="SRE technical product detail"
+              active="True">
+        <xpath expr="//section[@id='product_detail']" position="replace">
+            <section id="product_detail" class="sre-product-page">
+                <div class="container">
+                    <nav class="sre-breadcrumb" aria-label="Breadcrumb">
+                        <a href="/">Home</a><span>/</span>
+                        <a href="/sre/catalog">Catalog</a><span>/</span>
+                        <span t-esc="product.name"/>
+                    </nav>
 
-<!-- =================================================================
-     SRE basic catalog — product detail page.
-     Inherits website_sale.product. Layout in code; data via backend.
-     Privacy: no price, no Add to Cart / Add to RFQ, no supplier info.
-     ================================================================= -->
-<template id="sre_product_detail_inherit"
-          inherit_id="website_sale.product"
-          name="SRE Catalog Detail"
-          active="True">
+                    <div class="sre-product-page__hero">
+                        <div class="sre-product-page__visual">
+                            <div class="sre-product-page__image">
+                                <img t-if="product.image_1920"
+                                     t-att-src="'/web/image/product.template/%s/image_1024' % product.id"
+                                     t-att-alt="product.name"/>
+                                <div t-else="" class="sre-product-page__placeholder">
+                                    <span class="fa fa-cogs" aria-hidden="true"/>
+                                    <strong>Technical image pending</strong>
+                                    <small>Product identity is available below.</small>
+                                </div>
+                            </div>
+                            <div class="sre-product-page__image-note"><span class="fa fa-shield"/> Public assets are shown only after document-rights review.</div>
+                        </div>
 
-    <!-- 1) Insert an identification table right after the product
-         title block. Brand (OCA product_brand), Manufacturer (public
-         name only — not the partner_id of the brand, never the brand
-         itself if it would leak supplier), MPN (OCA
-         product_manufacturer.manufacturer_pref), SKU, and public
-         categories. -->
-    <xpath expr="//div[@id='o_wsale_product_details_content']"
-           position="inside">
-        <div class="o_wsale_product_details_content_section o_wsale_product_details_content_section_meta mb-4">
-            <table class="table table-sm o_wsale_product_meta_table mb-0">
-                <tbody>
-                    <tr t-if="product.product_brand_id">
-                        <th class="text-muted" scope="row" style="width: 12rem;">Brand</th>
-                        <td>
-                            <span t-field="product.product_brand_id.name"/>
-                        </td>
-                    </tr>
-                    <tr t-if="product.manufacturer_id">
-                        <th class="text-muted" scope="row" style="width: 12rem;">Manufacturer</th>
-                        <td>
-                            <span t-field="product.manufacturer_public_name"/>
-                            <!--
-                                Public manufacturer name only.
-                                We expose a `compute_sudo=True` field
-                                (`manufacturer_public_name`) instead of
-                                `product.manufacturer_id.display_name`
-                                because the default Odoo record rule
-                                for `res.partner` (`id child_of
-                                user.commercial_partner_id`) blocks the
-                                public user from reading any partner
-                                that is not in their own hierarchy.
-                                A superuser-computed field returns only
-                                the public name string and grants no
-                                broader access. `product.brand.partner_id`
-                                is intentionally NULL on every demo
-                                record per Risk #19, so the brand
-                                itself never leaks a supplier.
-                            -->
-                        </td>
-                    </tr>
-                    <tr t-if="product.manufacturer_pref">
-                        <th class="text-muted" scope="row" style="width: 12rem;">MPN</th>
-                        <td>
-                            <span t-field="product.manufacturer_pref"/>
-                        </td>
-                    </tr>
-                    <tr t-if="product.default_code">
-                        <th class="text-muted" scope="row" style="width: 12rem;">SKU</th>
-                        <td>
-                            <span t-field="product.default_code"/>
-                        </td>
-                    </tr>
-                    <tr t-if="product.public_categ_ids">
-                        <th class="text-muted" scope="row" style="width: 12rem;">Categories</th>
-                        <td>
-                            <t t-foreach="product.public_categ_ids" t-as="cat">
-                                <span t-field="cat.name"/>
-                                <t t-if="not cat_last">, </t>
-                            </t>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </xpath>
+                        <div class="sre-product-page__summary">
+                            <div class="sre-product-page__eyebrow">
+                                <span t-if="product.product_brand_id" t-esc="product.product_brand_id.name"/>
+                                <code t-if="product.default_code" t-esc="product.default_code"/>
+                            </div>
+                            <h1 t-esc="product.name"/>
+                            <p class="sre-product-page__intro">Technical product record for engineering selection and request for quotation.</p>
 
-    <!-- 2) Remove the price section (price block + base unit price).
-         Per spec: public price visibility = `public_price_approved`
-         AND user has assigned pricelist; demo products have
-         list_price=0 and no such flag exists yet. Hide entirely. -->
-    <xpath expr="//div[hasclass('o_wsale_product_details_content_section_price')]"
-           position="replace"/>
+                            <div class="o_wsale_product_details_content_section_meta sre-product-identity">
+                                <h2>Product identification</h2>
+                                <dl>
+                                    <t t-if="product.product_brand_id"><dt>Brand</dt><dd t-esc="product.product_brand_id.name"/></t>
+                                    <t t-if="product.manufacturer_public_name"><dt>Manufacturer</dt><dd t-esc="product.manufacturer_public_name"/></t>
+                                    <t t-if="product.manufacturer_pref"><dt>Manufacturer PN</dt><dd class="sre-mono" t-esc="product.manufacturer_pref"/></t>
+                                    <t t-if="product.default_code"><dt>SRE SKU</dt><dd class="sre-mono" t-esc="product.default_code"/></t>
+                                    <t t-if="product.sre_public_oem_part_numbers"><dt>OEM / cross reference</dt><dd class="sre-mono" t-esc="product.sre_public_oem_part_numbers"/></t>
+                                    <t t-if="product.family_id"><dt>Product family</dt><dd><a t-att-href="'/sre/catalog/family/%s' % product.family_id.slug" t-esc="product.family_id.name"/></dd></t>
+                                    <t t-if="product.public_categ_ids"><dt>Public category</dt><dd><t t-foreach="product.public_categ_ids" t-as="category"><span t-esc="category.name"/><t t-if="not category_last"> · </t></t></dd></t>
+                                </dl>
+                            </div>
 
-    <!-- 3) Remove the CTA section (Add to Cart button + accessories).
-         No RFQ flow exists yet. Per project rule: do not create a fake
-         Add to RFQ button until the real RFQ module is implemented. -->
-    <xpath expr="//div[hasclass('o_wsale_product_details_content_section_cta')]"
-           position="replace"/>
+                            <div class="sre-commercial-note">
+                                <span class="sre-status"><i/>Available for RFQ</span>
+                                <p>Price, stock position, MOQ and lead time are confirmed for your quantity and delivery location.</p>
+                            </div>
+                        </div>
+                    </div>
 
-    <!-- 4) Replace the entire form wrapper (which only contained the
-         hidden price + CTA + variant selectors). With both removed the
-         form is meaningless and confusing; drop it down to a plain
-         block. The product_title sub-template is still rendered via
-         the form-less flow (`is_add_to_cart_possible=False`). -->
-    <xpath expr="//div[@id='product_details']//form"
-           position="replace"/>
+                    <div class="sre-product-page__content">
+                        <main>
+                            <section class="sre-tech-section">
+                                <div class="sre-tech-section__head"><span>01</span><div><h2>Technical specification</h2><p>Public product data prepared for technical review.</p></div></div>
+                                <table t-if="product.attribute_line_ids" class="sre-tech-table">
+                                    <tbody><tr t-foreach="product.attribute_line_ids" t-as="attribute_line"><th t-esc="attribute_line.attribute_id.name"/><td t-esc="', '.join(attribute_line.value_ids.mapped('name'))"/></tr></tbody>
+                                </table>
+                                <div t-if="product.description" class="sre-product-description" t-field="product.description"/>
+                                <p t-if="not product.attribute_line_ids and not product.description" class="sre-tech-empty">Structured technical data has not been published for this item. Include your operating conditions in the RFQ for verification.</p>
+                            </section>
 
-    <!-- 5) Show the demo technical description prominently.
-         This is the structured HTML placed in `description` by the demo
-         import. We render it below the identification table as the
-         primary "spec sheet" surface. We do NOT call this a "completed
-         technical filter" — it is informational display of demo
-         fields stored in the description HTML, with a clear
-         illustrative-only banner. -->
-    <xpath expr="//div[hasclass('o_wsale_product_details_content_section') and hasclass('o_wsale_product_details_content_section_meta')]"
-           position="after">
-        <div class="o_wsale_product_details_content_section o_wsale_product_details_content_section_description mb-4">
-            <h2 class="h5 text-muted">Description</h2>
-            <div class="o_wsale_product_description_render" t-field="product.description"/>
-            <p class="text-muted small mt-2">
-                <em>The technical specification above is illustrative data from the demo
-                import, not a completed technical filter set. Do not use for product
-                selection or equipment operation.</em>
-            </p>
-        </div>
-    </xpath>
+                            <section class="sre-tech-section">
+                                <div class="sre-tech-section__head"><span>02</span><div><h2>Documents</h2><p>Datasheets, installation guides, CAD and certificates.</p></div></div>
+                                <div class="sre-tech-empty"><span class="fa fa-file-pdf-o"/> No rights-approved public document is attached to this product yet.</div>
+                            </section>
 
-    <!-- 6) Replace the empty-website-description editor placeholder
-         block — it would otherwise display "DROP BUILDING BLOCKS HERE"
-         to public users. -->
-    <xpath expr="//div[@id='product_full_description']"
-           position="replace"/>
+                            <section class="sre-tech-section">
+                                <div class="sre-tech-section__head"><span>03</span><div><h2>Compatibility</h2><p>Equipment manufacturer, model, series and component position.</p></div></div>
+                                <div class="sre-tech-empty"><span class="fa fa-link"/> Compatibility has not been publicly verified. Ask engineering before substitution.</div>
+                            </section>
 
-    <!-- 7) No class manipulation needed; the parent `t-attf-class`
-         already excludes the price-discount branch via its `if/else`
-         logic and our removed price + CTA sections mean the classes
-         referencing those (`o_wsale_has_discount`, etc.) are no longer
-         styled. -->
+                            <section class="sre-tech-section">
+                                <div class="sre-tech-section__head"><span>04</span><div><h2>Cross reference &amp; related products</h2><p>Alternatives, replacements, accessories and related items.</p></div></div>
+                                <div t-if="product.sre_public_oem_part_numbers" class="sre-cross-reference"><span>Verified identifier</span><strong class="sre-mono" t-esc="product.sre_public_oem_part_numbers"/></div>
+                                <div t-else="" class="sre-tech-empty"><span class="fa fa-random"/> No public cross-reference relationship is verified for this item.</div>
+                            </section>
+                        </main>
 
-</template>
-
+                        <aside class="sre-product-page__help">
+                            <span class="sre-kicker">Selection support</span>
+                            <h2>Verify before ordering</h2>
+                            <p>For replacement parts, include the equipment model, serial context and a photo of the nameplate.</p>
+                            <a href="/rfq" class="sre-link-arrow">Open RFQ list</a>
+                            <a href="/sre/catalog" class="sre-link-arrow">Back to catalog</a>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+        </xpath>
+    </template>
 </odoo>

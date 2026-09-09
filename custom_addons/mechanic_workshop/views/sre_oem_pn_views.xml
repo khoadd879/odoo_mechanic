@@ -1,0 +1,51 @@
+<odoo>
+    <record id="sre_oem_pn_list" model="ir.ui.view">
+        <field name="name">sre.oem.pn.list</field>
+        <field name="model">sre.oem.pn</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="product_tmpl_id"/>
+                <field name="source"/>
+                <field name="oem_part_number"/>
+                <field name="manufacturer_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+    <record id="sre_oem_pn_action" model="ir.actions.act_window">
+        <field name="name">OEM Part Numbers</field>
+        <field name="res_model">sre.oem.pn</field>
+        <field name="view_mode">list</field>
+    </record>
+    <menuitem id="sre_oem_pn_menu_items" name="OEM Part Numbers"
+              parent="sre_pillar_menu" action="sre_oem_pn_action"
+              sequence="60"/>
+
+    <record id="sre_oem_pn_inline_product" model="ir.ui.view">
+        <field name="name">product.template.sre.oem.pn</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='general_information']" position="inside">
+                <group string="SRE Catalog">
+                    <field name="family_id"/>
+                    <field name="industry_ids" widget="many2many_tags"/>
+                    <field name="application_ids" widget="many2many_tags"/>
+                </group>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="OEM Part Numbers" name="sre_oem_pn">
+                    <field name="sre_oem_pn_ids">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="oem_part_number"/>
+                            <field name="manufacturer_id"/>
+                            <field name="source"/>
+                            <field name="active"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

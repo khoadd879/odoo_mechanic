@@ -1,0 +1,236 @@
+/* Page section header, pagination footer, lead-magnet CTA.
+   Each block lives inside the Odoo ``#products_grid`` (col-9).
+   We force the Odoo sibling blocks to be hidden so we get a
+   single, predictable layout. */
+
+.sre-page-header {
+    background: #ffffff;
+    border-top: var(--sre-rule-w) solid var(--sre-rule);
+    border-bottom: var(--sre-rule-w-thin) solid var(--sre-border);
+    padding: 22px 0 18px 0;
+    width: 100%;
+    display: block;
+    grid-column: 1 / -1;
+}
+
+.sre-page-header__row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+}
+
+.sre-page-header__title {
+    margin: 0;
+    font-family: var(--sre-font-sans);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--sre-fg);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+}
+
+.sre-page-header__meta {
+    font-family: var(--sre-font-mono);
+    font-size: 12px;
+    color: var(--sre-fg-muted);
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+    margin: 4px 0 0 0;
+}
+
+.sre-page-header__meta strong {
+    color: var(--sre-fg);
+    font-weight: 700;
+}
+
+.sre-page-header__desc {
+    margin: 8px 0 0 0;
+    font-size: 13px;
+    color: var(--sre-fg-muted);
+    max-width: 80ch;
+    line-height: 1.5;
+}
+
+.sre-page-header__sort {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--sre-fg-muted);
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.sre-page-header__sort select,
+.sre-page-header__sort .form-select {
+    font-family: var(--sre-font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--sre-fg);
+    background: #ffffff;
+    border: 1.5px solid var(--sre-border-strong);
+    border-radius: 0;
+    padding: 6px 10px;
+    text-transform: none;
+    letter-spacing: 0;
+    min-width: 200px;
+    cursor: pointer;
+}
+
+.sre-page-header__sort select:focus,
+.sre-page-header__sort .form-select:focus {
+    outline: none;
+    border-color: var(--sre-accent);
+    box-shadow: 0 0 0 2px rgba(0, 60, 113, 0.2);
+}
+
+/* Hide the Odoo default products header. The SRE banner
+   replaces it. */
+.o_wsale_products_page #o_wsale_products_header {
+    display: none !important;
+}
+
+/* Hide the Odoo default sort widget that appears next to the
+   layout-mode toggle. We render our own sort dropdown in the
+   page header. */
+.o_wsale_products_page .o_sort_order_dropdown,
+.o_wsale_products_page .o_wsale_products_layout_modes,
+.o_wsale_products_page > .o_wsale_products_ppr_stretcher + .o_wsale_products_ppr_stretcher,
+.o_wsale_products_page .dropdown.o_sort_order_dropdown {
+    display: none !important;
+}
+
+/* Hide the Odoo "Clear filters" / "Price Range" widgets. We
+   render our own sidebar filter list. */
+.o_wsale_products_page .products_attributes_filters,
+.o_wsale_products_page .o_wsale_products_clear_filters,
+.o_wsale_products_page .o_wsale_search_count,
+.o_wsale_products_page .o_wsale_products_attributes,
+.o_wsale_products_page .o_wsale_products_refined_filter,
+.o_wsale_products_page .o_wsale_products_search_box {
+    display: none !important;
+}
+
+/* Pagination footer. */
+.sre-pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 24px 0 12px 0;
+    margin-top: 24px;
+    border-top: var(--sre-rule-w) solid var(--sre-rule);
+    font-family: var(--sre-font-sans);
+    width: 100%;
+    grid-column: 1 / -1;
+}
+
+.sre-pager__label {
+    font-family: var(--sre-font-mono);
+    font-size: 12px;
+    color: var(--sre-fg-muted);
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+}
+
+.sre-pager__label strong {
+    color: var(--sre-fg);
+    font-weight: 700;
+}
+
+.sre-pager__per-page {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--sre-fg-muted);
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+    font-weight: 600;
+}
+
+.sre-pager__per-page select,
+.sre-pager__per-page .form-select {
+    font-family: var(--sre-font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--sre-fg);
+    background: #ffffff;
+    border: 1.5px solid var(--sre-border-strong);
+    border-radius: 0;
+    padding: 6px 10px;
+    text-transform: none;
+    letter-spacing: 0;
+    cursor: pointer;
+    min-width: 80px;
+}
+
+/* Hide the Odoo native pager. We render our own. */
+.o_wsale_products_page .o_wsale_pager,
+.o_wsale_products_page .pagination {
+    display: none !important;
+}
+
+/* Lead-magnet CTA card. */
+.sre-lead {
+    background: var(--sre-accent);
+    color: #ffffff;
+    margin: 32px 0 48px 0;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 18px 32px;
+    border-radius: 0;
+    width: 100%;
+    grid-column: 1 / -1;
+}
+
+.sre-lead__title {
+    margin: 0 0 4px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.3;
+}
+
+.sre-lead__body {
+    margin: 0;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 60ch;
+    line-height: 1.5;
+}
+
+.sre-lead__cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 22px;
+    background: #ffffff;
+    color: var(--sre-accent);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+    text-decoration: none;
+    border-radius: 0;
+    white-space: nowrap;
+    transition: background 0.1s linear;
+}
+
+.sre-lead__cta:hover,
+.sre-lead__cta:focus {
+    background: var(--sre-table-head);
+    color: var(--sre-accent);
+    text-decoration: none;
+}
+
+.sre-lead__cta::after {
+    content: " \2192";
+}

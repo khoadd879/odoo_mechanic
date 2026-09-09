@@ -1,0 +1,331 @@
+/* =============================================================
+   SRE Category banner, family filter, table, layout toggle
+   McMaster-Carr section header + filter rail.
+   ============================================================= */
+
+/* Page section header — white card with hairline grid. */
+.sre-page-header {
+    background: #ffffff;
+    border-top: var(--sre-rule-w) solid var(--sre-rule);
+    border-bottom: var(--sre-rule-w) solid var(--sre-rule);
+    margin: 0;
+    padding: 18px 0 14px 0;
+}
+
+.sre-page-header__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px 24px;
+}
+
+.sre-page-header__title {
+    margin: 0;
+    font-family: var(--sre-font-sans);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--sre-fg);
+    line-height: 1.2;
+}
+
+.sre-page-header__meta {
+    font-family: var(--sre-font-mono);
+    font-size: 12px;
+    color: var(--sre-fg-muted);
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+}
+
+.sre-page-header__desc {
+    margin: 8px 0 0 0;
+    font-size: 13px;
+    color: var(--sre-fg-muted);
+    max-width: 70ch;
+}
+
+/* Breadcrumb — McMaster style, mono uppercase chevron. */
+.sre-category-banner {
+    background: #ffffff;
+    border-bottom: var(--sre-rule-w-thin) solid var(--sre-border);
+    margin: 0;
+    padding: 8px 0;
+}
+
+.sre-category-banner__breadcrumb {
+    font-family: var(--sre-font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+    color: var(--sre-fg-muted);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+}
+
+.sre-category-banner__breadcrumb li {
+    display: inline-flex;
+    align-items: center;
+}
+
+.sre-category-banner__breadcrumb li + li::before {
+    content: "\203A";
+    margin: 0 8px;
+    color: var(--sre-fg-faint);
+}
+
+.sre-category-banner__breadcrumb a {
+    color: var(--sre-fg-muted);
+    text-decoration: none;
+}
+
+.sre-category-banner__breadcrumb a:hover {
+    color: var(--sre-accent);
+    text-decoration: underline;
+}
+
+.sre-category-banner__breadcrumb .active {
+    color: var(--sre-fg);
+    font-weight: 700;
+}
+
+/* Sidebar filter rail — McMaster checkbox list. */
+.sre-family-filters {
+    background: #ffffff;
+    border: var(--sre-rule-w-thin) solid var(--sre-border);
+    padding: 0;
+    margin: 0 0 16px 0;
+}
+
+.sre-family-filters__head {
+    background: var(--sre-table-head);
+    border-bottom: var(--sre-rule-w) solid var(--sre-rule);
+    padding: 12px 16px;
+    font-family: var(--sre-font-sans);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+    color: var(--sre-fg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sre-family-filters__head .clear-all {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--sre-accent);
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+    text-decoration: none;
+}
+
+.sre-family-filters__note {
+    padding: 8px 16px;
+    font-size: 12px;
+    color: var(--sre-fg-muted);
+    border-bottom: var(--sre-rule-w-thin) solid var(--sre-border);
+    margin: 0;
+}
+
+.sre-family-filters__group {
+    border-bottom: var(--sre-rule-w-thin) solid var(--sre-border);
+    padding: 12px 16px 14px;
+}
+
+.sre-family-filters__group:last-child {
+    border-bottom: none;
+}
+
+.sre-family-filters__group-name {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--sre-font-sans);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+    color: var(--sre-fg);
+    margin: 0 0 8px 0;
+    padding: 0;
+    cursor: pointer;
+    user-select: none;
+}
+
+.sre-family-filters__group-name::after {
+    content: "\2212";
+    font-family: var(--sre-font-mono);
+    color: var(--sre-fg-faint);
+    font-size: 14px;
+    line-height: 1;
+}
+
+.sre-family-filters__group.collapsed .sre-family-filters__group-name::after {
+    content: "+";
+}
+
+.sre-family-filters__group.collapsed .sre-family-filters__list {
+    display: none;
+}
+
+.sre-family-filters__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 240px;
+    overflow-y: auto;
+}
+
+.sre-family-filters__list li {
+    margin: 0;
+    padding: 0;
+}
+
+.sre-family-filters__list label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 0;
+    font-size: 13px;
+    color: var(--sre-fg);
+    cursor: pointer;
+    line-height: 1.3;
+}
+
+.sre-family-filters__list input[type="checkbox"] {
+    margin: 0;
+    width: 14px;
+    height: 14px;
+    accent-color: var(--sre-accent);
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.sre-family-filters__list label:hover {
+    color: var(--sre-accent);
+}
+
+.sre-family-filters__count {
+    color: var(--sre-fg-faint);
+    font-weight: 400;
+    font-size: 11px;
+    margin-left: auto;
+    font-family: var(--sre-font-mono);
+}
+
+/* Technical table view. */
+.sre-products-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: var(--sre-rule-w) solid var(--sre-rule);
+    font-family: var(--sre-font-sans);
+    font-size: 14px;
+}
+
+.sre-products-table thead {
+    background: var(--sre-table-head);
+}
+
+.sre-products-table th {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: var(--sre-rule-w) solid var(--sre-rule);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+    color: var(--sre-fg);
+}
+
+.sre-products-table td {
+    padding: 10px 12px;
+    border-bottom: var(--sre-rule-w-thin) solid var(--sre-border);
+    vertical-align: top;
+    font-size: 13px;
+}
+
+.sre-products-table tbody tr:hover {
+    background: var(--sre-row-hover);
+}
+
+.sre-products-table code,
+.sre-products-table .sre-mono {
+    font-family: var(--sre-font-mono);
+    font-size: 12px;
+    background: transparent;
+    padding: 0;
+    color: var(--sre-fg);
+}
+
+/* View-mode toggle. */
+.sre-layout-toggle {
+    display: inline-flex;
+    align-items: stretch;
+    border: var(--sre-rule-w-thin) solid var(--sre-border);
+    background: #ffffff;
+    margin: 0 0 16px 0;
+}
+
+.sre-layout-toggle__label {
+    align-self: center;
+    font-family: var(--sre-font-sans);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+    color: var(--sre-fg-muted);
+    padding: 6px 12px;
+    border-right: var(--sre-rule-w-thin) solid var(--sre-border);
+}
+
+.sre-layout-toggle__option {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    color: var(--sre-fg);
+    text-decoration: none;
+    font-family: var(--sre-font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+    border-right: var(--sre-rule-w-thin) solid var(--sre-border);
+    transition: background 0.08s linear, color 0.08s linear;
+}
+
+.sre-layout-toggle__option:last-child {
+    border-right: none;
+}
+
+.sre-layout-toggle__option:hover {
+    background: var(--sre-row-hover);
+    text-decoration: none;
+}
+
+.sre-layout-toggle__option.is-active {
+    background: var(--sre-fg);
+    color: #ffffff;
+}
+
+/* Sidebar rail sticky on desktop. */
+@media (min-width: 992px) {
+    .o_wsale_products_main_row > aside#products_grid_before {
+        position: sticky;
+        top: 12px;
+        align-self: start;
+        max-height: calc(100vh - 24px);
+        overflow-y: auto;
+    }
+}
+
+/* Hide the Odoo attribute panel when a Family is active
+   (per brief §07) or when we render our own. */
+.products_attributes_filters[style*="display: none"] {
+    display: none !important;
+}

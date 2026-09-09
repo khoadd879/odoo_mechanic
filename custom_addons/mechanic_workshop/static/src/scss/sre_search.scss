@@ -1,0 +1,110 @@
+/* =============================================================
+   SRE Searchbox — McMaster style instant search.
+   560 px wide, monospace, focus ring, hint text below.
+   ============================================================= */
+
+.oe_search_box_form,
+.o_searchbar_form,
+form.s_searchbar_input,
+.s_searchbar_input {
+    width: 100%;
+    max-width: 560px;
+    margin: 0;
+    display: flex;
+    align-items: stretch;
+    background: #ffffff;
+    position: relative;
+    transition: border-color 0.1s linear, box-shadow 0.1s linear;
+}
+
+.oe_search_box_form .input-group,
+.o_searchbar_form .input-group,
+form.s_searchbar_input .input-group,
+.s_searchbar_input > .input-group {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    margin: 0;
+    background: #ffffff;
+    border: 1.5px solid var(--sre-border-strong);
+    border-radius: 0;
+    transition: border-color 0.1s linear, box-shadow 0.1s linear;
+}
+
+.oe_search_box_form:focus-within,
+.o_searchbar_form:focus-within,
+form.s_searchbar_input:focus-within,
+.s_searchbar_input:focus-within {
+    border-color: var(--sre-accent);
+    box-shadow: 0 0 0 2px rgba(0, 60, 113, 0.2);
+}
+
+.oe_search_box_form .input-group-text,
+.o_searchbar_form .input-group-text,
+form.s_searchbar_input .input-group-text,
+.s_searchbar_input > .input-group-text {
+    background: #ffffff;
+    border: none;
+    color: var(--sre-fg);
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+}
+
+.oe_search_box_form input.search-query,
+.o_searchbar_form input.search-query,
+form.s_searchbar_input input.search-query,
+.s_searchbar_input > input.search-query {
+    font-family: var(--sre-font-mono);
+    font-size: 14px;
+    color: var(--sre-fg);
+    background: #ffffff;
+    border: none;
+    padding: 10px 12px;
+    flex: 1;
+    min-width: 0;
+    border-radius: 0;
+}
+
+.oe_search_box_form input.search-query:focus,
+.o_searchbar_form input.search-query:focus,
+form.s_searchbar_input input.search-query:focus,
+.s_searchbar_input > input.search-query:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.oe_search_box_form input.search-query::placeholder,
+.o_searchbar_form input.search-query::placeholder,
+form.s_searchbar_input input.search-query::placeholder,
+.s_searchbar_input > input.search-query::placeholder {
+    color: var(--sre-fg-faint);
+    font-style: normal;
+}
+
+.oe_search_box_form button[type="submit"],
+.o_searchbar_form button[type="submit"],
+form.s_searchbar_input button[type="submit"],
+.s_searchbar_input > button[type="submit"] {
+    background: var(--sre-fg);
+    color: #ffffff;
+    border: none;
+    padding: 0 18px;
+    font-family: var(--sre-font-sans);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--sre-tracked);
+    cursor: pointer;
+    border-radius: 0;
+    transition: background 0.1s linear;
+}
+
+.oe_search_box_form button[type="submit"]:hover,
+.o_searchbar_form button[type="submit"]:hover,
+form.s_searchbar_input button[type="submit"]:hover,
+.s_searchbar_input > button[type="submit"]:hover {
+    background: var(--sre-accent);
+}

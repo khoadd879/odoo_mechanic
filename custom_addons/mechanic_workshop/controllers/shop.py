@@ -26,7 +26,14 @@ class SreWebsiteSale(http.Controller):
         website=True,
         sitemap=False,
     )
-    def shop(self, page=0, pillar_slug=None, family_slug=None, **kw):
+    def shop(
+        self,
+        page: int = 0,
+        pillar_slug: str | None = None,
+        family_slug: str | None = None,
+        **kw: object,
+    ) -> http.Response:
+        del kw
         target = "/sre/catalog"
         if pillar_slug:
             target = f"/sre/catalog/pillar/{pillar_slug}"
