@@ -4,8 +4,8 @@
 
          The 8 pillars are data-driven: the template iterates over
          ``request.website.sre_visible_pillars`` so we do not hard-code
-         the names (brief §22 #7). Links point to ``/shop/pillar/<slug>``
-         so the new route in ``controllers/shop.py`` picks the slug up
+         the names (brief §22 #7). Links point to ``/sre/catalog/pillar/<slug>``
+         so the canonical route in ``controllers/catalog.py`` picks the slug up
          as a path parameter. The McMaster-style industrial band is
          styled by ``static/src/scss/sre_topnav.scss``.
          ================================================================= -->
