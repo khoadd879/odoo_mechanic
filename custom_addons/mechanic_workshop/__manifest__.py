@@ -9,7 +9,18 @@ Mechanic Workshop
 
 Technical catalog, public RFQ basket, CRM intake and staff-controlled
 quotation creation. Native Odoo owns all sales and operational flows.
-    """,
+
+Sprint 1 catalogue taxonomy:
+  * 8 Navigation Pillars (brief §04)
+  * Product Family per Pillar with Attribute Profile (brief §07)
+  * Industry and Application taxonomies (brief §14/§15)
+  * OEM Part Number scaffold for search and Cross Reference (brief §05/§12)
+
+Sprint 1 visual (McMaster-Carr reference):
+  * 4-column table-row tiles, monospace SKU/MPN, dense spec list.
+  * Industrial-blue pillar top nav, sticky filter rail, per-page
+    section header, pagination footer, lead-magnet CTA card.
+""",
     "author": "Mechanic Workshop",
     "license": "LGPL-3",
     "depends": [
@@ -24,12 +35,34 @@ quotation creation. Native Odoo owns all sales and operational flows.
     ],
     "data": [
         "security/ir.model.access.csv",
+        "data/sre_pim_seed.xml",
+        "views/sre_navigation_pillar_views.xml",
+        "views/sre_product_family_views.xml",
+        "views/sre_attribute_profile_views.xml",
+        "views/sre_industry_views.xml",
+        "views/sre_oem_pn_views.xml",
+        "views/website_sale_header.xml",
+        "views/website_sale_search.xml",
+        "views/sre_catalog.xml",
         "views/rfq_backend.xml",
         "views/website_sale_product_tile.xml",
         "views/website_sale_product_detail.xml",
         "views/rfq_website.xml",
     ],
-    "assets": {"web.assets_frontend": ["mechanic_workshop/static/src/js/rfq.js"]},
+    "assets": {
+        "web.assets_frontend": [
+            "mechanic_workshop/static/src/js/rfq.js",
+            "mechanic_workshop/static/src/js/sre_rewrite_cards.js",
+            "mechanic_workshop/static/src/js/sre_assets.js",
+            "mechanic_workshop/static/src/js/sre_view_mode_toggle.js",
+            "mechanic_workshop/static/src/scss/sre_tokens.scss",
+            "mechanic_workshop/static/src/scss/sre_topnav.scss",
+            "mechanic_workshop/static/src/scss/sre_tile.scss",
+            "mechanic_workshop/static/src/scss/sre_category.scss",
+            "mechanic_workshop/static/src/scss/sre_search.scss",
+            "mechanic_workshop/static/src/scss/sre_section.scss",
+        ]
+    },
     "installable": True,
     "application": True,
     "auto_install": False,
