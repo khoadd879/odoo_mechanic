@@ -923,3 +923,28 @@ Remaining brief scope / data dependency:
   related-product relationships, family-driven RFQ fields/uploads,
   Boiler Part Finder, industry/application landing content and portal
   history/saved-list/re-order workflows remain for Sprints 2–4.
+
+## 2026-09-14 — Storefront UX Refinement: 1-Click RFQ & B2B Pricing Clarity
+
+User requested UX improvements to make product selection and quotation inquiry
+substantially more intuitive, addressing the absence of retail pricing on a B2B platform.
+
+Improvements:
+- Replaced the passive `<small>No public price</small>` label on catalog cards with
+  a clear, actionable badge: `<span class="sre-quote-price-tag"><i class="fa fa-calculator"/> B2B Quote on Request</span>`,
+  clarifying the quote-first procurement workflow.
+- Added 1-Click `Add to RFQ` form directly to product cards (for single-variant
+  items) and table rows on `/sre/catalog`. Clicking asynchronously dispatches to `/rfq/add`
+  and immediately updates the global header RFQ counter via AJAX, providing temporary
+  `✓ Added!` visual confirmation on the button without page reload.
+- Added a 3-step B2B procurement banner (`01. Identify Part → 02. Add to RFQ → 03. Receive Official Quote`)
+  to the catalog hero section, giving buyers immediate clarity on how transactions work.
+- Added `sre-rfq-count` class to the desktop header RFQ badge in `views/website_sale_header.xml`
+  so AJAX additions update both desktop and mobile header counters in real time.
+- Updated `views/rfq_website.xml` with visual icons and reassurance copy ("No payment required online").
+
+Verification:
+- `./scripts/update-module.sh mechanic_workshop` executed with clean restart and cache rebuild.
+- `./scripts/agent_check.sh`: **30 PASS, 0 FAIL**, exit 0.
+- Live HTTP/AJAX test: CSRF session + POST `/rfq/add` with `ajax=1` returns `{"line_count": 1}`, verified on `/rfq`.
+
