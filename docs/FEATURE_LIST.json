@@ -270,6 +270,30 @@
         "Family-driven dynamic RFQ fields and file uploads.",
         "Boiler Part Finder, industry/application landing content, customer portal RFQ history, saved lists and repeat-order features."
       ]
+    },
+    {
+      "id": "sre-storefront-ux-refinement",
+      "title": "Storefront UX refinement: 1-click RFQ, B2B pricing tag, and 3-step procurement banner",
+      "status": "completed",
+      "version": "19.0.1.8.0",
+      "summary": "Addresses the absence of retail pricing on a B2B platform and makes part inquiry substantially more intuitive. Replaces passive 'No public price' with actionable 'B2B Quote on Request' tag, adds 1-click AJAX Add to RFQ on catalog cards and table rows, synchronizes live header RFQ counter on both desktop and mobile, adds 3-step procurement process bar, and reinforces online inquiry safety with no-payment-required notices.",
+      "brief_alignment": {
+        "sections_06_09": "Fast 1-click RFQ addition directly on technical catalog cards and table view; active visual confirmation without page navigation.",
+        "section_08": "Clarified B2B pricing policy with B2B Quote on Request badge and purchasing process explanation."
+      },
+      "acceptance_criteria": [
+        "AC-1 Catalog cards render 'B2B Quote on Request' badge instead of 'No public price'.",
+        "AC-2 Catalog hero renders 3-step B2B procurement banner (Identify Part -> Add to RFQ -> Receive Official Quote).",
+        "AC-3 Single-variant products on catalog cards have direct 'Add to RFQ' form with AJAX submission, temporary button confirmation, and live header badge update.",
+        "AC-4 Table view mode has inline 'RFQ' action button per row.",
+        "AC-5 Desktop header RFQ badge updates live without full page refresh.",
+        "AC-6 agent_check.sh reports 30 PASS / 0 FAIL."
+      ],
+      "evidence": {
+        "module_update": "./scripts/update-module.sh mechanic_workshop exit 0",
+        "agent_check": "30 PASS, 0 FAIL",
+        "live_ajax_test": "POST /rfq/add with ajax=1 returns 200 JSON {'line_count': 1} and updates session basket"
+      }
     }
   ]
 }
