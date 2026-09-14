@@ -55,7 +55,7 @@
                        class="sre-header__rfq">
                         <span class="fa fa-file-text-o" aria-hidden="true"/>
                         <span>RFQ list</span>
-                        <strong t-esc="len(request.session.get('sre_rfq_basket_%s' % request.website.id, {}))"/>
+                        <strong class="sre-rfq-count" t-esc="len(request.session.get('sre_rfq_basket_%s' % request.website.id, {}))"/>
                     </a>
                 </div>
             </div>

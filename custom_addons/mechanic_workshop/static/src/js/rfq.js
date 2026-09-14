@@ -7,8 +7,9 @@
         form.dataset.busy = "1";
         const button = form.querySelector('button[type="submit"]');
         const feedback = form.querySelector(".sre-rfq-feedback");
-        button.disabled = true;
-        feedback.textContent = "";
+        const originalButtonHtml = button ? button.innerHTML : "";
+        if (button) button.disabled = true;
+        if (feedback) feedback.textContent = "";
         try {
             const data = new FormData(form);
             data.set("ajax", "1");
@@ -20,13 +21,28 @@
             document.querySelectorAll(".sre-rfq-count").forEach((badge) => {
                 badge.textContent = String(result.line_count);
             });
-            feedback.className = "sre-rfq-feedback mt-3 text-success";
-            feedback.textContent = feedback.dataset.success;
+            if (feedback) {
+                feedback.className = "sre-rfq-feedback mt-1 text-success";
+                feedback.textContent = feedback.dataset.success || "Added to RFQ!";
+            }
+            if (button) {
+                button.innerHTML = '<i class="fa fa-check" aria-hidden="true"></i> Added!';
+                button.classList.add("sre-button--added");
+                setTimeout(() => {
+                    button.innerHTML = originalButtonHtml;
+                    button.classList.remove("sre-button--added");
+                }, 2500);
+            }
         } catch {
-            feedback.className = "sre-rfq-feedback mt-3 text-danger";
-            feedback.textContent = feedback.dataset.error;
+            if (feedback) {
+                feedback.className = "sre-rfq-feedback mt-1 text-danger";
+                feedback.textContent = feedback.dataset.error || "Could not add to RFQ";
+            }
+            if (button) {
+                button.innerHTML = originalButtonHtml;
+            }
         } finally {
-            button.disabled = false;
+            if (button) button.disabled = false;
             delete form.dataset.busy;
         }
     });

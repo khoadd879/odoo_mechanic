@@ -26,10 +26,13 @@
                 </select>
                 <div class="sre-rfq-add__quantity">
                     <div><label for="rfq_quantity">Quantity</label><input id="rfq_quantity" name="quantity" type="number" min="0.001" max="1000000" step="any" value="1" required="required"/></div>
-                    <button class="sre-button" type="submit">Add to RFQ</button>
+                    <button class="sre-button" type="submit"><i class="fa fa-plus-circle" aria-hidden="true"/> Add to RFQ</button>
                 </div>
-                <a href="/rfq" class="sre-link-arrow">View current RFQ list</a>
-                <div class="sre-rfq-feedback" role="status" aria-live="polite" data-success="Added to your RFQ. You can continue browsing." data-error="Could not confirm the addition. Please check your RFQ before trying again."/>
+                <div class="d-flex align-items-center justify-content-between mt-2 flex-wrap gap-2">
+                    <a href="/rfq" class="sre-link-arrow">View current RFQ list</a>
+                    <span class="text-muted small"><i class="fa fa-lock" aria-hidden="true"/> No payment required online</span>
+                </div>
+                <div class="sre-rfq-feedback" role="status" aria-live="polite" data-success="Added to your RFQ. You can continue browsing or review your list." data-error="Could not confirm the addition. Please check your RFQ before trying again."/>
             </form>
         </xpath>
     </template>

@@ -44,11 +44,26 @@
             </dl>
             <div class="sre-product-card__commercial">
                 <span class="sre-status"><i aria-hidden="true"/>Availability on request</span>
-                <small>No public price</small>
+                <span class="sre-quote-price-tag"><i class="fa fa-calculator" aria-hidden="true"/> B2B Quote on Request</span>
             </div>
             <div class="sre-product-card__actions">
                 <a t-att-href="product.website_url" class="sre-link-arrow">Technical details</a>
-                <a t-att-href="product.website_url + '#sre-rfq-panel'" class="sre-button sre-button--compact">Configure RFQ</a>
+                <t t-if="len(product.product_variant_ids) == 1">
+                    <form action="/rfq/add" method="post" class="sre-rfq-add sre-rfq-card-form">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="product_id" t-att-value="product.product_variant_ids[0].id"/>
+                        <input type="hidden" name="quantity" value="1"/>
+                        <button class="sre-button sre-button--compact sre-button--rfq" type="submit" title="Add 1 unit to RFQ">
+                            <i class="fa fa-plus-circle" aria-hidden="true"/> Add to RFQ
+                        </button>
+                        <span class="sre-rfq-feedback" role="status" aria-live="polite" data-success="Added!" data-error="Failed"/>
+                    </form>
+                </t>
+                <t t-else="">
+                    <a t-att-href="product.website_url + '#sre-rfq-panel'" class="sre-button sre-button--compact">
+                        Select Variant (<t t-esc="len(product.product_variant_ids)"/>)
+                    </a>
+                </t>
             </div>
         </article>
     </template>
@@ -97,6 +112,31 @@
                                 <t t-set="search_value" t-value="search"/>
                             </t>
                             <p>Search priority: exact SKU → MPN → OEM part number → brand → keyword.</p>
+                        </div>
+                        <div class="sre-procurement-steps" aria-label="B2B procurement process">
+                            <div class="sre-procurement-step">
+                                <span class="sre-step-num">01</span>
+                                <div class="sre-step-text">
+                                    <strong>Identify Part</strong>
+                                    <span>Search SKU, MPN, Brand</span>
+                                </div>
+                            </div>
+                            <span class="sre-step-arrow" aria-hidden="true">→</span>
+                            <div class="sre-procurement-step">
+                                <span class="sre-step-num">02</span>
+                                <div class="sre-step-text">
+                                    <strong>Add to RFQ</strong>
+                                    <span>1-click add or configure</span>
+                                </div>
+                            </div>
+                            <span class="sre-step-arrow" aria-hidden="true">→</span>
+                            <div class="sre-procurement-step">
+                                <span class="sre-step-num">03</span>
+                                <div class="sre-step-text">
+                                    <strong>Receive Official Quote</strong>
+                                    <span>Pricing &amp; lead-time confirmed</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -197,7 +237,7 @@
                             </div>
                             <div t-else="" class="sre-table-wrap">
                                 <table class="sre-products-table">
-                                    <thead><tr><th>Product</th><th>Brand</th><th>MPN</th><th>OEM PN</th><th>Availability</th><th/></tr></thead>
+                                    <thead><tr><th>Product</th><th>Brand</th><th>MPN</th><th>OEM PN</th><th>Availability</th><th>Actions</th></tr></thead>
                                     <tbody>
                                         <tr t-foreach="products" t-as="product">
                                             <td><a t-att-href="product.website_url" t-esc="product.name"/><code t-if="product.default_code" t-esc="product.default_code"/></td>
@@ -205,7 +245,20 @@
                                             <td class="sre-mono" t-esc="product.manufacturer_pref or '—'"/>
                                             <td class="sre-mono" t-esc="product.sre_public_oem_part_numbers or '—'"/>
                                             <td><span class="sre-status"><i/>On request</span></td>
-                                            <td><a t-att-href="product.website_url" class="sre-link-arrow">Details</a></td>
+                                            <td class="text-nowrap">
+                                                <a t-att-href="product.website_url" class="sre-link-arrow">Details</a>
+                                                <t t-if="len(product.product_variant_ids) == 1">
+                                                    <form action="/rfq/add" method="post" class="sre-rfq-add d-inline-block ms-2">
+                                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                        <input type="hidden" name="product_id" t-att-value="product.product_variant_ids[0].id"/>
+                                                        <input type="hidden" name="quantity" value="1"/>
+                                                        <button class="sre-button sre-button--compact sre-button--rfq py-1 px-2" type="submit" title="Add 1 unit to RFQ">
+                                                            <i class="fa fa-plus-circle" aria-hidden="true"/> RFQ
+                                                        </button>
+                                                        <span class="sre-rfq-feedback ms-1" role="status" aria-live="polite" data-success="Added!" data-error="Error"/>
+                                                    </form>
+                                                </t>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
