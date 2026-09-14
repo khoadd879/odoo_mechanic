@@ -948,3 +948,26 @@ Verification:
 - `./scripts/agent_check.sh`: **30 PASS, 0 FAIL**, exit 0.
 - Live HTTP/AJAX test: CSRF session + POST `/rfq/add` with `ajax=1` returns `{"line_count": 1}`, verified on `/rfq`.
 
+## 2026-09-14 — Fix Storefront Scroll Jitter / Layout Thrashing
+
+User reported that the website was stuttering/jittering ("giật giật") when scrolling down.
+
+### Root Cause Analysis
+- Odoo 19 core JS `website.header_standard` (`HeaderStandard` in `@website/interactions/header/header_standard.js`) attaches to `header.o_header_standard:not(.o_header_sidebar)`.
+- At scroll transition point (~140px / 300px), it toggles `.o_header_affixed` (`position: fixed`), which pulls the ~140px header out of normal document flow and shrinks the page layout height.
+- To compensate, `BaseHeader.adjustMainPadding()` dynamically sets `padding-top: 140px` on `this.mainEl = document.querySelector("main")`.
+- On `/sre/catalog`, `main` was the right-hand column (`main.sre-catalog-results`), pushing only the products down while the filter sidebar stayed up, shifting `scrollTop` back and forth around the transition boundary, which caused an infinite oscillation loop (layout thrashing) and violent jitter on scroll.
+- On the homepage, absence of a top-level `<main>` caused the whole page to jerk upward by 140px on scroll.
+
+### Resolution
+1. **Deactivated `website.header_visibility_standard`**: Added `<record id="website.header_visibility_standard" model="ir.ui.view"><field name="active" eval="False"/></record>` to `views/website_sale_header.xml`. Without `o_header_standard`, Odoo's `HeaderStandard` JS interaction is never instantiated, completely eliminating the scroll listener and padding manipulation.
+2. **Native Sticky Header**: In `sre_site.scss`, styled `header#top` with `position: sticky !important; top: 0 !important; z-index: 1030 !important;` and a soft shadow. Because sticky elements remain in the document flow, the page layout never collapses and scrolling is 100% butter-smooth and hardware-accelerated.
+3. **Neutralized Dynamic Padding**: Added `padding-top: 0 !important;` to `#wrap, #wrapwrap main, main.sre-catalog-results` and neutralized any rogue affix classes.
+4. **Sidebar Offset Synchronization**: Updated `.sre-catalog-filters` and `.sre-product-page__help` sticky offsets to `top: 155px;` so they stick cleanly below the 140px sticky header without clipping or overlapping.
+
+### Verification
+- `./scripts/update-module.sh mechanic_workshop`: Module updated, caches cleared, public site ready.
+- HTML inspection: Verified `o_header_standard` is absent from rendered `<header id="top">` on both `/` and `/sre/catalog`.
+- `./scripts/agent_check.sh`: **30 PASS, 0 FAIL** (exit 0).
+- Committed in git: `ef6a894 fix(storefront): eliminate scroll jitter with sticky header and deactivate header_visibility_standard`.
+
