@@ -227,8 +227,10 @@ body {
 /* Header and global navigation. */
 header#top {
     background: var(--sre-white);
-    position: relative;
-    z-index: 1030;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1030 !important;
+    box-shadow: 0 2px 10px rgba(11, 34, 57, 0.06);
 
     > .navbar {
         background: var(--sre-white) !important;
@@ -236,6 +238,22 @@ header#top {
         box-shadow: none !important;
         padding: 0;
     }
+}
+
+// Neutralize any core Odoo header scroll interactions and padding shifts that cause layout thrashing / jitter
+header#top.o_header_affixed,
+header#top.o_header_is_scrolled,
+header#top.o_transitioning {
+    position: sticky !important;
+    top: 0 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+#wrap,
+#wrapwrap main,
+main.sre-catalog-results {
+    padding-top: 0 !important;
 }
 
 .sre-header__desktop {
@@ -600,7 +618,7 @@ header#top {
 .sre-catalog-hero__search p { color: var(--sre-muted); font-family: var(--sre-font-mono); font-size: 9px; letter-spacing: 0.05em; margin: 0; text-transform: uppercase; }
 
 .sre-catalog-shell { align-items: start; direction: ltr; display: grid; gap: 34px; grid-template-columns: 250px minmax(0, 1fr); padding-bottom: 80px; padding-top: 36px; }
-.sre-catalog-filters { border: 1px solid var(--sre-line); direction: ltr; grid-column: 1; position: sticky; top: 12px; }
+.sre-catalog-filters { border: 1px solid var(--sre-line); direction: ltr; grid-column: 1; position: sticky; top: 155px; }
 .sre-catalog-results { direction: ltr; grid-column: 2; }
 .sre-catalog-filters__head { align-items: center; background: var(--sre-navy); color: var(--sre-white); display: flex; justify-content: space-between; padding: 14px 16px; }
 .sre-catalog-filters__head div { display: flex; flex-direction: column; }
@@ -789,7 +807,7 @@ header#top {
 .sre-cross-reference { align-items: center; border: 1px solid var(--sre-line); display: flex; justify-content: space-between; padding: 15px; }
 .sre-cross-reference span { color: var(--sre-muted); font-size: 9px; text-transform: uppercase; }
 .sre-cross-reference strong { color: var(--sre-navy); font-size: 11px; }
-.sre-product-page__help { background: var(--sre-navy); color: #b8cad9; padding: 24px; position: sticky; top: 16px; }
+.sre-product-page__help { background: var(--sre-navy); color: #b8cad9; padding: 24px; position: sticky; top: 155px; }
 .sre-product-page__help h2 { color: var(--sre-white); font-size: 22px; margin: 8px 0 12px; }
 .sre-product-page__help p { font-size: 11px; line-height: 1.7; }
 .sre-product-page__help .sre-link-arrow { color: var(--sre-white) !important; display: flex; margin-top: 15px; }

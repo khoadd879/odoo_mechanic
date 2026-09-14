@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Deactivate Odoo standard header scroll interaction to prevent layout jitter & jump -->
+    <record id="website.header_visibility_standard" model="ir.ui.view">
+        <field name="active" eval="False"/>
+    </record>
+
     <template id="sre_search_form" name="SRE global search form">
         <form t-att-action="search_action or '/sre/catalog'"
               method="get"
