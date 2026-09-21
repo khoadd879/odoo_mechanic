@@ -64,11 +64,6 @@ custom_addons/**/static/src/**/*.min.css
 
 # OCA mirrors: cloned on demand from upstream, never committed.
 # See docs/PROGRESS.md for the clone procedure.
-oca_addons/*
-!oca_addons/.gitkeep
-oca_addons/**/*.pyc
-oca_addons/**/__pycache__/
-
 # Backups / scratch
 backups/
 *.dump
