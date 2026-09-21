@@ -1,0 +1,8 @@
+[submodule "oca_addons/brand"]
+	path = oca_addons/brand
+	url = https://github.com/OCA/brand.git
+	branch = 19.0
+[submodule "oca_addons/product-attribute"]
+	path = oca_addons/product-attribute
+	url = https://github.com/OCA/product-attribute.git
+	branch = 19.0
