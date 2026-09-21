@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sre_boiler_finder_page" name="SRE Boiler Part Finder">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Boiler Part Finder | Technical Replacement Discovery</t>
+            <div id="wrap" class="sre-boiler-finder-page">
+                <!-- Hero Section -->
+                <section class="sre-page-header">
+                    <div class="container">
+                        <nav class="sre-breadcrumb" aria-label="Breadcrumb">
+                            <a href="/">Home</a><span>/</span>
+                            <a href="/boiler-finder">Boiler Part Finder</a>
+                            <t t-if="selected_make"><span>/</span><a t-att-href="'/boiler-finder?make=%s' % selected_make.slug" t-esc="selected_make.name"/></t>
+                            <t t-if="selected_model"><span>/</span><a t-att-href="'/boiler-finder?make=%s&amp;model=%s' % (selected_make.slug, selected_model.slug)" t-esc="selected_model.name"/></t>
+                            <t t-if="selected_subsystem"><span>/</span><span t-esc="selected_subsystem.name"/></t>
+                        </nav>
+                        <div class="sre-page-header__row">
+                            <div>
+                                <span class="sre-kicker">Boiler Equipment Discovery Engine · Brief §11</span>
+                                <h1 class="sre-page-header__title">Boiler Part Finder</h1>
+                                <p class="sre-page-header__desc">
+                                    Identify 100% verified replacement valves, feed pumps, level probes, blowdown stations and burner components by boiler manufacturer and model.
+                                </p>
+                            </div>
+                            <div class="sre-boiler-badge">
+                                <i class="fa fa-shield text-primary"/>
+                                <div>
+                                    <strong>Direct Fit Guarantee</strong>
+                                    <span>Engineering-verified compatibility</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="container my-4">
+                    <!-- 4-Step Visual Progress Bar -->
+                    <div class="sre-boiler-wizard-steps">
+                        <div t-att-class="'sre-wizard-step ' + ('is-active' if not selected_make else 'is-complete')">
+                            <a t-att-href="'/boiler-finder' if selected_make else '#'" class="sre-wizard-step__link">
+                                <span class="sre-step-circle"><t t-if="selected_make"><i class="fa fa-check"/></t><t t-else="">1</t></span>
+                                <div class="sre-step-info">
+                                    <span class="sre-step-label">Step 1</span>
+                                    <strong class="sre-step-title"><t t-if="selected_make" t-esc="selected_make.name"/><t t-else="">Manufacturer</t></strong>
+                                </div>
+                            </a>
+                        </div>
+                        <div t-att-class="'sre-wizard-step ' + ('is-active' if selected_make and not selected_model else ('is-complete' if selected_model else ''))">
+                            <a t-att-href="'/boiler-finder?make=%s' % selected_make.slug if selected_make and selected_model else '#'" class="sre-wizard-step__link">
+                                <span class="sre-step-circle"><t t-if="selected_model"><i class="fa fa-check"/></t><t t-else="">2</t></span>
+                                <div class="sre-step-info">
+                                    <span class="sre-step-label">Step 2</span>
+                                    <strong class="sre-step-title"><t t-if="selected_model" t-esc="selected_model.name"/><t t-else="">Boiler Model</t></strong>
+                                </div>
+                            </a>
+                        </div>
+                        <div t-att-class="'sre-wizard-step ' + ('is-active' if selected_model and not selected_subsystem else ('is-complete' if selected_subsystem else ''))">
+                            <a t-att-href="'/boiler-finder?make=%s&amp;model=%s' % (selected_make.slug, selected_model.slug) if selected_model and selected_subsystem else '#'" class="sre-wizard-step__link">
+                                <span class="sre-step-circle"><t t-if="selected_subsystem"><i class="fa fa-check"/></t><t t-else="">3</t></span>
+                                <div class="sre-step-info">
+                                    <span class="sre-step-label">Step 3</span>
+                                    <strong class="sre-step-title"><t t-if="selected_subsystem" t-esc="selected_subsystem.name"/><t t-else="">Subsystem</t></strong>
+                                </div>
+                            </a>
+                        </div>
+                        <div t-att-class="'sre-wizard-step ' + ('is-active' if selected_model else '')">
+                            <span class="sre-wizard-step__link">
+                                <span class="sre-step-circle">4</span>
+                                <div class="sre-step-info">
+                                    <span class="sre-step-label">Step 4</span>
+                                    <strong class="sre-step-title">Verified Parts</strong>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Active Configuration Pill Strip -->
+                    <div t-if="selected_make" class="sre-boiler-active-bar">
+                        <span class="sre-bar-label">Current Configuration:</span>
+                        <span class="sre-pill">
+                            <strong>Make:</strong> <t t-esc="selected_make.name"/>
+                            <a href="/boiler-finder" title="Change manufacturer">×</a>
+                        </span>
+                        <span t-if="selected_model" class="sre-pill">
+                            <strong>Model:</strong> <t t-esc="selected_model.name"/>
+                            <a t-att-href="'/boiler-finder?make=%s' % selected_make.slug" title="Change model">×</a>
+                        </span>
+                        <span t-if="selected_subsystem" class="sre-pill">
+                            <strong>Subsystem:</strong> <t t-esc="selected_subsystem.name"/>
+                            <a t-att-href="'/boiler-finder?make=%s&amp;model=%s' % (selected_make.slug, selected_model.slug)" title="Change subsystem">×</a>
+                        </span>
+                        <a href="/boiler-finder" class="sre-reset-btn">Reset All</a>
+                    </div>
+
+                    <!-- STEP 1: SELECT MANUFACTURER -->
+                    <div t-if="not selected_make" class="sre-finder-step-content">
+                        <div class="sre-section-title">
+                            <h2>1. Select Boiler Manufacturer</h2>
+                            <p>Choose your boiler equipment manufacturer to inspect compatible product lines and series.</p>
+                        </div>
+                        <div class="row g-3">
+                            <div t-foreach="manufacturers" t-as="mfg" class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <a t-att-href="'/boiler-finder?make=%s' % mfg.slug" class="sre-mfg-card text-decoration-none">
+                                    <div class="sre-mfg-card__head">
+                                        <i class="fa fa-industry text-primary fs-3 mb-2"/>
+                                        <h3 t-esc="mfg.name"/>
+                                        <span t-if="mfg.country_name" class="sre-mfg-origin" t-esc="mfg.country_name"/>
+                                    </div>
+                                    <p t-if="mfg.description" class="sre-mfg-card__desc" t-esc="mfg.description"/>
+                                    <div class="sre-mfg-card__foot">
+                                        <span><strong t-esc="mfg.model_count"/> series / models</span>
+                                        <i class="fa fa-arrow-right"/>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: SELECT BOILER MODEL -->
+                    <div t-elif="selected_make and not selected_model" class="sre-finder-step-content">
+                        <div class="sre-section-title">
+                            <h2>2. Select Boiler Model for <span class="text-primary" t-esc="selected_make.name"/></h2>
+                            <p>Select your boiler model series to view engineered replacement components.</p>
+                        </div>
+                        <div class="row g-3">
+                            <div t-foreach="available_models" t-as="bm" class="col-12 col-md-6 col-lg-4">
+                                <a t-att-href="'/boiler-finder?make=%s&amp;model=%s' % (selected_make.slug, bm.slug)" class="sre-model-card text-decoration-none">
+                                    <div class="sre-model-card__header">
+                                        <h3 t-esc="bm.name"/>
+                                        <span class="badge bg-primary" t-esc="bm.boiler_type_id.name"/>
+                                    </div>
+                                    <div class="sre-model-card__metrics">
+                                        <div t-if="bm.design_pressure_bar">
+                                            <span>Max Pressure</span>
+                                            <strong><t t-esc="'%.1f' % bm.design_pressure_bar"/> bar</strong>
+                                        </div>
+                                        <div t-if="bm.steam_capacity_kg_h">
+                                            <span>Steam Output</span>
+                                            <strong><t t-esc="'%.0f' % bm.steam_capacity_kg_h"/> kg/h</strong>
+                                        </div>
+                                    </div>
+                                    <p t-if="bm.description" class="sre-model-card__desc" t-esc="bm.description"/>
+                                    <div class="sre-model-card__foot">
+                                        <span><strong t-esc="bm.part_count"/> verified parts</span>
+                                        <span class="sre-select-btn">Select Model →</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3 & 4: SELECT SUBSYSTEM OR VIEW PARTS -->
+                    <div t-elif="selected_model" class="sre-finder-step-content">
+                        <!-- Subsystem Tabs -->
+                        <div class="sre-subsystem-bar mb-4">
+                            <span class="sre-subsystem-bar__title">Subsystems:</span>
+                            <div class="sre-subsystem-tabs">
+                                <a t-att-href="'/boiler-finder?make=%s&amp;model=%s' % (selected_make.slug, selected_model.slug)"
+                                   t-att-class="'sre-subsystem-tab ' + ('is-active' if not selected_subsystem else '')">
+                                    <i class="fa fa-th-large"/> All Subsystems
+                                </a>
+                                <a t-foreach="available_subsystems" t-as="sub"
+                                   t-att-href="'/boiler-finder?make=%s&amp;model=%s&amp;subsystem=%s' % (selected_make.slug, selected_model.slug, sub.slug)"
+                                   t-att-class="'sre-subsystem-tab ' + ('is-active' if selected_subsystem and selected_subsystem.id == sub.id else '')">
+                                    <i t-att-class="'fa ' + (sub.icon or 'fa-cogs')"/>
+                                    <span t-esc="sub.name"/>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Results Section -->
+                        <div class="sre-results-section">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <h2 class="h4 mb-1">
+                                        Verified Replacement Parts for <span class="text-primary" t-esc="selected_model.name"/>
+                                        <t t-if="selected_subsystem"> — <span class="text-muted" t-esc="selected_subsystem.name"/></t>
+                                    </h2>
+                                    <p class="text-muted small mb-0">Showing <strong><t t-esc="len(mapped_parts)"/></strong> engineered components verified for this equipment series.</p>
+                                </div>
+                                <a href="/rfq" class="sre-button sre-button--compact">
+                                    <i class="fa fa-paper-plane me-1"/> Request Custom Parts
+                                </a>
+                            </div>
+
+                            <div t-if="mapped_parts" class="row g-3">
+                                <div t-foreach="mapped_parts" t-as="mapping" class="col-12 col-md-6 col-lg-4">
+                                    <article class="sre-boiler-part-card">
+                                        <div class="sre-boiler-part-card__top">
+                                            <span t-if="mapping.is_critical_spare" class="sre-badge sre-badge--critical" title="Prevent unscheduled boiler downtime">
+                                                <i class="fa fa-bolt"/> Critical Spare
+                                            </span>
+                                            <span class="sre-badge sre-badge--subsystem">
+                                                <i t-att-class="'fa ' + (mapping.subsystem_id.icon or 'fa-cogs')"/>
+                                                <t t-esc="mapping.subsystem_id.name"/>
+                                            </span>
+                                        </div>
+
+                                        <a t-att-href="mapping.product_tmpl_id.website_url" class="sre-boiler-part-card__media">
+                                            <img t-if="mapping.product_tmpl_id.image_128"
+                                                 t-att-src="'/web/image/product.template/%s/image_256' % mapping.product_tmpl_id.id"
+                                                 t-att-alt="mapping.product_tmpl_id.name" loading="lazy"/>
+                                            <span t-else="" class="sre-product-card__placeholder">
+                                                <i class="fa fa-cogs"/>
+                                            </span>
+                                        </a>
+
+                                        <div class="sre-boiler-part-card__body">
+                                            <div class="sre-boiler-part-card__pos" t-if="mapping.position_ref">
+                                                <span>Position:</span> <strong t-esc="mapping.position_ref"/>
+                                            </div>
+
+                                            <h3 class="sre-boiler-part-card__title">
+                                                <a t-att-href="mapping.product_tmpl_id.website_url" t-esc="mapping.product_tmpl_id.name"/>
+                                            </h3>
+
+                                            <div class="sre-boiler-part-card__ids">
+                                                <span t-if="mapping.product_tmpl_id.default_code">SKU: <strong class="sre-mono" t-esc="mapping.product_tmpl_id.default_code"/></span>
+                                                <span t-if="mapping.product_tmpl_id.manufacturer_pref">MPN: <strong class="sre-mono" t-esc="mapping.product_tmpl_id.manufacturer_pref"/></span>
+                                                <span t-if="mapping.product_tmpl_id.product_brand_id">Brand: <t t-esc="mapping.product_tmpl_id.product_brand_id.name"/></span>
+                                            </div>
+
+                                            <div class="sre-boiler-part-card__specs" t-if="mapping.product_tmpl_id.operating_pressure_max or mapping.product_tmpl_id.operating_temp_max or mapping.product_tmpl_id.flow_rate_max">
+                                                <span t-if="mapping.product_tmpl_id.operating_pressure_max"><i class="fa fa-tachometer"/> <t t-esc="'%.1f' % mapping.product_tmpl_id.operating_pressure_max"/> bar</span>
+                                                <span t-if="mapping.product_tmpl_id.operating_temp_max"><i class="fa fa-thermometer-half"/> <t t-esc="'%.0f' % mapping.product_tmpl_id.operating_temp_max"/> °C</span>
+                                                <span t-if="mapping.product_tmpl_id.flow_rate_max"><i class="fa fa-tint"/> <t t-esc="'%.1f' % mapping.product_tmpl_id.flow_rate_max"/> m³/h</span>
+                                            </div>
+
+                                            <p t-if="mapping.notes" class="sre-boiler-part-card__note">
+                                                <i class="fa fa-info-circle text-primary me-1"/> <t t-esc="mapping.notes"/>
+                                            </p>
+                                        </div>
+
+                                        <div class="sre-boiler-part-card__foot">
+                                            <div class="sre-quote-tag">
+                                                <t t-if="mapping.product_tmpl_id.public_price_approved and mapping.product_tmpl_id.list_price">
+                                                    <span t-field="mapping.product_tmpl_id.list_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <span class="sre-status"><i/>B2B Quote</span>
+                                                </t>
+                                            </div>
+                                            <div class="sre-actions">
+                                                <t t-if="len(mapping.product_tmpl_id.product_variant_ids) == 1">
+                                                    <form action="/rfq/add" method="post" class="sre-rfq-add sre-rfq-card-form">
+                                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                        <input type="hidden" name="product_id" t-att-value="mapping.product_tmpl_id.product_variant_ids[0].id"/>
+                                                        <input type="hidden" name="quantity" value="1"/>
+                                                        <button class="sre-button sre-button--compact sre-button--rfq" type="submit" title="Add to RFQ">
+                                                            <i class="fa fa-plus-circle"/> Add to RFQ
+                                                        </button>
+                                                        <span class="sre-rfq-feedback" role="status" aria-live="polite" data-success="Added!" data-error="Error"/>
+                                                    </form>
+                                                </t>
+                                                <t t-else="">
+                                                    <a t-att-href="mapping.product_tmpl_id.website_url" class="sre-button sre-button--compact">Select</a>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                            <div t-else="" class="sre-empty-state my-4">
+                                <span class="fa fa-wrench"/>
+                                <h2>No parts registered for this subsystem yet</h2>
+                                <p>Our boiler engineering team maintains specifications for all series. Upload your nameplate or part photo for immediate matching.</p>
+                                <div>
+                                    <a t-att-href="'/boiler-finder?make=%s&amp;model=%s' % (selected_make.slug, selected_model.slug)" class="sre-button sre-button--secondary">View all parts for this model</a>
+                                    <a href="/rfq" class="sre-button">Request Engineering Match</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Consultation Box -->
+                    <div class="sre-engineering-cta mt-5">
+                        <div>
+                            <span class="sre-kicker">Industrial Boiler Engineering Desk</span>
+                            <h2>Don't see your specific boiler series or obsolete component?</h2>
+                            <p>Send our steam specialists your boiler nameplate photo, serial number, and operating steam pressure. We will cross-reference original drawing records and dispatch a formal quotation within 24 hours.</p>
+                        </div>
+                        <a href="/rfq" class="sre-button sre-button--light">Submit Boiler Nameplate Photo</a>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -15,3 +15,20 @@ access_sre_application_public,SRE Application public,model_sre_application,base.
 access_sre_application_sales,SRE Application sales,model_sre_application,sales_team.group_sale_salesman,1,1,1,0
 access_sre_oem_pn_public,SRE OEM PN public disabled,model_sre_oem_pn,base.group_public,0,0,0,0
 access_sre_oem_pn_sales,SRE OEM PN sales,model_sre_oem_pn,sales_team.group_sale_salesman,1,1,1,0
+access_sre_boiler_mfg_public,SRE Boiler Manufacturer public,model_sre_boiler_manufacturer,base.group_public,1,0,0,0
+access_sre_boiler_mfg_sales,SRE Boiler Manufacturer sales,model_sre_boiler_manufacturer,sales_team.group_sale_salesman,1,1,1,1
+access_sre_boiler_type_public,SRE Boiler Type public,model_sre_boiler_type,base.group_public,1,0,0,0
+access_sre_boiler_type_sales,SRE Boiler Type sales,model_sre_boiler_type,sales_team.group_sale_salesman,1,1,1,1
+access_sre_boiler_subsystem_public,SRE Boiler Subsystem public,model_sre_boiler_subsystem,base.group_public,1,0,0,0
+access_sre_boiler_subsystem_sales,SRE Boiler Subsystem sales,model_sre_boiler_subsystem,sales_team.group_sale_salesman,1,1,1,1
+access_sre_boiler_model_public,SRE Boiler Model public,model_sre_boiler_model,base.group_public,1,0,0,0
+access_sre_boiler_model_sales,SRE Boiler Model sales,model_sre_boiler_model,sales_team.group_sale_salesman,1,1,1,1
+access_sre_boiler_mapping_public,SRE Boiler Mapping public,model_sre_boiler_part_mapping,base.group_public,1,0,0,0
+access_sre_boiler_mapping_sales,SRE Boiler Mapping sales,model_sre_boiler_part_mapping,sales_team.group_sale_salesman,1,1,1,1
+access_sre_cross_reference_public,SRE Cross Reference public,model_sre_product_cross_reference,base.group_public,1,0,0,0
+access_sre_cross_reference_sales,SRE Cross Reference sales,model_sre_product_cross_reference,sales_team.group_sale_salesman,1,1,1,1
+access_sre_customer_equipment_portal,SRE Customer Equipment portal,model_sre_customer_equipment,base.group_portal,1,1,1,1
+access_sre_customer_equipment_sales,SRE Customer Equipment sales,model_sre_customer_equipment,sales_team.group_sale_salesman,1,1,1,1
+access_sre_customer_equipment_public,SRE Customer Equipment public disabled,model_sre_customer_equipment,base.group_public,0,0,0,0
+
+

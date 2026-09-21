@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Portal Home Extensions (Brief §18) -->
+    <template id="sre_portal_my_home_inherit" inherit_id="portal.portal_my_home" priority="25">
+        <xpath expr="//div[@id='portal_client_category']" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/mechanic_workshop/static/src/img/rfq_icon.svg'"/>
+                <t t-set="title">My RFQs</t>
+                <t t-set="url" t-value="'/my/rfqs'"/>
+                <t t-set="text">Track quotation requests, unknown part inquiries and status</t>
+                <t t-set="placeholder_count" t-value="'rfq_count'"/>
+            </t>
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/mechanic_workshop/static/src/img/plant_icon.svg'"/>
+                <t t-set="title">My Plant Equipment</t>
+                <t t-set="url" t-value="'/my/plant'"/>
+                <t t-set="text">Manage factory machinery and order verified direct-fit spare parts</t>
+                <t t-set="placeholder_count" t-value="'equipment_count'"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Breadcrumbs -->
+    <template id="sre_portal_breadcrumbs" inherit_id="portal.portal_breadcrumbs">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'rfq'" class="breadcrumb-item">
+                <a t-if="rfq" href="/my/rfqs">My RFQs</a>
+                <t t-else="">My RFQs</t>
+            </li>
+            <li t-if="rfq" class="breadcrumb-item active">
+                <t t-out="rfq.name"/>
+            </li>
+            <li t-if="page_name == 'plant'" class="breadcrumb-item">
+                <a t-if="equipment" href="/my/plant">My Plant</a>
+                <t t-else="">My Plant</t>
+            </li>
+            <li t-if="equipment" class="breadcrumb-item active">
+                <t t-out="equipment.name"/>
+            </li>
+        </xpath>
+    </template>
+
+    <!-- RFQ List Template -->
+    <template id="sre_portal_my_rfqs" name="My RFQs">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <h3 class="mb-0 fw-bold">My Technical RFQs</h3>
+                    <p class="text-muted small mb-0">Track engineering inquiries, unknown part verifications, and draft quotations.</p>
+                </div>
+                <a href="/rfq" class="btn btn-sm btn-primary">
+                    <i class="fa fa-plus me-1"/> New RFQ
+                </a>
+            </div>
+
+            <t t-if="not rfqs">
+                <div class="alert alert-info py-4 text-center">
+                    <p class="mb-2 fs-5">You have not submitted any technical RFQs yet.</p>
+                    <a href="/sre/catalog" class="btn btn-primary btn-sm">Explore Catalog</a>
+                </div>
+            </t>
+
+            <t t-if="rfqs">
+                <div class="table-responsive border rounded bg-white shadow-sm mb-4">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light small text-uppercase">
+                            <tr>
+                                <th style="width: 140px;">RFQ Ref</th>
+                                <th style="width: 110px;">Date</th>
+                                <th>Project / Plant</th>
+                                <th class="text-center" style="width: 100px;">Items</th>
+                                <th style="width: 140px;">Type</th>
+                                <th style="width: 130px;">Status</th>
+                                <th class="text-end" style="width: 160px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="rfqs" t-as="rfq">
+                                <td>
+                                    <a t-attf-href="/my/rfqs/#{rfq.id}" class="fw-bold text-decoration-none">
+                                        <t t-out="rfq.name"/>
+                                    </a>
+                                </td>
+                                <td class="text-muted small">
+                                    <span t-field="rfq.create_date" t-options='{"widget": "date"}'/>
+                                </td>
+                                <td>
+                                    <div class="fw-semibold"><t t-out="rfq.company_name"/></div>
+                                    <div t-if="rfq.project_name" class="small text-muted"><t t-out="rfq.project_name"/></div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge bg-light text-dark border">
+                                        <t t-out="len(rfq.line_ids)"/>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span t-if="rfq.is_unknown_part" class="badge bg-warning text-dark">
+                                        <i class="fa fa-question-circle me-1"/> Unknown Part
+                                    </span>
+                                    <span t-else="" class="badge bg-light text-muted border">Standard RFQ</span>
+                                </td>
+                                <td>
+                                    <span t-if="rfq.state == 'submitted'" class="badge bg-info text-white">
+                                        <i class="fa fa-clock-o me-1"/> Submitted
+                                    </span>
+                                    <span t-elif="rfq.state == 'quoted'" class="badge bg-success text-white">
+                                        <i class="fa fa-check-circle me-1"/> Quoted
+                                    </span>
+                                </td>
+                                <td class="text-end">
+                                    <a t-attf-href="/my/rfqs/#{rfq.id}" class="btn btn-outline-secondary btn-sm py-0 px-2 me-1" title="View details">
+                                        View
+                                    </a>
+                                    <a t-attf-href="/my/rfqs/reorder/#{rfq.id}" class="btn btn-outline-primary btn-sm py-0 px-2" title="Add all items to RFQ">
+                                        <i class="fa fa-repeat me-1"/> Re-order
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div t-if="pager['page_count'] &gt; 1" class="d-flex justify-content-center">
+                    <t t-call="portal.pager"/>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- RFQ Detail Page -->
+    <template id="sre_portal_rfq_page" name="RFQ Detail">
+        <t t-call="portal.portal_layout">
+            <div class="container py-2">
+                <!-- Header Card -->
+                <div class="card mb-4 border shadow-sm">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center py-3">
+                        <div>
+                            <span class="text-muted small">Technical RFQ</span>
+                            <h4 class="mb-0 fw-bold text-primary"><t t-out="rfq.name"/></h4>
+                        </div>
+                        <div class="text-end">
+                            <span t-if="rfq.state == 'submitted'" class="badge bg-info text-white fs-6 py-2 px-3">
+                                <i class="fa fa-clock-o me-1"/> Submitted &amp; In Engineering Review
+                            </span>
+                            <span t-elif="rfq.state == 'quoted'" class="badge bg-success text-white fs-6 py-2 px-3">
+                                <i class="fa fa-check-circle me-1"/> Quotation Prepared
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6 border-end">
+                                <h6 class="fw-bold text-uppercase small text-muted mb-2">Customer &amp; Project Info</h6>
+                                <p class="mb-1"><strong>Company:</strong> <t t-out="rfq.company_name"/></p>
+                                <p class="mb-1"><strong>Contact Person:</strong> <t t-out="rfq.contact_name"/></p>
+                                <p class="mb-1"><strong>Email:</strong> <t t-out="rfq.email"/></p>
+                                <p t-if="rfq.phone" class="mb-1"><strong>Phone:</strong> <t t-out="rfq.phone"/></p>
+                                <p t-if="rfq.project_name" class="mb-1"><strong>Project:</strong> <t t-out="rfq.project_name"/></p>
+                                <p t-if="rfq.project_location" class="mb-1"><strong>Location:</strong> <t t-out="rfq.project_location"/></p>
+                                <p t-if="rfq.required_delivery_date" class="mb-1"><strong>Required Date:</strong> <span t-field="rfq.required_delivery_date"/></p>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-uppercase small text-muted mb-2">Submission Details</h6>
+                                <p class="mb-1"><strong>Submitted On:</strong> <span t-field="rfq.create_date" t-options='{"widget": "datetime"}'/></p>
+                                <p t-if="rfq.notes" class="mb-1"><strong>Engineering Notes:</strong> <br/><span class="text-muted" t-out="rfq.notes"/></p>
+                                <div t-if="rfq.order_id" class="mt-3 p-3 bg-light rounded border border-success">
+                                    <div class="fw-bold text-success"><i class="fa fa-file-text-o me-1"/> Official Quotation Ready</div>
+                                    <p class="small text-muted mb-2">Quotation <strong t-out="rfq.order_id.name"/> has been created for your request.</p>
+                                    <a t-attf-href="/my/orders/#{rfq.order_id.id}" class="btn btn-sm btn-success">
+                                        View Official Quotation &amp; Pricing
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Unknown Part Technical Operating Conditions Block -->
+                        <div t-if="rfq.is_unknown_part" class="mt-4 p-3 bg-light rounded border border-warning">
+                            <h6 class="fw-bold text-warning-emphasis mb-2">
+                                <i class="fa fa-wrench me-1"/> Unknown Part Operating Conditions &amp; Nameplate
+                            </h6>
+                            <div class="row g-2 small">
+                                <div t-if="rfq.equipment_make_model" class="col-sm-6">
+                                    <strong>Equipment Make/Model:</strong> <t t-out="rfq.equipment_make_model"/>
+                                </div>
+                                <div t-if="rfq.operating_medium" class="col-sm-6">
+                                    <strong>Operating Medium:</strong> <span t-field="rfq.operating_medium"/>
+                                </div>
+                                <div t-if="rfq.operating_pressure" class="col-sm-6">
+                                    <strong>Operating Pressure:</strong> <t t-out="rfq.operating_pressure"/> bar
+                                </div>
+                                <div t-if="rfq.operating_temperature" class="col-sm-6">
+                                    <strong>Operating Temperature:</strong> <t t-out="rfq.operating_temperature"/> °C
+                                </div>
+                                <div t-if="rfq.connection_type" class="col-sm-6">
+                                    <strong>Connection Type:</strong> <t t-out="rfq.connection_type"/>
+                                </div>
+                            </div>
+                            <div t-if="rfq.nameplate_image" class="mt-3">
+                                <strong>Attached Nameplate / Technical Document:</strong>
+                                <div class="mt-1">
+                                    <img t-attf-src="data:image/png;base64,#{rfq.nameplate_image.decode('utf-8')}"
+                                         class="img-thumbnail" style="max-height: 200px;" alt="Nameplate Photo"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Line Items Table -->
+                <div class="card border shadow-sm mb-4">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center py-2">
+                        <h6 class="mb-0 fw-bold">Requested Products (<t t-out="len(rfq.line_ids)"/>)</h6>
+                        <a t-attf-href="/my/rfqs/reorder/#{rfq.id}" class="btn btn-sm btn-primary">
+                            <i class="fa fa-repeat me-1"/> 1-Click Re-order All Items
+                        </a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light small text-uppercase">
+                                <tr>
+                                    <th style="width: 140px;">SKU</th>
+                                    <th style="width: 140px;">MPN</th>
+                                    <th>Product Name</th>
+                                    <th>Brand</th>
+                                    <th class="text-center" style="width: 100px;">Quantity</th>
+                                    <th style="width: 80px;">Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="rfq.line_ids" t-as="line">
+                                    <td class="font-monospace small"><t t-out="line.sku or line.product_id.default_code or '-'"/></td>
+                                    <td class="font-monospace small"><t t-out="line.mpn or line.product_id.manufacturer_pref or '-'"/></td>
+                                    <td>
+                                        <div class="fw-semibold"><t t-out="line.product_name or line.product_id.name"/></div>
+                                        <div t-if="line.product_id" class="small">
+                                            <a t-attf-href="/shop/#{slug(line.product_id.product_tmpl_id)}" target="_blank" class="text-muted">
+                                                <i class="fa fa-external-link me-1"/> View Catalog Page
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td><t t-out="line.brand_name or (line.product_id.product_brand_id and line.product_id.product_brand_id.name) or '-'"/></td>
+                                    <td class="text-center fw-bold"><t t-out="line.quantity"/></td>
+                                    <td class="text-muted small"><t t-out="line.uom_id.name or 'Units'"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- My Plant List Page -->
+    <template id="sre_portal_my_plant" name="My Plant Equipment">
+        <t t-call="portal.portal_layout">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <h3 class="mb-0 fw-bold">My Plant Equipment</h3>
+                    <p class="text-muted small mb-0">Installed machinery in your factory with pre-verified direct-fit replacement parts.</p>
+                </div>
+                <a href="/my/plant/new" class="btn btn-sm btn-primary">
+                    <i class="fa fa-plus me-1"/> Register New Machine
+                </a>
+            </div>
+
+            <div t-if="request.params.get('deleted')" class="alert alert-success py-2 small">
+                Machine removed from your plant equipment list.
+            </div>
+
+            <t t-if="not equipments">
+                <div class="alert alert-info py-4 text-center">
+                    <p class="mb-2 fs-5">No equipment registered for your plant yet.</p>
+                    <p class="text-muted small mb-3">Register your boilers, pumps, and valve stations to enable 1-click spare part discovery.</p>
+                    <a href="/my/plant/new" class="btn btn-primary btn-sm">Register Equipment</a>
+                </div>
+            </t>
+
+            <t t-if="equipments">
+                <div class="row g-3">
+                    <div t-foreach="equipments" t-as="eq" class="col-md-6 col-lg-4">
+                        <div class="card h-100 border shadow-sm">
+                            <div class="card-header bg-light d-flex justify-content-between align-items-center py-2">
+                                <span class="badge bg-secondary font-monospace"><t t-out="eq.plant_tag or 'NO-TAG'"/></span>
+                                <span class="badge bg-info text-white small"><span t-field="eq.equipment_type"/></span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold text-primary mb-1">
+                                    <a t-attf-href="/my/plant/#{eq.id}" class="text-decoration-none"><t t-out="eq.name"/></a>
+                                </h5>
+                                <div t-if="eq.location" class="text-muted small mb-2">
+                                    <i class="fa fa-map-marker me-1"/> <t t-out="eq.location"/>
+                                </div>
+
+                                <div class="p-2 bg-light rounded small mb-3">
+                                    <div t-if="eq.boiler_model_id">
+                                        <strong>Model:</strong> <t t-out="eq.boiler_manufacturer_id.name"/> <t t-out="eq.boiler_model_id.name"/>
+                                    </div>
+                                    <div t-if="eq.operating_pressure">
+                                        <strong>Pressure:</strong> <t t-out="eq.operating_pressure"/> bar
+                                    </div>
+                                    <div t-if="eq.operating_temperature">
+                                        <strong>Temp:</strong> <t t-out="eq.operating_temperature"/> °C
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle">
+                                        <i class="fa fa-check-circle me-1"/> <t t-out="eq.compatible_part_count"/> Compatible Spares
+                                    </span>
+                                    <span t-if="eq.critical_part_count" class="badge bg-danger-subtle text-danger border border-danger-subtle">
+                                        <i class="fa fa-exclamation-circle me-1"/> <t t-out="eq.critical_part_count"/> Critical
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white border-top d-flex justify-content-between align-items-center">
+                                <a t-attf-href="/my/plant/#{eq.id}" class="btn btn-sm btn-outline-primary">
+                                    View Spares &amp; Order
+                                </a>
+                                <form t-attf-action="/my/plant/delete/#{eq.id}" method="POST" onsubmit="return confirm('Remove this equipment from your plant?');">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <button type="submit" class="btn btn-sm btn-link text-danger p-0" title="Delete machine">
+                                        <i class="fa fa-trash-o"/>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- My Plant Equipment Detail Page -->
+    <template id="sre_portal_equipment_page" name="Equipment Detail">
+        <t t-call="portal.portal_layout">
+            <div class="container py-2">
+                <div t-if="request.params.get('created')" class="alert alert-success py-2 small">
+                    Machine successfully registered in your plant inventory!
+                </div>
+
+                <!-- Machine Specs Card -->
+                <div class="card border shadow-sm mb-4">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center py-3">
+                        <div>
+                            <span class="badge bg-secondary font-monospace me-2"><t t-out="equipment.plant_tag or 'NO-TAG'"/></span>
+                            <span class="badge bg-info text-white"><span t-field="equipment.equipment_type"/></span>
+                            <h4 class="mb-0 fw-bold mt-1 text-primary"><t t-out="equipment.name"/></h4>
+                        </div>
+                        <div class="text-end">
+                            <a t-attf-href="/my/plant/#{equipment.id}/add-all-spares" class="btn btn-primary btn-sm">
+                                <i class="fa fa-cart-plus me-1"/> Add All Spares to RFQ
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6 border-end">
+                                <h6 class="fw-bold text-uppercase small text-muted mb-2">Technical Identification</h6>
+                                <p class="mb-1"><strong>Tag / Asset Code:</strong> <t t-out="equipment.plant_tag or '-'"/></p>
+                                <p class="mb-1"><strong>Location / Dept:</strong> <t t-out="equipment.location or '-'"/></p>
+                                <p t-if="equipment.boiler_manufacturer_id" class="mb-1"><strong>Manufacturer / Make:</strong> <t t-out="equipment.boiler_manufacturer_id.name"/></p>
+                                <p t-if="equipment.boiler_model_id" class="mb-1"><strong>Model / Series:</strong> <t t-out="equipment.boiler_model_id.name"/></p>
+                                <p t-if="equipment.serial_number" class="mb-1"><strong>Serial Number:</strong> <t t-out="equipment.serial_number"/></p>
+                                <p t-if="equipment.commissioning_year" class="mb-1"><strong>Commissioned:</strong> <t t-out="equipment.commissioning_year"/></p>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-uppercase small text-muted mb-2">Operating Parameters</h6>
+                                <p t-if="equipment.operating_medium" class="mb-1"><strong>Medium:</strong> <span t-field="equipment.operating_medium"/></p>
+                                <p t-if="equipment.operating_pressure" class="mb-1"><strong>Operating Pressure:</strong> <t t-out="equipment.operating_pressure"/> bar</p>
+                                <p t-if="equipment.operating_temperature" class="mb-1"><strong>Operating Temperature:</strong> <t t-out="equipment.operating_temperature"/> °C</p>
+                                <p t-if="equipment.notes" class="mb-1"><strong>Notes:</strong> <span class="text-muted" t-out="equipment.notes"/></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Verified Compatible Parts Table -->
+                <div class="card border shadow-sm mb-4">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center py-2">
+                        <h6 class="mb-0 fw-bold">
+                            <i class="fa fa-check-circle text-success me-1"/> Verified Replacement Spare Parts (<t t-out="equipment.compatible_part_count"/>)
+                        </h6>
+                        <span class="small text-muted">Direct Fit Guarantee • Engineering Approved</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light small text-uppercase">
+                                <tr>
+                                    <th style="width: 140px;">SKU</th>
+                                    <th style="width: 140px;">MPN</th>
+                                    <th>Part Name</th>
+                                    <th>Brand</th>
+                                    <th style="width: 140px;">Status</th>
+                                    <th class="text-end" style="width: 150px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="equipment.compatible_part_ids" t-as="part">
+                                    <td class="font-monospace small"><t t-out="part.default_code or '-'"/></td>
+                                    <td class="font-monospace small"><t t-out="part.manufacturer_pref or '-'"/></td>
+                                    <td>
+                                        <div class="fw-semibold"><t t-out="part.name"/></div>
+                                        <div class="small text-muted"><t t-out="part.public_categ_ids and part.public_categ_ids[0].name or ''"/></div>
+                                    </td>
+                                    <td><t t-out="part.product_brand_id.name or '-'"/></td>
+                                    <td>
+                                        <span class="badge bg-success-subtle text-success border border-success-subtle">
+                                            Direct Fit
+                                        </span>
+                                    </td>
+                                    <td class="text-end">
+                                        <form action="/rfq/add" method="POST" class="d-inline">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <input type="hidden" name="product_id" t-att-value="part.product_variant_id.id"/>
+                                            <input type="hidden" name="quantity" value="1"/>
+                                            <button type="submit" class="btn btn-sm btn-outline-primary py-0 px-2">
+                                                <i class="fa fa-plus me-1"/> Add to RFQ
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Register Machine Form -->
+    <template id="sre_portal_equipment_form" name="Register Equipment">
+        <t t-call="portal.portal_layout">
+            <div class="container py-2" style="max-width: 800px;">
+                <div class="card border shadow-sm">
+                    <div class="card-header bg-light py-3">
+                        <h4 class="mb-0 fw-bold">Register Factory Machinery / Equipment</h4>
+                        <p class="text-muted small mb-0">Add equipment installed in your plant to enable instant direct-fit spare part lookup.</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <form action="/my/plant/submit" method="POST">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                            <div class="row g-3">
+                                <div class="col-md-8">
+                                    <label class="form-label fw-semibold">Equipment Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="name" class="form-control" placeholder="e.g. Lò hơi đốt gas số 1" required="required"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Plant Tag / Asset ID</label>
+                                    <input type="text" name="plant_tag" class="form-control" placeholder="e.g. BLR-01"/>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Equipment Type</label>
+                                    <select name="equipment_type" class="form-select">
+                                        <option value="boiler" selected="selected">Industrial Boiler / Lò hơi</option>
+                                        <option value="pump">Pump Station / Trạm bơm</option>
+                                        <option value="valve_station">Valve Station / Cụm van</option>
+                                        <option value="heat_exchanger">Heat Exchanger / Trao đổi nhiệt</option>
+                                        <option value="chiller_hvac">HVAC / Chiller</option>
+                                        <option value="instrumentation">Instrumentation / Đo lường</option>
+                                        <option value="other">Other / Thiết bị khác</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Location / Factory Department</label>
+                                    <input type="text" name="location" class="form-control" placeholder="e.g. Boiler House, Line 1"/>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="form-label fw-semibold">Select Boiler Make &amp; Model (Auto-links Spare Parts)</label>
+                                    <select name="boiler_model_id" class="form-select">
+                                        <option value="">-- Optional: Select Boiler Model --</option>
+                                        <t t-foreach="models" t-as="m">
+                                            <option t-att-value="m.id">
+                                                <t t-out="m.manufacturer_id.name"/> - <t t-out="m.name"/> (<t t-out="m.design_pressure_bar"/> bar, <t t-out="m.steam_capacity_kg_h"/> kg/h)
+                                            </option>
+                                        </t>
+                                    </select>
+                                    <div class="form-text small">Selecting a known boiler model will automatically pull all verified replacement parts!</div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Serial Number</label>
+                                    <input type="text" name="serial_number" class="form-control" placeholder="e.g. SN-2021-9874"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Commissioning Year</label>
+                                    <input type="number" name="commissioning_year" class="form-control" placeholder="e.g. 2021"/>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Operating Medium</label>
+                                    <select name="operating_medium" class="form-select">
+                                        <option value="saturated_steam">Saturated Steam / Hơi bão hòa</option>
+                                        <option value="superheated_steam">Superheated Steam / Hơi quá nhiệt</option>
+                                        <option value="condensate">Condensate / Nước ngưng</option>
+                                        <option value="feedwater">Feedwater / Nước cấp</option>
+                                        <option value="thermal_oil">Thermal Oil / Dầu truyền nhiệt</option>
+                                        <option value="compressed_air">Compressed Air / Khí nén</option>
+                                        <option value="other">Other Fluid</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Operating Pressure (bar)</label>
+                                    <input type="number" step="0.1" name="operating_pressure" class="form-control" placeholder="e.g. 16.0"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Operating Temp (°C)</label>
+                                    <input type="number" step="1" name="operating_temperature" class="form-control" placeholder="e.g. 180"/>
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">Maintenance Notes</label>
+                                    <textarea name="notes" rows="2" class="form-control" placeholder="e.g. Next annual boiler inspection in November 2026. Feed pump seal replaced in Jan 2026."></textarea>
+                                </div>
+
+                                <div class="col-12 mt-4 d-flex justify-content-between">
+                                    <a href="/my/plant" class="btn btn-outline-secondary">Cancel</a>
+                                    <button type="submit" class="btn btn-primary px-4">Register Machine</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- 1. Public Datasheet PDF for Demo Valve 001 -->
+    <record id="sre_doc_demo_v001_datasheet" model="product.document">
+        <field name="name">Datasheet-Spirax-TD52-Thermo-Trap.pdf</field>
+        <field name="datas">JVBERi0xLjQKJcTl8uXrp/Og0MTGCjEgMCBvYmoKPDwKL1R5cGUgL0NhdGFsb2cKL1BhZ2VzIDIgMCBSCj4+CmVuZG9iagoyIDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMyAwIFJdCi9Db3VudCAxCj4+CmVuZG9iagozIDAgb2JqCjw8Ci9UeXBlIC9QYWdlCi9QYXJlbnQgMiAwIFIKL01lZGlhQm94IFswIDAgNjEyIDc5Ml0KPj4KZW5kb2JqCnhyZWYKMCA0CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDAxOCAwMDAwMCBuIAowMDAwMDAwMDY4IDAwMDAwMCBuIAowMDAwMDAwMTIzIDAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDQKL1Jvb3QgMSAwIFIKPj4Kc3RhcnR4cmVmCjE5MQolJUVPRg==</field>
+        <field name="mimetype">application/pdf</field>
+        <field name="res_model">product.template</field>
+        <field name="res_id" ref="sre_demo.product_template_demo_v_001"/>
+        <field name="document_type">datasheet</field>
+        <field name="governance_type">public</field>
+        <field name="cad_format">pdf</field>
+        <field name="shown_on_product_page">True</field>
+    </record>
+
+    <!-- 2. Gated 3D CAD Model (STEP) for Demo Valve 001 -->
+    <record id="sre_doc_demo_v001_cad" model="product.document">
+        <field name="name">CAD-3D-Step-SRE-DEMO-V-001.step</field>
+        <field name="datas">SVNPLTEwMzAzLTIxOwpIRUFERVI7CkZJTEVfREVTQ1JJUFRJT04oKCdTUkUgM0QgQ0FEIE1PREVMJyksJzI7MScpOwpFTkRTRUM7CkVORC1JU08tMTAzMDMtMjE7Cg==</field>
+        <field name="mimetype">application/step</field>
+        <field name="res_model">product.template</field>
+        <field name="res_id" ref="sre_demo.product_template_demo_v_001"/>
+        <field name="document_type">cad_drawing</field>
+        <field name="governance_type">gated</field>
+        <field name="cad_format">step</field>
+        <field name="shown_on_product_page">True</field>
+    </record>
+
+    <!-- 3. Public Installation Manual for Demo Valve 002 (Viessmann Safety Valve) -->
+    <record id="sre_doc_demo_v002_manual" model="product.document">
+        <field name="name">Manual-Installation-Viessmann-Boiler-SafetyValve.pdf</field>
+        <field name="datas">JVBERi0xLjQKJcTl8uXrp/Og0MTGCjEgMCBvYmoKPDwKL1R5cGUgL0NhdGFsb2cKL1BhZ2VzIDIgMCBSCj4+CmVuZG9iagoyIDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMyAwIFJdCi9Db3VudCAxCj4+CmVuZG9iagozIDAgb2JqCjw8Ci9UeXBlIC9QYWdlCi9QYXJlbnQgMiAwIFIKL01lZGlhQm94IFswIDAgNjEyIDc5Ml0KPj4KZW5kb2JqCnhyZWYKMCA0CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDAxOCAwMDAwMCBuIAowMDAwMDAwMDY4IDAwMDAwMCBuIAowMDAwMDAwMTIzIDAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDQKL1Jvb3QgMSAwIFIKPj4Kc3RhcnR4cmVmCjE5MQolJUVPRg==</field>
+        <field name="mimetype">application/pdf</field>
+        <field name="res_model">product.template</field>
+        <field name="res_id" ref="sre_demo.product_template_demo_v_002"/>
+        <field name="document_type">manual</field>
+        <field name="governance_type">public</field>
+        <field name="cad_format">pdf</field>
+        <field name="shown_on_product_page">True</field>
+    </record>
+
+    <!-- 4. Gated Factory Test Certificate CO/CQ for Demo Pump 001 (Grundfos CR-15) -->
+    <record id="sre_doc_demo_p001_cert" model="product.document">
+        <field name="name">Certificate-Factory-Test-CO-CQ-Grundfos-CR15.pdf</field>
+        <field name="datas">JVBERi0xLjQKJcTl8uXrp/Og0MTGCjEgMCBvYmoKPDwKL1R5cGUgL0NhdGFsb2cKL1BhZ2VzIDIgMCBSCj4+CmVuZG9iagoyIDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMyAwIFJdCi9Db3VudCAxCj4+CmVuZG9iagozIDAgb2JqCjw8Ci9UeXBlIC9QYWdlCi9QYXJlbnQgMiAwIFIKL01lZGlhQm94IFswIDAgNjEyIDc5Ml0KPj4KZW5kb2JqCnhyZWYKMCA0CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDAxOCAwMDAwMCBuIAowMDAwMDAwMDY4IDAwMDAwMCBuIAowMDAwMDAwMTIzIDAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDQKL1Jvb3QgMSAwIFIKPj4Kc3RhcnR4cmVmCjE5MQolJUVPRg==</field>
+        <field name="mimetype">application/pdf</field>
+        <field name="res_model">product.template</field>
+        <field name="res_id" ref="sre_demo.product_template_demo_p_001"/>
+        <field name="document_type">certificate</field>
+        <field name="governance_type">gated</field>
+        <field name="cad_format">pdf</field>
+        <field name="shown_on_product_page">True</field>
+    </record>
+
+    <!-- 5. Gated 2D CAD Drawing (DWG) for Demo Pump 003 (KSB Movitec) -->
+    <record id="sre_doc_demo_p003_dwg" model="product.document">
+        <field name="name">Drawing-2D-AutoCAD-KSB-Movitec-FeedPump.dwg</field>
+        <field name="datas">SVNPLTEwMzAzLTIxOwpIRUFERVI7CkZJTEVfREVTQ1JJUFRJT04oKCdTUkUgM0QgQ0FEIE1PREVMJyksJzI7MScpOwpFTkRTRUM7CkVORC1JU08tMTAzMDMtMjE7Cg==</field>
+        <field name="mimetype">image/vnd.dwg</field>
+        <field name="res_model">product.template</field>
+        <field name="res_id" ref="sre_demo.product_template_demo_p_003"/>
+        <field name="document_type">cad_drawing</field>
+        <field name="governance_type">gated</field>
+        <field name="cad_format">dwg</field>
+        <field name="shown_on_product_page">True</field>
+    </record>
+
+    <!-- 6. Internal Only QA Document for Demo Valve 001 (MUST NOT BE SHOWN PUBLICLY) -->
+    <record id="sre_doc_demo_v001_internal" model="product.document">
+        <field name="name">Internal-Engineering-QA-Tolerance-Report.pdf</field>
+        <field name="datas">JVBERi0xLjQKJcTl8uXrp/Og0MTGCjEgMCBvYmoKPDwKL1R5cGUgL0NhdGFsb2cKL1BhZ2VzIDIgMCBSCj4+CmVuZG9iagoyIDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMyAwIFJdCi9Db3VudCAxCj4+CmVuZG9iagozIDAgb2JqCjw8Ci9UeXBlIC9QYWdlCi9QYXJlbnQgMiAwIFIKL01lZGlhQm94IFswIDAgNjEyIDc5Ml0KPj4KZW5kb2JqCnhyZWYKMCA0CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDAxOCAwMDAwMCBuIAowMDAwMDAwMDY4IDAwMDAwMCBuIAowMDAwMDAwMTIzIDAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDQKL1Jvb3QgMSAwIFIKPj4Kc3RhcnR4cmVmCjE5MQolJUVPRg==</field>
+        <field name="mimetype">application/pdf</field>
+        <field name="res_model">product.template</field>
+        <field name="res_id" ref="sre_demo.product_template_demo_v_001"/>
+        <field name="document_type">manual</field>
+        <field name="governance_type">internal</field>
+        <field name="cad_format">pdf</field>
+        <field name="shown_on_product_page">False</field>
+    </record>
+</odoo>

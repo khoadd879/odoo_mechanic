@@ -1,6 +1,6 @@
 {
   "project": "mechanic_workshop",
-  "version": "19.0.1.8.0",
+  "version": "19.0.1.12.0",
   "features": [
     {
       "id": "oca-brand-mirror",
@@ -293,6 +293,187 @@
         "module_update": "./scripts/update-module.sh mechanic_workshop exit 0",
         "agent_check": "30 PASS, 0 FAIL",
         "live_ajax_test": "POST /rfq/add with ajax=1 returns 200 JSON {'line_count': 1} and updates session basket"
+      }
+    },
+    {
+      "id": "sre-industry-application-landing-pages",
+      "title": "Dedicated Industry & Application Landing Pages (Brief §14 & §15)",
+      "status": "completed",
+      "version": "19.0.1.8.0",
+      "summary": "Implements dedicated landing pages for 10 Industries (/sre/industry/<slug>) and 10 Applications (/sre/application/<slug>) alongside directory indexes (/sre/industry and /sre/application). Adopts McMaster-Carr industrial density layout featuring breadcrumbs, technical duty specs, mapped products, RFQ dispatch panels, and catalog links with full EN/VI localization.",
+      "brief_alignment": {
+        "sections_14_15": "Dedicated landing pages per Industry and Application showing industry compliance, system duties, compatible parts, and direct RFQ engineering consultation.",
+        "homepage": "Homepage #industries and #applications sections now directly link to these dedicated landing routes."
+      },
+      "acceptance_criteria": [
+        "AC-1 GET /sre/industry returns 200 directory listing of all 10 industries.",
+        "AC-2 GET /sre/industry/<slug> returns 200 detail page with mapped products, standards strip, and RFQ card; 404 for invalid slug.",
+        "AC-3 GET /sre/application returns 200 directory listing of all 10 applications.",
+        "AC-4 GET /sre/application/<slug> returns 200 detail page with mapped products, technical duty strip, and RFQ card; 404 for invalid slug.",
+        "AC-5 Homepage cards in #industries and #applications link directly to landing pages.",
+        "AC-6 Full bilingual support on /vi/sre/industry and /vi/sre/application with zero untranslated UI elements.",
+        "AC-7 agent_check.sh reports 30 PASS / 0 FAIL."
+      ],
+      "evidence": {
+        "module_update": "./scripts/update-module.sh mechanic_workshop exit 0",
+        "agent_check": "30 PASS, 0 FAIL",
+        "live_http_verification": "Verified 200 OK on /sre/industry, /sre/industry/food-beverage, /sre/application, /sre/application/steam-system; verified safe 404 on invalid slugs; verified Vietnamese strings on /vi/."
+      }
+    },
+    {
+      "id": "sre-numeric-range-filters",
+      "title": "Numeric Range Slider & Input Filters for Pressure, Temperature, Flow (Brief §07)",
+      "status": "completed",
+      "version": "19.0.1.8.0",
+      "summary": "Implements technical numeric range filtering on the catalog sidebar for operating pressure (bar), operating temperature (°C), and flow rate (m³/h). Combines min-max numeric inputs with interactive dual-range sliders, active filter badges with 1-click removal, spec cards/detail integration, and complete EN/VI bilingual localization.",
+      "brief_alignment": {
+        "section_07": "Physical range filtering (Pressure, Temperature, Flow) based on technical parameters and duty specifications."
+      },
+      "acceptance_criteria": [
+        "AC-1 Sidebar renders 'Technical specifications' group with dual slider and Min/Max inputs for Pressure (bar), Temperature (°C), Flow rate (m³/h).",
+        "AC-2 /sre/catalog?pressure_min=20&pressure_max=50 filters products whose pressure rating falls within [20, 50] bar.",
+        "AC-3 /sre/catalog?temp_min=180 filters products capable of operating at >= 180°C.",
+        "AC-4 /sre/catalog?flow_min=50 filters high-capacity products with flow >= 50 m³/h.",
+        "AC-5 Active filters bar displays badges for numeric filters with 1-click clear links; 'Clear' resets all numeric filters.",
+        "AC-6 Product card and detail specs display operating parameters when defined.",
+        "AC-7 Full bilingual localization on /vi/sre/catalog ('Áp suất vận hành', 'Nhiệt độ làm việc', 'Lưu lượng định mức').",
+        "AC-8 agent_check.sh reports 30 PASS / 0 FAIL."
+      ],
+      "evidence": {
+        "module_update": "./scripts/update-module.sh mechanic_workshop exit 0",
+        "agent_check": "30 PASS, 0 FAIL",
+        "live_query_test": "Verified pressure filtering [20, 50] matches Demo Valve 002 (40 bar) and Demo Pump 003 (35 bar); verified temp filtering >= 180°C matches Demo Valve 002 (250°C); verified flow filtering >= 50 m³/h matches Demo Pump 003 (120 m³/h); verified Vietnamese translations on /vi/."
+      }
+    },
+    {
+      "id": "sre-boiler-part-finder",
+      "title": "Boiler Equipment Discovery Engine & Part Finder (Brief §11 — P0)",
+      "status": "completed",
+      "version": "19.0.1.10.0",
+      "summary": "Implements a dedicated McMaster-Carr style 4-step discovery wizard for industrial boiler replacement parts: Manufacturer (Miura, Cleaver-Brooks, Fulton, Hurst, Viessmann) -> Boiler Model -> Subsystem (Feedwater, Level, Combustion, Blowdown, Safety, Steam) -> Verified Replacement Parts with Direct Fit Guarantee, Critical Spare badges, technical specs, and 1-click Add to RFQ.",
+      "brief_alignment": {
+        "section_11": "Boiler Part Finder wizard navigating Make -> Model -> Subsystem -> Verified Parts with direct fit guarantee and RFQ integration.",
+        "section_13": "Equipment Compatibility Matrix rendering boiler series fitment under Tab 03 on product detail page."
+      },
+      "acceptance_criteria": [
+        "AC-1 GET /boiler-finder renders 4-step wizard with boiler manufacturers grid.",
+        "AC-2 GET /boiler-finder?make=miura renders boiler series (LX-200, EX-Series) with pressure and steam output metrics.",
+        "AC-3 GET /boiler-finder?make=miura&model=miura-lx-200 renders subsystem tabs and verified replacement parts with Critical Spare tags.",
+        "AC-4 GET /boiler-finder?make=miura&model=miura-lx-200&subsystem=feedwater-pumps filters to specific subsystem components.",
+        "AC-5 1-click Add to RFQ button adds item to RFQ basket with feedback.",
+        "AC-6 Product detail page renders compatibility table under Tab 03.",
+        "AC-7 Full bilingual EN/VI support on /vi/boiler-finder.",
+        "AC-8 agent_check.sh reports 30 PASS / 0 FAIL."
+      ],
+      "evidence": {
+        "module_update": "./scripts/update-module.sh mechanic_workshop exit 0",
+        "agent_check": "30 PASS, 0 FAIL",
+        "live_http_verification": "Verified 200 OK on /boiler-finder; step 1 renders 5 manufacturers; step 2 renders Miura models; step 3/4 renders parts with Critical Spare badges; JSON-RPC API works; Tab 03 on product detail renders compatibility table; verified Vietnamese on /vi/boiler-finder."
+      }
+    },
+    {
+      "id": "sre-cross-reference-engine",
+      "title": "Cross Reference Engine & Competitor Lookup (Brief §12 — P0)",
+      "status": "completed",
+      "version": "19.0.1.10.0",
+      "summary": "Implements dedicated cross-reference lookup mapping competitor and OEM part numbers (Spirax Sarco, TLV, Armstrong, Yoshitake, Grundfos, KSB) to verified SRE replacement products. Features Equivalence Grade classification (Direct Replacement, Drop-in Alternative, Obsolete Upgrade), engineering fitment notes, quick brand pills, typeahead search API, and Tab 04 cross-reference table on product detail pages.",
+      "brief_alignment": {
+        "section_12": "Cross Reference Engine allowing lookup of competitor and OEM part numbers with defined equivalence grades, fitment notes, and RFQ integration."
+      },
+      "acceptance_criteria": [
+        "AC-1 GET /cross-reference renders search bar, brand pills, grade filter tabs, and cross-reference cards.",
+        "AC-2 Search query ?q=TD-52 returns Spirax Sarco TD-52 matching SRE replacement product.",
+        "AC-3 Brand filter ?brand=Spirax+Sarco isolates Spirax cross references.",
+        "AC-4 Equivalence grade filters (direct, drop_in, obsolete) correctly filter cards.",
+        "AC-5 Typeahead API endpoint /sre/cross-reference/api/search returns matching results via JSON-RPC.",
+        "AC-6 Tab 04 Cross reference & related products on product detail page displays competitor replacement table.",
+        "AC-7 Full bilingual EN/VI support on /vi/cross-reference.",
+        "AC-8 agent_check.sh reports 30 PASS / 0 FAIL."
+      ],
+      "evidence": {
+        "module_update": "./scripts/update-module.sh mechanic_workshop exit 0",
+        "agent_check": "30 PASS, 0 FAIL",
+        "live_http_verification": "Verified 200 OK on /cross-reference; ?q=TD-52 returns Spirax Sarco TD-52 card; JSON-RPC API returns matching items; Tab 04 on Demo Valve 001 renders Spirax and TLV cross references; verified Vietnamese on /vi/cross-reference."
+      }
+    },
+    {
+      "id": "sre-document-governance",
+      "title": "Document Governance & CAD/PDF Technical Library (Brief §16 — P1)",
+      "status": "completed",
+      "version": "19.0.1.11.0",
+      "summary": "Inherits Odoo 19 product.document with governance classification (Public, Gated, Internal), document type (Datasheet, Installation Manual, 2D/3D CAD Drawing, Compliance Certificate), and CAD format. Implements McMaster-Carr technical library (/sre/documents and /technical-library) with multi-facet filters, Section 02 Documents tab on product detail pages, and gated document download flow returning instant file access while creating crm.lead with complete engineering requirements.",
+      "brief_alignment": {
+        "section_16": "Document Governance workflow enforcing Public/Gated/Internal access levels, CAD format detection, and gated lead generation."
+      },
+      "acceptance_criteria": [
+        "AC-1 GET /technical-library renders searchable McMaster-Carr technical document directory with type, brand, and format facets.",
+        "AC-2 Product detail Section 02 Documents renders format icons, document types, file sizes, and download actions.",
+        "AC-3 Public documents download directly (200 OK) without login or form requirement.",
+        "AC-4 Gated CAD/PDF documents trigger lead capture modal (#sreGatedDocModal) and /sre/document/gated-request endpoint creates crm.lead while returning download URL.",
+        "AC-5 Internal documents are strictly filtered out from public catalog and technical library views.",
+        "AC-6 Seed data populated across demo products (Spirax, Viessmann, Grundfos, KSB).",
+        "AC-7 Full bilingual EN/VI support across technical library and gated modals.",
+        "AC-8 agent_check.sh reports 30 PASS / 0 FAIL."
+      ],
+      "evidence": {
+        "module_update": "./scripts/update-module.sh mechanic_workshop exit 0",
+        "agent_check": "30 PASS, 0 FAIL",
+        "live_http_verification": "Verified 200 OK on /technical-library and /sre/documents; public document download returns 200 stream; gated document JSON-RPC creates crm.lead and returns download link; internal documents verified hidden; Tab 02 on /shop/sre-demo-v-001-demo-valve-001-demo-56 renders 2 documents; verified Vietnamese on /vi/technical-library."
+      }
+    },
+    {
+      "id": "sre-rfq-unknown-part-bom",
+      "title": "Unknown Part Identification Wizard & BOM Multi-line Paste (Brief §09 & §10 — P1)",
+      "status": "completed",
+      "version": "19.0.1.11.0",
+      "summary": "Dedicated Unknown Part Identification wizard (/rfq/unknown-part) for customers without explicit part numbers, capturing operating medium, pressure, temperature, connection type, and photo uploads with high-priority CRM opportunity sync. Also adds BOM Multi-line Quick Paste tool on /rfq with JSON-RPC endpoint (/rfq/api/bom-parse) that intelligently parses SKU, MPN, and OEM cross-reference text lines into the RFQ basket.",
+      "brief_alignment": {
+        "section_09": "Unknown part inquiry flow capturing operating conditions and nameplate uploads with priority triage.",
+        "section_10": "BOM quick-add and multi-line text paste parsing SKUs and MPNs into the RFQ session."
+      },
+      "acceptance_criteria": [
+        "AC-1 GET /rfq/unknown-part renders 4-step guided identification wizard with operating conditions form.",
+        "AC-2 Submitting unknown part form creates sre.rfq record and priority 3 crm.lead with structured technical parameters in chatter.",
+        "AC-3 /rfq renders BOM Multi-line Quick Paste drawer and prominent Unknown Part helper card.",
+        "AC-4 POST /rfq/api/bom-parse parses SKUs, MPNs, and OEM cross references into RFQ lines, reporting recognized and unrecognized lines.",
+        "AC-5 Backend sre.rfq form displays unknown part operating conditions and nameplate preview.",
+        "AC-6 Full bilingual EN/VI support on /rfq/unknown-part and BOM paste modal.",
+        "AC-7 agent_check.sh reports 30 PASS / 0 FAIL."
+      ],
+      "evidence": {
+        "module_update": "./scripts/update-module.sh mechanic_workshop exit 0",
+        "agent_check": "30 PASS, 0 FAIL",
+        "live_http_verification": "Verified 200 OK on /rfq/unknown-part; submitted unknown part form created RFQ and CRM lead with priority 3 and technical chatter; BOM parse endpoint tested with 4-line snippet adding 3 recognized items and warning on 1 unrecognized item; verified Vietnamese on /vi/rfq/unknown-part."
+      }
+    },
+    {
+      "id": "sre-customer-portal-b2b",
+      "title": "B2B Customer Portal, Saved Equipment & Platform Architecture (Brief §18 & §24 — Sprint 4)",
+      "status": "completed",
+      "version": "19.0.1.12.0",
+      "summary": "Full B2B self-service engineering platform extending Odoo 19 portal: RFQ submission history and tracking (/my/rfqs), 1-click re-order from past RFQs or confirmed quotations (/my/rfqs/reorder/<id>, /my/orders/reorder/<id>), My Plant Equipment management (/my/plant, /my/plant/new, /my/plant/<id>) with automatic lookup of verified compatible spare parts from boiler part mappings and 1-click 'Add all spares to RFQ' action, Excel/CSV BOM file upload on /rfq with openpyxl/csv parsing across SKU/MPN/cross-references, B2B contract pricing display for authenticated users with assigned pricelists, direct CAD/PDF document download for logged-in users, and 100% Vietnamese localization.",
+      "brief_alignment": {
+        "section_18": "Customer Portal self-service features: RFQ history, 1-click re-order, My Plant equipment registry, contract pricing, direct CAD download, and BOM Excel/CSV upload.",
+        "section_24": "Architecture and module integration honoring native Odoo 19 portal and sale capabilities."
+      },
+      "acceptance_criteria": [
+        "AC-1 GET /my renders 'My RFQs' and 'My Plant Equipment' metric cards with live counts.",
+        "AC-2 GET /my/rfqs displays dense technical table of submitted RFQs with status badges and re-order action.",
+        "AC-3 GET /my/rfqs/<id> renders full RFQ details including operating conditions, nameplate preview, and line items.",
+        "AC-4 GET /my/rfqs/reorder/<id> and /my/orders/reorder/<id> reloads line items into active session RFQ basket and redirects to /rfq.",
+        "AC-5 GET /my/plant lists customer factory equipment cards with plant tags, locations, and spare counts.",
+        "AC-6 GET /my/plant/new and POST /my/plant/submit allows registering plant assets linked to boiler models.",
+        "AC-7 GET /my/plant/<id> shows equipment specs and verified compatible spare parts with 1-click 'Add All to RFQ' (/my/plant/<id>/add-all-spares).",
+        "AC-8 Excel/CSV BOM file upload on /rfq via /rfq/api/bom-upload matches SKUs, MPNs, and OEM Cross References, populating the RFQ basket.",
+        "AC-9 Logged-in B2B customers with customer pricelists see 'Contract Price: $...' on catalog and product pages, while unauthenticated users see 'B2B Quote on Request'.",
+        "AC-10 Logged-in users bypass the gated lead capture modal and download CAD drawings directly.",
+        "AC-11 Complete bilingual EN/VI support across all portal pages (/vi/my/rfqs, /vi/my/plant).",
+        "AC-12 agent_check.sh reports 30 PASS / 0 FAIL."
+      ],
+      "evidence": {
+        "module_update": "./scripts/update-module.sh mechanic_workshop exit 0",
+        "agent_check": "30 PASS, 0 FAIL",
+        "live_http_verification": "Verified 200 OK on /my, /my/rfqs, /my/plant, /my/plant/1; verified 1-click Add All Spares populates session basket; verified /rfq/api/bom-upload with .xlsx file matches 3 parts and returns 1 unmatched line; verified Contract Pricing on catalog cards; verified direct CAD download for logged-in session; verified complete Vietnamese translations."
       }
     }
   ]

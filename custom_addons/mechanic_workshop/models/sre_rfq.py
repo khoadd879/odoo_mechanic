@@ -25,6 +25,23 @@ class SreRfq(models.Model):
     project_location = fields.Char()
     required_delivery_date = fields.Date()
     notes = fields.Text()
+    nameplate_image = fields.Binary("Nameplate Photo / Spec Document", attachment=True)
+    nameplate_filename = fields.Char("Nameplate Filename")
+    is_unknown_part = fields.Boolean("Unknown Part Identification Request", default=False)
+    equipment_make_model = fields.Char("Equipment Make / Series / Model")
+    operating_medium = fields.Selection([
+        ("saturated_steam", "Saturated Steam / Hơi bão hòa"),
+        ("superheated_steam", "Superheated Steam / Hơi quá nhiệt"),
+        ("condensate", "Condensate / Nước ngưng"),
+        ("feedwater", "Feedwater / Nước cấp lò hơi"),
+        ("thermal_oil", "Thermal Oil / Dầu truyền nhiệt"),
+        ("compressed_air", "Compressed Air / Khí nén"),
+        ("lpg_gas", "LPG / Gas / Khí đốt"),
+        ("other", "Other Media / Môi chất khác"),
+    ], string="Operating Fluid / Medium")
+    operating_pressure = fields.Float("Operating Pressure (bar)", digits=(6, 2))
+    operating_temperature = fields.Float("Operating Temperature (°C)", digits=(6, 1))
+    connection_type = fields.Char("Connection Type & Size (Flange/Thread/DN)")
     partner_id = fields.Many2one("res.partner", string="Verified customer", check_company=True)
     state = fields.Selection([("submitted", "Submitted"), ("quoted", "Quotation created")], default="submitted", required=True, readonly=True)
     line_ids = fields.One2many("sre.rfq.line", "rfq_id", copy=True)
@@ -40,13 +57,50 @@ class SreRfq(models.Model):
     def _create_opportunity(self):
         self.ensure_one()
         if not self.lead_id:
-            self.lead_id = self.env["crm.lead"].create({
-                "name": self.name + " — " + self.company_name,
-                "type": "opportunity", "contact_name": self.contact_name,
-                "partner_name": self.company_name, "email_from": self.email,
-                "phone": self.phone, "company_id": self.company_id.id,
+            lead_name = f"{self.name} — {self.company_name}"
+            if self.is_unknown_part:
+                lead_name = f"[UNKNOWN PART IDENTIFICATION] {self.name} — {self.company_name}"
+
+            desc_parts = []
+            if self.project_name:
+                desc_parts.append(f"Project: {self.project_name}")
+            if self.project_location:
+                desc_parts.append(f"Location: {self.project_location}")
+            if self.is_unknown_part:
+                desc_parts.append("=== UNKNOWN PART IDENTIFICATION SPECIFICATIONS ===")
+                if self.equipment_make_model:
+                    desc_parts.append(f"• Equipment Make/Model: {self.equipment_make_model}")
+                if self.operating_medium:
+                    desc_parts.append(f"• Operating Fluid: {dict(self._fields['operating_medium'].selection).get(self.operating_medium, self.operating_medium)}")
+                if self.operating_pressure:
+                    desc_parts.append(f"• Operating Pressure: {self.operating_pressure} bar")
+                if self.operating_temperature:
+                    desc_parts.append(f"• Operating Temperature: {self.operating_temperature} °C")
+                if self.connection_type:
+                    desc_parts.append(f"• Connection / Port Size: {self.connection_type}")
+            if self.notes:
+                desc_parts.append(f"\nCustomer Notes:\n{self.notes}")
+
+            lead = self.env["crm.lead"].create({
+                "name": lead_name,
+                "type": "opportunity",
+                "contact_name": self.contact_name,
+                "partner_name": self.company_name,
+                "email_from": self.email,
+                "phone": self.phone,
+                "company_id": self.company_id.id,
+                "description": "\n".join(desc_parts) if desc_parts else False,
+                "priority": "3" if self.is_unknown_part else "1",
                 "sre_rfq_id": self.id,
             })
+            self.lead_id = lead
+            if self.nameplate_image:
+                self.env["ir.attachment"].create({
+                    "name": self.nameplate_filename or f"{self.name}-nameplate",
+                    "datas": self.nameplate_image,
+                    "res_model": "crm.lead",
+                    "res_id": lead.id,
+                })
 
     def action_create_quotation(self):
         self.ensure_one()

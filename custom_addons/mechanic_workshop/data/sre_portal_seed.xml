@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Seed Sample Customer Equipment for Demo / Admin Partner -->
+        <record id="sre_customer_equipment_demo_boiler" model="sre.customer.equipment">
+            <field name="name">Lò hơi đốt gas số 1 (Miura LX-200)</field>
+            <field name="plant_tag">BLR-01</field>
+            <field name="partner_id" ref="base.partner_admin"/>
+            <field name="location">Boiler House - Workshop 1</field>
+            <field name="equipment_type">boiler</field>
+            <field name="boiler_manufacturer_id" ref="mechanic_workshop.sre_boiler_mfg_miura"/>
+            <field name="boiler_model_id" ref="mechanic_workshop.sre_boiler_model_miura_lx200"/>
+            <field name="serial_number">MIU-2022-8821</field>
+            <field name="commissioning_year">2022</field>
+            <field name="operating_medium">saturated_steam</field>
+            <field name="operating_pressure">16.0</field>
+            <field name="operating_temperature">198.0</field>
+            <field name="notes">Annual safety valve recertification completed. Verified compatible spare parts linked from Boiler Discovery.</field>
+        </record>
+
+        <record id="sre_customer_equipment_demo_valve" model="sre.customer.equipment">
+            <field name="name">Trạm van phân phối &amp; giảm áp hơi xưởng 2</field>
+            <field name="plant_tag">PRS-STM-02</field>
+            <field name="partner_id" ref="base.partner_admin"/>
+            <field name="location">Dyeing Workshop - Header 2</field>
+            <field name="equipment_type">valve_station</field>
+            <field name="serial_number">VS-2023-014</field>
+            <field name="commissioning_year">2023</field>
+            <field name="operating_medium">saturated_steam</field>
+            <field name="operating_pressure">10.0</field>
+            <field name="operating_temperature">180.0</field>
+            <field name="notes">Upgraded to direct-fit thermodynamic and ball float steam traps.</field>
+        </record>
+    </data>
+</odoo>

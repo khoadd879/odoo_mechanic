@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sre_cross_reference_page" name="SRE Cross Reference Engine">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Cross Reference Engine | Competitor &amp; OEM Replacement Finder</t>
+            <div id="wrap" class="sre-cross-ref-page">
+                <!-- Hero Header -->
+                <section class="sre-page-header">
+                    <div class="container">
+                        <nav class="sre-breadcrumb" aria-label="Breadcrumb">
+                            <a href="/">Home</a><span>/</span>
+                            <a href="/cross-reference">Cross Reference</a>
+                            <t t-if="selected_brand"><span>/</span><a t-att-href="'/cross-reference?brand=%s' % selected_brand" t-esc="selected_brand"/></t>
+                            <t t-if="query"><span>/</span><span>Search: <t t-esc="query"/></span></t>
+                        </nav>
+                        <div class="sre-page-header__row">
+                            <div>
+                                <span class="sre-kicker">Cross Reference Engine · Brief §12</span>
+                                <h1 class="sre-page-header__title">Part Number Cross Reference</h1>
+                                <p class="sre-page-header__desc">
+                                    Cross-reference competitor and OEM part numbers from Spirax Sarco, TLV, Armstrong, Yoshitake, Grundfos, and KSB to SRE-stocked direct replacement products.
+                                </p>
+                            </div>
+                            <div class="sre-boiler-badge">
+                                <i class="fa fa-exchange text-primary"/>
+                                <div>
+                                    <strong>Equivalence Guarantee</strong>
+                                    <span>Dimensional &amp; duty verification</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="container my-4">
+                    <!-- Search Bar -->
+                    <div class="sre-xref-search-box mb-4">
+                        <form action="/cross-reference" method="get" class="sre-xref-search-form">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0">
+                                    <i class="fa fa-search text-muted"/>
+                                </span>
+                                <input type="text"
+                                       name="q"
+                                       t-att-value="query"
+                                       class="form-control border-start-0 ps-0"
+                                       placeholder="Enter competitor or OEM part number, code or brand (e.g. TD-52, FT-14, 811, CR-15, Spirax, TLV)..."
+                                       autocomplete="off"
+                                       aria-label="Cross-reference search"/>
+                                <t t-if="selected_brand">
+                                    <input type="hidden" name="brand" t-att-value="selected_brand"/>
+                                </t>
+                                <t t-if="selected_grade">
+                                    <input type="hidden" name="grade" t-att-value="selected_grade"/>
+                                </t>
+                                <button type="submit" class="sre-button">Cross Reference Lookup</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Quick Brand Filter Pills -->
+                    <div class="sre-xref-filter-bar mb-3">
+                        <span class="sre-filter-label">Filter by Brand:</span>
+                        <div class="sre-brand-pills">
+                            <a t-att-href="'/cross-reference%s' % (('?grade=%s' % selected_grade) if selected_grade else '')"
+                               t-att-class="'sre-brand-pill ' + ('is-active' if not selected_brand else '')">
+                                All Brands
+                            </a>
+                            <a t-foreach="available_brands" t-as="b"
+                               t-att-href="'/cross-reference?brand=%s%s%s' % (b, ('&amp;grade=%s' % selected_grade) if selected_grade else '', ('&amp;q=%s' % query) if query else '')"
+                               t-att-class="'sre-brand-pill ' + ('is-active' if selected_brand == b else '')"
+                               t-esc="b"/>
+                        </div>
+                    </div>
+
+                    <!-- Equivalence Grade Filter Tabs -->
+                    <div class="sre-grade-tabs mb-4">
+                        <a t-att-href="'/cross-reference%s%s' % (('?brand=%s' % selected_brand) if selected_brand else '', (('&amp;' if selected_brand else '?') + 'q=%s' % query) if query else '')"
+                           t-att-class="'sre-grade-tab ' + ('is-active' if not selected_grade else '')">
+                            All Equivalences <span class="badge" t-esc="counts['all']"/>
+                        </a>
+                        <a t-att-href="'/cross-reference?grade=direct%s%s' % (('&amp;brand=%s' % selected_brand) if selected_brand else '', ('&amp;q=%s' % query) if query else '')"
+                           t-att-class="'sre-grade-tab ' + ('is-active' if selected_grade == 'direct' else '')">
+                            <i class="fa fa-check-circle text-success me-1"/> Direct Replacement <span class="badge" t-esc="counts['direct']"/>
+                        </a>
+                        <a t-att-href="'/cross-reference?grade=drop_in%s%s' % (('&amp;brand=%s' % selected_brand) if selected_brand else '', ('&amp;q=%s' % query) if query else '')"
+                           t-att-class="'sre-grade-tab ' + ('is-active' if selected_grade == 'drop_in' else '')">
+                            <i class="fa fa-exchange text-info me-1"/> Drop-in Alternative <span class="badge" t-esc="counts['drop_in']"/>
+                        </a>
+                        <a t-att-href="'/cross-reference?grade=obsolete%s%s' % (('&amp;brand=%s' % selected_brand) if selected_brand else '', ('&amp;q=%s' % query) if query else '')"
+                           t-att-class="'sre-grade-tab ' + ('is-active' if selected_grade == 'obsolete' else '')">
+                            <i class="fa fa-history text-warning me-1"/> Obsolete Upgrade <span class="badge" t-esc="counts['obsolete']"/>
+                        </a>
+                    </div>
+
+                    <!-- Results List -->
+                    <div t-if="cross_refs" class="sre-xref-list">
+                        <article t-foreach="cross_refs" t-as="xref" class="sre-xref-card mb-3">
+                            <div class="row align-items-center g-3">
+                                <!-- Source Item (Competitor / OEM) -->
+                                <div class="col-12 col-md-4">
+                                    <div class="sre-xref-source">
+                                        <span class="sre-source-brand-badge" t-esc="xref.source_brand"/>
+                                        <h3 class="sre-source-pn sre-mono" t-esc="xref.source_part_number"/>
+                                        <p t-if="xref.source_specs" class="sre-source-specs text-muted small mb-0" t-esc="xref.source_specs"/>
+                                    </div>
+                                </div>
+
+                                <!-- Equivalence Indicator -->
+                                <div class="col-12 col-md-2 text-center">
+                                    <div class="sre-xref-arrow">
+                                        <t t-if="xref.replacement_type == 'direct'">
+                                            <span class="badge bg-success mb-1">
+                                                <i class="fa fa-check-circle"/> Direct Fit
+                                            </span>
+                                        </t>
+                                        <t t-elif="xref.replacement_type == 'drop_in'">
+                                            <span class="badge bg-info text-dark mb-1">
+                                                <i class="fa fa-exchange"/> Drop-in
+                                            </span>
+                                        </t>
+                                        <t t-else="">
+                                            <span class="badge bg-warning text-dark mb-1">
+                                                <i class="fa fa-history"/> Obsolete Upgrade
+                                            </span>
+                                        </t>
+                                        <div class="sre-arrow-symbol">→</div>
+                                    </div>
+                                </div>
+
+                                <!-- Target SRE Replacement Product -->
+                                <div class="col-12 col-md-4">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <a t-att-href="xref.target_product_id.website_url" class="sre-xref-img-wrap flex-shrink-0">
+                                            <img t-if="xref.target_product_id.image_128"
+                                                 t-att-src="'/web/image/product.template/%s/image_128' % xref.target_product_id.id"
+                                                 t-att-alt="xref.target_product_id.name"/>
+                                            <span t-else="" class="sre-product-card__placeholder">
+                                                <i class="fa fa-cogs"/>
+                                            </span>
+                                        </a>
+                                        <div class="sre-target-details">
+                                            <h4 class="h6 mb-1">
+                                                <a t-att-href="xref.target_product_id.website_url" t-esc="xref.target_product_id.name"/>
+                                            </h4>
+                                            <div class="sre-target-meta small text-muted">
+                                                <span t-if="xref.target_product_id.default_code">SKU: <strong class="sre-mono" t-esc="xref.target_product_id.default_code"/></span>
+                                                <span t-if="xref.target_product_id.manufacturer_pref" class="ms-2">MPN: <strong class="sre-mono" t-esc="xref.target_product_id.manufacturer_pref"/></span>
+                                                <span t-if="xref.target_product_id.product_brand_id" class="ms-2">Brand: <t t-esc="xref.target_product_id.product_brand_id.name"/></span>
+                                            </div>
+                                            <div class="sre-target-specs mt-1" t-if="xref.target_product_id.operating_pressure_max or xref.target_product_id.operating_temp_max">
+                                                <span t-if="xref.target_product_id.operating_pressure_max" class="badge bg-light text-dark border me-1">
+                                                    <i class="fa fa-tachometer text-primary"/> <t t-esc="'%.1f' % xref.target_product_id.operating_pressure_max"/> bar
+                                                </span>
+                                                <span t-if="xref.target_product_id.operating_temp_max" class="badge bg-light text-dark border">
+                                                    <i class="fa fa-thermometer-half text-danger"/> <t t-esc="'%.0f' % xref.target_product_id.operating_temp_max"/> °C
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Action & Price -->
+                                <div class="col-12 col-md-2 text-md-end">
+                                    <div class="sre-xref-actions">
+                                        <div class="mb-2">
+                                            <t t-if="xref.target_product_id.public_price_approved and xref.target_product_id.list_price">
+                                                <strong class="fs-6" t-field="xref.target_product_id.list_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span class="sre-status"><i/>B2B Quote</span>
+                                            </t>
+                                        </div>
+                                        <t t-if="len(xref.target_product_id.product_variant_ids) == 1">
+                                            <form action="/rfq/add" method="post" class="sre-rfq-add sre-rfq-card-form d-inline-block">
+                                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="product_id" t-att-value="xref.target_product_id.product_variant_ids[0].id"/>
+                                                <input type="hidden" name="quantity" value="1"/>
+                                                <button class="sre-button sre-button--compact sre-button--rfq" type="submit" title="Add to RFQ">
+                                                    <i class="fa fa-plus-circle"/> Add to RFQ
+                                                </button>
+                                                <span class="sre-rfq-feedback" role="status" aria-live="polite" data-success="Added!" data-error="Error"/>
+                                            </form>
+                                        </t>
+                                        <t t-else="">
+                                            <a t-att-href="xref.target_product_id.website_url" class="sre-button sre-button--compact">Select Model</a>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Engineering & Fitment Notes Footer -->
+                            <div t-if="xref.notes" class="sre-xref-card__notes mt-3 pt-2 border-top">
+                                <span class="text-primary fw-bold small me-1"><i class="fa fa-info-circle"/> Technical Note:</span>
+                                <span class="small text-muted" t-esc="xref.notes"/>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div t-else="" class="sre-empty-state my-5">
+                        <span class="fa fa-exchange"/>
+                        <h2>No exact cross-reference found for this part number</h2>
+                        <p>Our engineering database indexes thousands of industrial part numbers. Let our specialists match your specifications manually.</p>
+                        <div>
+                            <a href="/cross-reference" class="sre-button sre-button--secondary">View All Cross References</a>
+                            <a href="/rfq" class="sre-button">Submit Part for Engineering Match</a>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Consultation Banner -->
+                    <div class="sre-engineering-cta mt-5">
+                        <div>
+                            <span class="sre-kicker">OEM &amp; Legacy Equipment Cross Referencing</span>
+                            <h2>Have a competitor part number or legacy equipment manual?</h2>
+                            <p>Send our applications desk your part number, operating pressure, temperature, and media. We will identify the direct SRE replacement and provide formal CAD drawings and submittals.</p>
+                        </div>
+                        <a href="/rfq" class="sre-button sre-button--light">Request Cross-Reference Match</a>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

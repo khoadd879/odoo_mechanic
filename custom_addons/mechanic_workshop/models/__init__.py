@@ -9,5 +9,9 @@ from . import sre_product_family
 from . import sre_attribute_profile
 from . import sre_industry
 from . import sre_oem_pn
+from . import sre_boiler
+from . import sre_cross_reference
+from . import sre_product_document
+from . import sre_customer_equipment
 
 from . import website

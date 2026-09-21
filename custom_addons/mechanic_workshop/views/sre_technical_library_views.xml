@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="technical_library_page" name="SRE Technical Documents &amp; CAD Library">
+        <t t-call="website.layout">
+            <div id="wrap" class="sre-technical-library-page py-4">
+                <div class="container">
+                    <!-- Breadcrumb -->
+                    <nav class="sre-breadcrumb mb-3" aria-label="Breadcrumb">
+                        <a href="/">Home</a><span>/</span>
+                        <span class="active">Technical Library &amp; CAD Assets</span>
+                    </nav>
+
+                    <!-- Hero / Header -->
+                    <div class="sre-section-hero mb-4 p-4 bg-light border rounded">
+                        <div class="row align-items-center">
+                            <div class="col-lg-8">
+                                <span class="badge bg-primary text-uppercase mb-2">Engineering Repository</span>
+                                <h1 class="h3 fw-bold mb-2">Technical Library &amp; CAD Center</h1>
+                                <p class="text-muted mb-0">
+                                    Access rights-verified engineering datasheets, 2D/3D CAD models (STEP, DWG), installation &amp; maintenance manuals, and factory compliance certificates for all SRE catalog equipment.
+                                </p>
+                            </div>
+                            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                                <a href="/rfq" class="btn btn-outline-dark me-2">
+                                    <i class="fa fa-list-alt me-1"/> RFQ Basket
+                                </a>
+                                <a href="/boiler-finder" class="btn btn-primary">
+                                    <i class="fa fa-cogs me-1"/> Boiler Part Finder
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search & Filter Controls -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-3">
+                            <form method="GET" action="/sre/documents" class="row g-3 align-items-center">
+                                <div class="col-md-5">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white border-end-0">
+                                            <i class="fa fa-search text-muted"/>
+                                        </span>
+                                        <input type="text" name="q" class="form-control border-start-0"
+                                               placeholder="Search by document name, product, SKU, or brand..."
+                                               t-att-value="current_q"/>
+                                        <button class="btn btn-primary" type="submit">Search</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="type" class="form-select" onchange="this.form.submit()">
+                                        <option value="" t-att-selected="current_type == 'all'">All Document Types (<t t-esc="type_counts.get('all', 0)"/>)</option>
+                                        <option value="datasheet" t-att-selected="current_type == 'datasheet'">Datasheets (<t t-esc="type_counts.get('datasheet', 0)"/>)</option>
+                                        <option value="cad_drawing" t-att-selected="current_type == 'cad_drawing'">2D/3D CAD Drawings (<t t-esc="type_counts.get('cad_drawing', 0)"/>)</option>
+                                        <option value="manual" t-att-selected="current_type == 'manual'">Installation Manuals (<t t-esc="type_counts.get('manual', 0)"/>)</option>
+                                        <option value="certificate" t-att-selected="current_type == 'certificate'">Certificates (<t t-esc="type_counts.get('certificate', 0)"/>)</option>
+                                        <option value="brochure" t-att-selected="current_type == 'brochure'">Catalogs &amp; Brochures (<t t-esc="type_counts.get('brochure', 0)"/>)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3" t-if="available_brands">
+                                    <select name="brand" class="form-select" onchange="this.form.submit()">
+                                        <option value="">All Brands</option>
+                                        <t t-foreach="available_brands" t-as="b">
+                                            <option t-att-value="b.id" t-att-selected="current_brand == b.id" t-esc="b.name"/>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div class="col-md-1 text-end" t-if="current_q or current_type != 'all' or current_brand">
+                                    <a href="/sre/documents" class="btn btn-outline-secondary btn-sm" title="Clear filters">
+                                        <i class="fa fa-times"/> Reset
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Documents Table -->
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
+                            <h2 class="h6 mb-0 fw-bold">
+                                Available Engineering Documents (<t t-esc="len(documents)"/>)
+                            </h2>
+                            <span class="small text-muted">Document Rights Verified</span>
+                        </div>
+                        <div class="table-responsive" t-if="documents">
+                            <table class="table table-hover align-middle mb-0 sre-tech-table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Document Title</th>
+                                        <th>Associated Product / Equipment</th>
+                                        <th>Brand</th>
+                                        <th>Type</th>
+                                        <th>Format</th>
+                                        <th>Access Level</th>
+                                        <th class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="documents" t-as="doc">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <t t-if="doc.cad_format == 'pdf'">
+                                                    <i class="fa fa-file-pdf-o fa-2x text-danger me-3"/>
+                                                </t>
+                                                <t t-elif="doc.cad_format in ('step', 'dwg', 'dxf')">
+                                                    <i class="fa fa-cube fa-2x text-primary me-3"/>
+                                                </t>
+                                                <t t-elif="doc.cad_format == 'zip'">
+                                                    <i class="fa fa-file-archive-o fa-2x text-warning me-3"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <i class="fa fa-file-text-o fa-2x text-secondary me-3"/>
+                                                </t>
+                                                <div>
+                                                    <strong class="d-block" t-esc="doc.name"/>
+                                                    <small class="text-muted" t-if="doc.file_size">
+                                                        <t t-if="doc.file_size &lt; 1048576">
+                                                            <t t-esc="'%.1f' % (doc.file_size / 1024.0)"/> KB
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-esc="'%.1f' % (doc.file_size / 1048576.0)"/> MB
+                                                        </t>
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <t t-if="doc.product_tmpl_id">
+                                                <a t-att-href="'/shop/' + slug(doc.product_tmpl_id)" class="fw-semibold text-decoration-none">
+                                                    <t t-esc="doc.product_tmpl_id.name"/>
+                                                </a>
+                                                <code t-if="doc.product_tmpl_id.default_code" class="d-block text-muted small mt-1 sre-mono" t-esc="doc.product_tmpl_id.default_code"/>
+                                            </t>
+                                            <span t-else="" class="text-muted">General Catalog Document</span>
+                                        </td>
+                                        <td>
+                                            <span t-if="doc.product_tmpl_id and doc.product_tmpl_id.product_brand_id" class="badge bg-light text-dark border" t-esc="doc.product_tmpl_id.product_brand_id.name"/>
+                                            <span t-else="" class="text-muted">—</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-light text-dark border">
+                                                <t t-if="doc.document_type == 'datasheet'">Datasheet</t>
+                                                <t t-elif="doc.document_type == 'cad_drawing'">2D/3D CAD</t>
+                                                <t t-elif="doc.document_type == 'manual'">Manual</t>
+                                                <t t-elif="doc.document_type == 'certificate'">Certificate</t>
+                                                <t t-elif="doc.document_type == 'brochure'">Brochure</t>
+                                                <t t-else="" t-esc="doc.document_type"/>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-secondary text-uppercase" t-esc="doc.cad_format"/>
+                                        </td>
+                                        <td>
+                                            <t t-if="doc.governance_type == 'public'">
+                                                <span class="badge bg-success-subtle text-success border border-success-subtle">
+                                                    <i class="fa fa-check-circle me-1"/> Public
+                                                </span>
+                                            </t>
+                                            <t t-else="">
+                                                <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">
+                                                    <i class="fa fa-shield me-1"/> B2B Gated
+                                                </span>
+                                            </t>
+                                        </td>
+                                        <td class="text-end">
+                                            <t t-if="doc.governance_type == 'public' or not user_id._is_public()">
+                                                <a t-if="doc.product_tmpl_id"
+                                                   t-att-href="'/shop/' + slug(doc.product_tmpl_id) + '/document/' + str(doc.id)"
+                                                   class="btn btn-sm btn-outline-primary" target="_blank">
+                                                    <i class="fa fa-download me-1"/> <t t-if="doc.governance_type == 'public'">Download</t><t t-else="">Download CAD</t>
+                                                </a>
+                                                <a t-else=""
+                                                   t-att-href="'/web/content/' + str(doc.ir_attachment_id.id) + '?download=true'"
+                                                   class="btn btn-sm btn-outline-primary" target="_blank">
+                                                    <i class="fa fa-download me-1"/> <t t-if="doc.governance_type == 'public'">Download</t><t t-else="">Download CAD</t>
+                                                </a>
+                                            </t>
+                                            <t t-else="">
+                                                <button type="button"
+                                                        class="btn btn-sm btn-primary sre-btn-gated-download"
+                                                        t-att-data-doc-id="doc.id"
+                                                        t-att-data-doc-name="doc.name"
+                                                        t-att-data-doc-format="doc.cad_format.upper()"
+                                                        t-att-data-product-name="doc.product_tmpl_id.name if doc.product_tmpl_id else ''">
+                                                    <i class="fa fa-download me-1"/> Request CAD
+                                                </button>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div t-else="" class="card-body text-center py-5">
+                            <i class="fa fa-folder-open-o fa-3x text-muted mb-3 d-block"/>
+                            <h3 class="h5 fw-bold text-muted">No documents found</h3>
+                            <p class="text-muted small">No rights-verified technical document matches your filter criteria.</p>
+                            <a href="/sre/documents" class="btn btn-sm btn-outline-primary mt-2">Clear all filters</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal for Gated Document Download -->
+                <div class="modal fade" id="sreGatedDocModal" tabindex="-1" aria-labelledby="sreGatedDocModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 shadow">
+                            <div class="modal-header bg-dark text-white">
+                                <h5 class="modal-title h6 mb-0" id="sreGatedDocModalLabel">
+                                    <i class="fa fa-shield text-warning me-2"/> Request Engineering Asset
+                                </h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form id="sreGatedDocForm">
+                                <div class="modal-body p-4">
+                                    <div class="alert alert-light border d-flex align-items-center mb-3">
+                                        <i class="fa fa-cube fa-2x text-primary me-3"/>
+                                        <div>
+                                            <strong id="sreModalDocName" class="d-block text-truncate" style="max-width: 320px;">CAD Model</strong>
+                                            <small class="text-muted">Enter your business information to unlock instant download and direct engineer support.</small>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="sreModalDocId" name="document_id"/>
+                                    <div class="row g-2 mb-2">
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold">Full Name <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control form-control-sm" name="contact_name" required="required" placeholder="Nguyen Van A"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold">Company Name <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control form-control-sm" name="company_name" required="required" placeholder="Industrial Plant Co."/>
+                                        </div>
+                                    </div>
+                                    <div class="row g-2 mb-2">
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold">Business Email <span class="text-danger">*</span></label>
+                                            <input type="email" class="form-control form-control-sm" name="email" required="required" placeholder="engineer@company.com"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold">Phone Number</label>
+                                            <input type="tel" class="form-control form-control-sm" name="phone" placeholder="+84 90 123 4567"/>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label small fw-bold">Project / Application Notes</label>
+                                        <textarea class="form-control form-control-sm" name="notes" rows="2" placeholder="Application, fluid or equipment requirements (optional)..."></textarea>
+                                    </div>
+                                    <div id="sreGatedModalAlert" class="alert d-none mt-3 mb-0 small" role="alert"></div>
+                                </div>
+                                <div class="modal-footer bg-light p-3">
+                                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-sm btn-primary" id="sreGatedSubmitBtn">
+                                        <i class="fa fa-download me-1"/> Unlock &amp; Download
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

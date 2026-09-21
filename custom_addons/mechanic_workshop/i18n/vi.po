@@ -1,0 +1,3562 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mechanic_workshop
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260723\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-14 08:48+0000\n"
+"PO-Revision-Date: 2026-09-14 08:48+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_thanks
+msgid ""
+". Our team will review the product list and contact details before preparing"
+" a quotation."
+msgstr ""
+". Đội ngũ kỹ sư của chúng tôi sẽ kiểm tra danh sách sản phẩm và thông tin "
+"liên hệ trước khi gửi báo giá."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_desktop_header
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_mobile_header
+msgid "/sre/catalog"
+msgstr "/sre/catalog"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid ""
+"<i class=\"fa fa-check-circle text-primary me-2\"/><strong>Fitment "
+"review:</strong> Engineering review of physical dimensions and port "
+"standards before quote"
+msgstr ""
+"<i class=\"fa fa-check-circle text-primary me-2\"/><strong>Kiểm định kích "
+"thước:</strong> Kỹ sư thẩm định kích thước vật lý và tiêu chuẩn cổng kết nối"
+" trước khi báo giá"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid ""
+"<i class=\"fa fa-cogs text-primary me-2\"/><strong>Operating duty:</strong> "
+"High pressure, continuous thermal cycles and aggressive fluid media"
+msgstr ""
+"<i class=\"fa fa-cogs text-primary me-2\"/><strong>Điều kiện vận "
+"hành:</strong> Áp suất cao, chu kỳ nhiệt liên tục và môi chất ăn mòn mạnh"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid ""
+"<i class=\"fa fa-exchange text-primary me-2\"/><strong>Cross-"
+"reference:</strong> Direct and drop-in replacements for obsolete or OEM "
+"components"
+msgstr ""
+"<i class=\"fa fa-exchange text-primary me-2\"/><strong>Tra cứu "
+"chéo:</strong> Linh kiện thay thế trực tiếp và tương đương cho mã OEM hoặc "
+"mã đã ngưng sản xuất"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid ""
+"<i class=\"fa fa-file-text-o text-primary me-2\"/><strong>B2B "
+"Procurement:</strong> Consolidated multi-product quotation and technical "
+"submittals"
+msgstr ""
+"<i class=\"fa fa-file-text-o text-primary me-2\"/><strong>Mua hàng "
+"B2B:</strong> Báo giá tổng hợp nhiều mặt hàng và hồ sơ kỹ thuật dự án"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_header
+msgid ""
+"<i class=\"fa fa-file-text-o\" aria-hidden=\"true\"/>\n"
+"                    <span>RFQ</span>"
+msgstr ""
+"<i class=\"fa fa-file-text-o\" aria-hidden=\"true\"/>\n"
+"                    <span>RFQ</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_product
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_card
+msgid "<i class=\"fa fa-plus-circle\" aria-hidden=\"true\"/> Add to RFQ"
+msgstr "<i class=\"fa fa-plus-circle\" aria-hidden=\"true\"/> Thêm vào RFQ"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "<i class=\"fa fa-plus-circle\" aria-hidden=\"true\"/> RFQ"
+msgstr "<i class=\"fa fa-plus-circle\" aria-hidden=\"true\"/> RFQ"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid ""
+"<i class=\"fa fa-shield text-primary me-2\"/><strong>Engineering "
+"compliance:</strong> ASME, API, DIN and sanitary-grade standards verified"
+msgstr ""
+"<i class=\"fa fa-shield text-primary me-2\"/><strong>Tiêu chuẩn kỹ "
+"thuật:</strong> Kiểm định theo chuẩn ASME, API, DIN và tiêu chuẩn vi sinh "
+"thực phẩm"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid ""
+"<i class=\"fa fa-sliders text-primary me-2\"/><strong>Sizing "
+"parameters:</strong> Flow rate, differential pressure, fluid temperature, "
+"connection rating"
+msgstr ""
+"<i class=\"fa fa-sliders text-primary me-2\"/><strong>Thông số lựa "
+"chọn:</strong> Lưu lượng, áp suất chênh lệch, nhiệt độ môi chất, cấp áp lực "
+"kết nối"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "<i>→</i>"
+msgstr "<i>→</i>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "<i>↗</i>"
+msgstr "<i>↗</i>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "<option value=\"\">All brands</option>"
+msgstr "<option value=\"\">Tất cả thương hiệu</option>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid ""
+"<small class=\"sre-rfq-contact__privacy\"><span class=\"fa fa-lock\"/> "
+"Supplier, cost and source information remain private.</small>"
+msgstr ""
+"<small class=\"sre-rfq-contact__privacy\"><span class=\"fa fa-lock\"/> Thông"
+" tin nhà cung cấp, giá vốn và nguồn hàng được bảo mật tuyệt đối.</small>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid ""
+"<small class=\"text-muted d-block mt-1\">Attach a photo of the nameplate, "
+"damaged part or technical datasheet (PNG, JPG, PDF, max 10MB).</small>"
+msgstr ""
+"<small class=\"text-muted d-block mt-1\">Đính kèm ảnh tem mác thiết bị, linh"
+" kiện hư hỏng hoặc tài liệu thông số kỹ thuật (PNG, JPG, PDF, tối đa "
+"10MB).</small>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_products_item_inherit
+msgid ""
+"<span class=\"dot\"/>\n"
+"                    <span>Availability on request</span>"
+msgstr ""
+"<span class=\"dot\"/>\n"
+"                    <span>Tình trạng tồn kho theo yêu cầu</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid ""
+"<span class=\"fa fa-camera\" aria-hidden=\"true\"/> Equipment nameplate / "
+"photo (optional)"
+msgstr ""
+"<span class=\"fa fa-camera\" aria-hidden=\"true\"/> Ảnh tem mác thiết bị / "
+"tài liệu (tùy chọn)"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid ""
+"<span class=\"fa fa-check-square-o\"/><strong>Engineering "
+"review</strong><small>Specifications checked before quote</small>"
+msgstr ""
+"<span class=\"fa fa-check-square-o\"/><strong>Kỹ sư thẩm "
+"định</strong><small>Kiểm tra thông số kỹ thuật trước khi báo giá</small>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid ""
+"<span class=\"fa fa-cogs\" aria-hidden=\"true\"/>\n"
+"                                    <strong>Technical image pending</strong>\n"
+"                                    <small>Product identity is available below.</small>"
+msgstr ""
+"<span class=\"fa fa-cogs\" aria-hidden=\"true\"/>\n"
+"                                    <strong>Đang cập nhật ảnh kỹ thuật</strong>\n"
+"                                    <small>Thông tin định danh sản phẩm hiển thị bên dưới.</small>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid ""
+"<span class=\"fa fa-file-pdf-o\"/> No rights-approved public document is "
+"attached to this product yet."
+msgstr ""
+"<span class=\"fa fa-file-pdf-o\"/> Chưa có tài liệu kỹ thuật công khai được "
+"duyệt bản quyền cho sản phẩm này."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_desktop_header
+msgid ""
+"<span class=\"fa fa-file-text-o\" aria-hidden=\"true\"/>\n"
+"                        <span>RFQ list</span>"
+msgstr ""
+"<span class=\"fa fa-file-text-o\" aria-hidden=\"true\"/>\n"
+"                        <span>Danh sách RFQ</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid ""
+"<span class=\"fa fa-files-o\"/><strong>Multi-product RFQ</strong><small>One "
+"request, multiple line items</small>"
+msgstr ""
+"<span class=\"fa fa-files-o\"/><strong>RFQ nhiều sản phẩm</strong><small>Một"
+" yêu cầu, nhiều mặt hàng</small>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid ""
+"<span class=\"fa fa-link\"/> Compatibility has not been publicly verified. "
+"Ask engineering before substitution."
+msgstr ""
+"<span class=\"fa fa-link\"/> Khả năng tương thích chưa được kiểm chứng công "
+"khai. Vui lòng hỏi kỹ sư trước khi thay thế."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid ""
+"<span class=\"fa fa-lock\"/><strong>Controlled data</strong><small>No "
+"supplier or cost exposure</small>"
+msgstr ""
+"<span class=\"fa fa-lock\"/><strong>Dữ liệu kiểm soát</strong><small>Không "
+"để lộ thông tin nhà cung cấp hay chi phí</small>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid ""
+"<span class=\"fa fa-random\"/> No public cross-reference relationship is "
+"verified for this item."
+msgstr ""
+"<span class=\"fa fa-random\"/> Chưa có liên kết tra cứu chéo công khai được "
+"xác thực cho sản phẩm này."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid ""
+"<span class=\"fa fa-search\"/><strong>Part-number search</strong><small>SKU,"
+" MPN, OEM and brand</small>"
+msgstr ""
+"<span class=\"fa fa-search\"/><strong>Tra cứu mã phụ "
+"tùng</strong><small>SKU, MPN, OEM và thương hiệu</small>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid ""
+"<span class=\"fa fa-shield\"/> Public assets are shown only after document-"
+"rights review."
+msgstr ""
+"<span class=\"fa fa-shield\"/> Tài liệu công khai chỉ hiển thị sau khi đã rà"
+" soát bản quyền."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_desktop_header
+msgid ""
+"<span class=\"fa fa-th-list\" aria-hidden=\"true\"/>\n"
+"                        All products"
+msgstr ""
+"<span class=\"fa fa-th-list\" aria-hidden=\"true\"/>\n"
+"                        Tất cả sản phẩm"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_desktop_header
+msgid ""
+"<span class=\"fa fa-user-o\" aria-hidden=\"true\"/>\n"
+"                        <span>Account</span>"
+msgstr ""
+"<span class=\"fa fa-user-o\" aria-hidden=\"true\"/>\n"
+"                        <span>Tài khoản</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+msgid "<span class=\"sre-brand__mark\" aria-hidden=\"true\">SRE</span>"
+msgstr "<span class=\"sre-brand__mark\" aria-hidden=\"true\">SRE</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_desktop_header
+msgid ""
+"<span class=\"sre-brand__mark\" aria-hidden=\"true\">SRE</span>\n"
+"                    <span class=\"sre-brand__copy\">\n"
+"                        <strong>SRE Commercial</strong>\n"
+"                        <small>Industrial engineering supply</small>\n"
+"                    </span>"
+msgstr ""
+"<span class=\"sre-brand__mark\" aria-hidden=\"true\">SRE</span>\n"
+"                    <span class=\"sre-brand__copy\">\n"
+"                        <strong>SRE Commercial</strong>\n"
+"                        <small>Cung ứng kỹ thuật công nghiệp</small>\n"
+"                    </span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_mobile_header
+msgid ""
+"<span class=\"sre-brand__mark\" aria-hidden=\"true\">SRE</span>\n"
+"                <span class=\"sre-brand__copy\"><strong>SRE Commercial</strong></span>"
+msgstr ""
+"<span class=\"sre-brand__mark\" aria-hidden=\"true\">SRE</span>\n"
+"                <span class=\"sre-brand__copy\"><strong>SRE Commercial</strong></span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid ""
+"<span class=\"sre-kicker\">Application Architecture · System Duty &amp; "
+"Sizing</span>"
+msgstr ""
+"<span class=\"sre-kicker\">Kiến trúc ứng dụng · Thông số vận hành &amp; Lựa "
+"chọn thiết bị</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "<span class=\"sre-kicker\">Application support</span>"
+msgstr "<span class=\"sre-kicker\">Hỗ trợ ứng dụng</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid "<span class=\"sre-kicker\">Applications</span>"
+msgstr "<span class=\"sre-kicker\">Ứng dụng</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_product
+msgid "<span class=\"sre-kicker\">Commercial request</span>"
+msgstr "<span class=\"sre-kicker\">Yêu cầu thương mại</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid "<span class=\"sre-kicker\">Equipment &amp; Components</span>"
+msgstr "<span class=\"sre-kicker\">Thiết bị &amp; Linh kiện</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "<span class=\"sre-kicker\">Featured product categories</span>"
+msgstr "<span class=\"sre-kicker\">Danh mục sản phẩm tiêu biểu</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid ""
+"<span class=\"sre-kicker\">Industrial Solution · SRE Technical "
+"Distribution</span>"
+msgstr ""
+"<span class=\"sre-kicker\">Giải pháp công nghiệp · Phân phối kỹ thuật "
+"SRE</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_index
+msgid "<span class=\"sre-kicker\">Industrial Solutions</span>"
+msgstr "<span class=\"sre-kicker\">Giải pháp công nghiệp</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "<span class=\"sre-kicker\">Quick access</span>"
+msgstr "<span class=\"sre-kicker\">Truy cập nhanh</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "<span class=\"sre-kicker\">RFQ-first procurement</span>"
+msgstr "<span class=\"sre-kicker\">Mua sắm ưu tiên RFQ</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "<span class=\"sre-kicker\">Request a quote</span>"
+msgstr "<span class=\"sre-kicker\">Yêu cầu báo giá</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "<span class=\"sre-kicker\">SRE technical distribution</span>"
+msgstr "<span class=\"sre-kicker\">Phân phối kỹ thuật SRE</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid "<span class=\"sre-kicker\">Sectors</span>"
+msgstr "<span class=\"sre-kicker\">Lĩnh vực</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "<span class=\"sre-kicker\">Selection support</span>"
+msgstr "<span class=\"sre-kicker\">Hỗ trợ lựa chọn kỹ thuật</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "<span class=\"sre-kicker\">Shop by application</span>"
+msgstr "<span class=\"sre-kicker\">Tra cứu theo ứng dụng</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "<span class=\"sre-kicker\">Shop by industry</span>"
+msgstr "<span class=\"sre-kicker\">Tra cứu theo ngành công nghiệp</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid "<span class=\"sre-kicker\">Specialized procurement</span>"
+msgstr "<span class=\"sre-kicker\">Cung ứng chuyên biệt</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "<span class=\"sre-kicker\">Step 01</span>"
+msgstr "<span class=\"sre-kicker\">Bước 01</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "<span class=\"sre-kicker\">Step 02</span>"
+msgstr "<span class=\"sre-kicker\">Bước 02</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_index
+msgid "<span class=\"sre-kicker\">System Applications</span>"
+msgstr "<span class=\"sre-kicker\">Ứng dụng hệ thống</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid "<span class=\"sre-kicker\">System Components</span>"
+msgstr "<span class=\"sre-kicker\">Linh kiện hệ thống</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid "<span class=\"sre-kicker\">System duty inquiry</span>"
+msgstr "<span class=\"sre-kicker\">Yêu cầu thông số hệ thống</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid ""
+"<span class=\"sre-kicker\">Technical distribution · Vietnam &amp; "
+"international projects</span>"
+msgstr ""
+"<span class=\"sre-kicker\">Phân phối kỹ thuật · Dự án Việt Nam &amp; quốc "
+"tế</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "<span class=\"sre-kicker\">Technical resources</span>"
+msgstr "<span class=\"sre-kicker\">Tài nguyên kỹ thuật</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_mobile_header
+msgid "<span class=\"sre-mobile-menu__label\">Browse by</span>"
+msgstr "<span class=\"sre-mobile-menu__label\">Tra cứu theo</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_mobile_header
+msgid "<span class=\"sre-mobile-menu__label\">Product groups</span>"
+msgstr "<span class=\"sre-mobile-menu__label\">Nhóm sản phẩm</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "<span class=\"sre-pillar-grid__arrow\">↗</span>"
+msgstr "<span class=\"sre-pillar-grid__arrow\">↗</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_card
+msgid ""
+"<span class=\"sre-quote-price-tag\"><i class=\"fa fa-calculator\" aria-"
+"hidden=\"true\"/>Quote on Request</span>"
+msgstr ""
+"<span class=\"sre-quote-price-tag\"><i class=\"fa fa-calculator\" aria-"
+"hidden=\"true\"/>Báo giá theo yêu cầu</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_thanks
+msgid ""
+"<span class=\"sre-rfq-thanks__icon fa fa-check\" aria-hidden=\"true\"/>\n"
+"                    <span class=\"sre-kicker\">Submission confirmed</span>"
+msgstr ""
+"<span class=\"sre-rfq-thanks__icon fa fa-check\" aria-hidden=\"true\"/>\n"
+"                    <span class=\"sre-kicker\">Đã xác nhận gửi yêu cầu</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_card
+msgid ""
+"<span class=\"sre-status\"><i aria-hidden=\"true\"/>Availability on "
+"request</span>"
+msgstr ""
+"<span class=\"sre-status\"><i aria-hidden=\"true\"/>Tồn kho theo yêu "
+"cầu</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "<span class=\"sre-status\"><i/>Available for RFQ</span>"
+msgstr "<span class=\"sre-status\"><i/>Sẵn sàng cho RFQ</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "<span class=\"sre-status\"><i/>On request</span>"
+msgstr "<span class=\"sre-status\"><i/>Theo yêu cầu</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid ""
+"<span class=\"sre-status\"><i/>Standard list price · RFQ for project "
+"discounts</span>"
+msgstr ""
+"<span class=\"sre-status\"><i/>Giá niêm yết tiêu chuẩn · Gửi RFQ nhận chiết "
+"khấu dự án</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_products_item_inherit
+msgid "<span class=\"sre-tile__mpn-label\">MPN</span>"
+msgstr "<span class=\"sre-tile__mpn-label\">MPN</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "<span class=\"text-muted small d-block\">Approved Public Price</span>"
+msgstr "<span class=\"text-muted small d-block\">Giá công khai đã duyệt</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_product
+msgid ""
+"<span class=\"text-muted small\"><i class=\"fa fa-lock\" aria-"
+"hidden=\"true\"/> No payment required online</span>"
+msgstr ""
+"<span class=\"text-muted small\"><i class=\"fa fa-lock\" aria-"
+"hidden=\"true\"/> Không yêu cầu thanh toán trực tuyến</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "<span>/</span>"
+msgstr "<span>/</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_index
+msgid ""
+"<span>/</span>\n"
+"                            <span>Applications</span>"
+msgstr ""
+"<span>/</span>\n"
+"                            <span>Ứng dụng</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_index
+msgid ""
+"<span>/</span>\n"
+"                            <span>Industries</span>"
+msgstr ""
+"<span>/</span>\n"
+"                            <span>Ngành công nghiệp</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "<span>/</span><span>RFQ</span>"
+msgstr "<span>/</span><span>RFQ</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "<span>01</span>"
+msgstr "<span>01</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "<span>02</span>"
+msgstr "<span>02</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "<span>03</span>"
+msgstr "<span>03</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "<span>04</span>"
+msgstr "<span>04</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "<span>Active:</span>"
+msgstr "<span>Đang chọn:</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_desktop_header
+msgid ""
+"<span>Engineering desk</span>\n"
+"                        <strong>Technical sourcing support</strong>"
+msgstr ""
+"<span>Bộ phận kỹ thuật</span>\n"
+"                        <strong>Hỗ trợ tìm nguồn vật tư kỹ thuật</strong>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "<span>Engineering search protocol</span><strong>01 / IDENTIFY</strong>"
+msgstr "<span>Quy trình tra cứu kỹ thuật</span><strong>01 / XÁC ĐỊNH</strong>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "<span>Exact part numbers are ranked first.</span>"
+msgstr "<span>Mã phụ tùng chính xác được ưu tiên hàng đầu.</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_index
+msgid "<span>Explore application →</span>"
+msgstr "<span>Khám phá ứng dụng →</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_index
+msgid "<span>Explore industry →</span>"
+msgstr "<span>Khám phá ngành →</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_card
+msgid "<span>MPN</span>"
+msgstr "<span>MPN</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+msgid ""
+"<span>RFQ-first B2B supply</span>\n"
+"                        <strong>Part-number accuracy.<br/>Engineering-led review.</strong>"
+msgstr ""
+"<span>Cung ứng B2B ưu tiên RFQ</span>\n"
+"                        <strong>Độ chính xác mã phụ tùng.<br/>Kỹ sư chuyên môn thẩm định.</strong>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "<span>Refine results</span>"
+msgstr "<span>Lọc kết quả</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "<span>Verified identifier</span>"
+msgstr "<span>Mã định danh đã xác thực</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid "<span>View application →</span>"
+msgstr "<span>Xem ứng dụng →</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid "<span>View industry →</span>"
+msgstr "<span>Xem ngành →</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+msgid ""
+"<span>© 2026 SRE Commercial</span>\n"
+"                        <span>Prices and availability confirmed by quotation.</span>"
+msgstr ""
+"<span>© 2026 SRE Commercial</span>\n"
+"                        <span>Giá và tình trạng tồn kho được xác nhận qua báo giá.</span>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "<strong>Engineering RFQ</strong>"
+msgstr "<strong>RFQ Kỹ thuật</strong>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "<strong>Not sure which specification?</strong>"
+msgstr "<strong>Chưa chắc chắn về thông số kỹ thuật?</strong>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "<strong>Part-number lookup</strong>"
+msgstr "<strong>Tra cứu mã phụ tùng</strong>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+msgid "<strong>SRE Commercial</strong>"
+msgstr "<strong>SRE Commercial</strong>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "<strong>Technical catalog</strong>"
+msgstr "<strong>Danh mục kỹ thuật</strong>"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Actions"
+msgstr "Thao tác"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_application__active
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_industry__active
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_navigation_pillar__active
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_oem_pn__active
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_family__active
+msgid "Active"
+msgstr "Đang hoạt động"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_card
+msgid "Add 1 unit to RFQ"
+msgstr "Thêm 1 sản phẩm vào RFQ"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_product
+msgid "Add to RFQ"
+msgstr "Thêm vào RFQ"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "All"
+msgstr "Tất cả"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "All applications"
+msgstr "Tất cả ứng dụng"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid "All industries"
+msgstr "Tất cả ngành công nghiệp"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_mobile_header
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+msgid "All products"
+msgstr "Tất cả sản phẩm"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile_attribute__value_ids
+msgid "Allowed values"
+msgstr "Giá trị cho phép"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields.selection,name:mechanic_workshop.selection__sre_oem_pn__source__alternative
+msgid "Alternative"
+msgstr "Thay thế tương đương"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Alternatives, replacements, accessories and related items."
+msgstr ""
+"Sản phẩm thay thế tương đương, phụ tùng thay thế, phụ kiện và sản phẩm liên "
+"quan."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Application"
+msgstr "Ứng dụng"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid "Application component mapping in progress"
+msgstr "Đang cập nhật danh mục linh kiện cho ứng dụng này"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid "Application duty"
+msgstr "Chế độ vận hành ứng dụng"
+
+#. module: mechanic_workshop
+#: model:ir.model.constraint,message:mechanic_workshop.constraint_sre_application_slug_unique
+msgid "Application slug must be unique."
+msgstr "Slug ứng dụng phải là duy nhất."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Application taxonomy is ready for governed PIM data."
+msgstr "Phân loại ứng dụng đã sẵn sàng cho dữ liệu PIM."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Application:"
+msgstr "Ứng dụng:"
+
+#. module: mechanic_workshop
+#: model:ir.actions.act_window,name:mechanic_workshop.sre_application_action
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_product__application_ids
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_template__application_ids
+#: model:ir.ui.menu,name:mechanic_workshop.sre_application_menu_items
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_desktop_header
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_mobile_header
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+msgid "Applications"
+msgstr "Ứng dụng"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Apply filters"
+msgstr "Áp dụng bộ lọc"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Ask engineering"
+msgstr "Tư vấn kỹ sư"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile_attribute__attribute_id
+msgid "Attribute"
+msgstr "Thuộc tính"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_family__attribute_profile_id
+msgid "Attribute Profile"
+msgstr "Hồ sơ thuộc tính"
+
+#. module: mechanic_workshop
+#: model:ir.actions.act_window,name:mechanic_workshop.sre_attr_profile_action
+#: model:ir.ui.menu,name:mechanic_workshop.sre_attr_profile_menu_items
+msgid "Attribute Profiles"
+msgstr "Hồ sơ thuộc tính"
+
+#. module: mechanic_workshop
+#: model:ir.model,name:mechanic_workshop.model_sre_attribute_profile_attribute
+msgid "Attribute in a profile"
+msgstr "Thuộc tính trong hồ sơ"
+
+#. module: mechanic_workshop
+#: model:ir.model.constraint,message:mechanic_workshop.constraint_sre_attribute_profile_attribute_attribute_unique
+msgid "Attribute may appear at most once per profile."
+msgstr "Mỗi thuộc tính chỉ được xuất hiện tối đa một lần trong mỗi hồ sơ."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_product_family__attribute_profile_id
+msgid ""
+"Attribute profile that scopes the technical filters shown on this family's "
+"category page. Brief §07 requires filters to be per-family; leave empty to "
+"render no facet."
+msgstr ""
+"Hồ sơ thuộc tính xác định các bộ lọc kỹ thuật hiển thị trên trang danh mục "
+"của dòng sản phẩm này. Để trống nếu không hiển thị bộ lọc kỹ thuật."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile__line_ids
+msgid "Attributes"
+msgstr "Thuộc tính"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Availability"
+msgstr "Tình trạng tồn kho"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Back to catalog"
+msgstr "Quay lại danh mục"
+
+#. module: mechanic_workshop
+#: model:sre.navigation.pillar,short_label:mechanic_workshop.sre_pillar_boiler_thermal
+msgid "Boiler"
+msgstr "Lò hơi"
+
+#. module: mechanic_workshop
+#: model:sre.navigation.pillar,name:mechanic_workshop.sre_pillar_boiler_thermal
+msgid "Boiler & Thermal"
+msgstr "Hệ thống Lò hơi & Nhiệt công nghiệp"
+
+#. module: mechanic_workshop
+#: model:sre.application,name:mechanic_workshop.sre_application_home_boiler_burner
+msgid "Boiler Burner & Combustion"
+msgstr "Đầu đốt & Buồng đốt lò hơi"
+
+#. module: mechanic_workshop
+#: model:sre.application,name:mechanic_workshop.sre_application_home_boiler_water
+msgid "Boiler Water Level Control"
+msgstr "Điều khiển mức nước lò hơi"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Brand"
+msgstr "Thương hiệu"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Brand:"
+msgstr "Thương hiệu:"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_index
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_index
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Breadcrumb"
+msgstr "Đường dẫn trang"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_product_product__public_price_approved
+#: model:ir.model.fields,help:mechanic_workshop.field_product_template__public_price_approved
+msgid ""
+"Brief §11: When checked, the public catalog displays the list_price. When "
+"unchecked (default), price is hidden and B2B Quote on Request is shown."
+msgstr ""
+"Khi chọn, danh mục công khai sẽ hiển thị giá bán list_price. Khi không chọn "
+"(mặc định), giá sẽ ẩn và hiển thị Báo giá B2B theo yêu cầu."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_product_product__industry_ids
+#: model:ir.model.fields,help:mechanic_workshop.field_product_template__industry_ids
+msgid "Brief §14: a product may serve many industries."
+msgstr "Một sản phẩm có thể phục vụ nhiều ngành công nghiệp."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_product_product__application_ids
+#: model:ir.model.fields,help:mechanic_workshop.field_product_template__application_ids
+msgid "Brief §15: a product may serve many applications."
+msgstr "Một sản phẩm có thể phục vụ nhiều ứng dụng."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Browse by equipment group"
+msgstr "Tra cứu theo nhóm thiết bị"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid "Browse catalog"
+msgstr "Duyệt danh mục"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Browse full catalog"
+msgstr "Xem toàn bộ danh mục"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "Browse technical catalog"
+msgstr "Duyệt danh mục kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_index
+msgid ""
+"Browse technical components by operating system and mechanical duty. Select "
+"an application to review sizing requirements, compatible product families "
+"and B2B quote dispatch."
+msgstr ""
+"Tra cứu linh kiện kỹ thuật theo hệ thống vận hành và bài toán cơ khí. Chọn "
+"ứng dụng để xem yêu cầu thông số, dòng sản phẩm tương thích và gửi yêu cầu "
+"báo giá B2B."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid ""
+"Build a multi-product RFQ. No payment is taken online; our team verifies "
+"product fit, availability and commercial terms before preparing a native "
+"Odoo quotation."
+msgstr ""
+"Tạo yêu cầu báo giá nhiều sản phẩm. Không phát sinh thanh toán trực tuyến; "
+"đội ngũ kỹ sư SRE sẽ xác thực tính tương thích, tồn kho và điều kiện thương "
+"mại trước khi lập báo giá Odoo chính thức."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid ""
+"Build one technical request with multiple products. No payment is taken "
+"online."
+msgstr ""
+"Tạo một yêu cầu kỹ thuật với nhiều sản phẩm. Không phát sinh thanh toán trực"
+" tuyến."
+
+#. module: mechanic_workshop
+#: model:sre.navigation.pillar,short_label:mechanic_workshop.sre_pillar_pumps
+msgid "Bơm"
+msgstr "Bơm"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Catalog"
+msgstr "Danh mục"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Catalog filters"
+msgstr "Bộ lọc danh mục"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Catalog pages"
+msgstr "Trang danh mục"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+msgid "Catalogue"
+msgstr "Danh mục sản phẩm"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid ""
+"Check the part number, remove a filter, or send the identifier to our "
+"engineering team."
+msgstr ""
+"Kiểm tra lại mã phụ tùng, xóa bộ lọc, hoặc gửi mã định danh cho đội ngũ kỹ "
+"sư của chúng tôi."
+
+#. module: mechanic_workshop
+#: model:sre.industry,name:mechanic_workshop.sre_industry_home_chemical
+msgid "Chemical"
+msgstr "Hóa chất & Hóa dầu"
+
+#. module: mechanic_workshop
+#: model:sre.application,name:mechanic_workshop.sre_application_home_chemical_dosing
+msgid "Chemical Dosing & Metering"
+msgstr "Định lượng hóa chất & Đo lường"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Clear"
+msgstr "Xóa lọc"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Clear search"
+msgstr "Xóa tìm kiếm"
+
+#. module: mechanic_workshop
+#: model:sre.industry,name:mechanic_workshop.sre_industry_home_commercial_building
+msgid "Commercial Building"
+msgstr "Tòa nhà thương mại & Văn phòng"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__company_id
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq_line__company_id
+msgid "Company"
+msgstr "Tên công ty / Doanh nghiệp"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__company_name
+msgid "Company Name"
+msgstr "Tên công ty"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Compatibility"
+msgstr "Tương thích thiết bị"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Components. Spare Parts. Controls. Instrumentation."
+msgstr "Linh kiện. Phụ tùng. Điều khiển. Thiết bị đo lường."
+
+#. module: mechanic_workshop
+#: model:sre.application,name:mechanic_workshop.sre_application_home_compressed_air
+msgid "Compressed Air System"
+msgstr "Hệ thống khí nén công nghiệp"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__contact_name
+msgid "Contact Name"
+msgstr "Tên người liên hệ"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+msgid "Contact engineering"
+msgstr "Liên hệ bộ phận kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid ""
+"Contact our engineering team with your operating pressure, temperature and "
+"flow requirements for tailored component selection."
+msgstr ""
+"Liên hệ bộ phận kỹ sư với thông số áp suất, nhiệt độ và lưu lượng để được tư"
+" vấn chọn thiết bị tối ưu."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_thanks
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Continue browsing"
+msgstr "Tiếp tục xem sản phẩm"
+
+#. module: mechanic_workshop
+#: model:sre.navigation.pillar,short_label:mechanic_workshop.sre_pillar_controls_automation
+msgid "Controls"
+msgstr "Tự động hóa"
+
+#. module: mechanic_workshop
+#: model:sre.navigation.pillar,name:mechanic_workshop.sre_pillar_controls_automation
+msgid "Controls & Automation"
+msgstr "Hệ thống Điều khiển & Tự động hóa"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_form
+msgid "Create / Open Quotation"
+msgstr "Tạo / Mở Báo giá"
+
+#. module: mechanic_workshop
+#: model:ir.model,website_form_label:mechanic_workshop.model_crm_lead
+msgid "Create an Opportunity"
+msgstr "Tạo cơ hội"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_application__create_uid
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile__create_uid
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile_attribute__create_uid
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_industry__create_uid
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_navigation_pillar__create_uid
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_oem_pn__create_uid
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_family__create_uid
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__create_uid
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq_line__create_uid
+msgid "Created by"
+msgstr "Người tạo"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_application__create_date
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile__create_date
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile_attribute__create_date
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_industry__create_date
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_navigation_pillar__create_date
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_oem_pn__create_date
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_family__create_date
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__create_date
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq_line__create_date
+msgid "Created on"
+msgstr "Ngày tạo"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields.selection,name:mechanic_workshop.selection__sre_oem_pn__source__cross_ref
+msgid "Cross reference"
+msgstr "Tra cứu chéo"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Cross reference &amp; related products"
+msgstr "Tra cứu chéo &amp; sản phẩm liên quan"
+
+#. module: mechanic_workshop
+#: model:ir.model,name:mechanic_workshop.model_sre_rfq
+msgid "Customer RFQ"
+msgstr "Yêu cầu báo giá khách hàng"
+
+#. module: mechanic_workshop
+#: model:ir.model,name:mechanic_workshop.model_sre_rfq_line
+msgid "Customer RFQ Line"
+msgstr "Dòng RFQ khách hàng"
+
+#. module: mechanic_workshop
+#: model:ir.actions.act_window,name:mechanic_workshop.rfq_action
+#: model:ir.ui.menu,name:mechanic_workshop.rfq_menu
+msgid "Customer RFQs"
+msgstr "Danh sách RFQ khách hàng"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Datasheets, installation guides, CAD and certificates."
+msgstr "Datasheet thông số, hướng dẫn lắp đặt, bản vẽ CAD và chứng chỉ."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_rfq_line__uom_id
+msgid "Default unit of measure used for all stock operations."
+msgstr "Đơn vị tính mặc định dùng cho các hoạt động kho."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_application__description
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_industry__description
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_navigation_pillar__description
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_family__description
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_form
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_family_form
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_form
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_pillar_form
+msgid "Description"
+msgstr "Mô tả"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Details"
+msgstr "Chi tiết"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid "Direct catalog mapping in progress"
+msgstr "Đang cập nhật danh mục sản phẩm cho ngành này"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Discuss an application"
+msgstr "Tư vấn giải pháp ứng dụng"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_crm_lead__display_name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_template__display_name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sale_order__display_name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_application__display_name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile__display_name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile_attribute__display_name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_industry__display_name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_navigation_pillar__display_name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_oem_pn__display_name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_family__display_name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__display_name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq_line__display_name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_website__display_name
+msgid "Display Name"
+msgstr "Tên hiển thị"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Documents"
+msgstr "Tài liệu kỹ thuật"
+
+#. module: mechanic_workshop
+#: model:ir.model.constraint,message:mechanic_workshop.constraint_sre_oem_pn_part_number_unique
+msgid "Duplicate OEM part number for the same product and manufacturer."
+msgstr "Mã phụ tùng OEM bị trùng lặp cho cùng một sản phẩm và nhà sản xuất."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__email
+msgid "Email"
+msgstr "Email"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid ""
+"Engineered valve, pump, heat transfer and instrumentation solutions tailored"
+" for demanding industrial operating conditions."
+msgstr ""
+"Giải pháp van, bơm, trao đổi nhiệt và thiết bị đo lường được thiết kế chuyên"
+" biệt cho điều kiện vận hành công nghiệp khắt khe."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_index
+msgid "Engineering duty"
+msgstr "Bài toán kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid "Engineering duty verified"
+msgstr "Đã kiểm chứng điều kiện kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Engineering selection"
+msgstr "Lựa chọn kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid "Engineering selection active"
+msgstr "Sẵn sàng lựa chọn kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_form
+msgid "Equipment Nameplate / Document"
+msgstr "Ảnh tem mác thiết bị / Tài liệu thông số"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Equipment for demanding operating environments"
+msgstr "Thiết bị chuyên dụng cho các môi trường vận hành công nghiệp khắt khe"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Equipment manufacturer, model, series and component position."
+msgstr ""
+"Hãng sản xuất thiết bị, model, dòng sản phẩm và vị trí lắp đặt linh kiện."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_index
+msgid ""
+"Explore industrial sectors supported by SRE technical supply. Navigate "
+"specialized landing pages for equipment standards, component fitment and "
+"quotation requests."
+msgstr ""
+"Khám phá các lĩnh vực công nghiệp được hỗ trợ bởi chuỗi cung ứng kỹ thuật "
+"SRE. Truy cập landing page chuyên biệt để xem tiêu chuẩn thiết bị, độ vừa "
+"vặn linh kiện và gửi yêu cầu báo giá."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid "Explore other industries"
+msgstr "Khám phá các ngành công nghiệp khác"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid "Explore other system applications"
+msgstr "Khám phá các ứng dụng hệ thống khác"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid "Explore solutions"
+msgstr "Khám phá giải pháp"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_navigation_pillar__family_count
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_pillar_form
+msgid "Families"
+msgstr "Dòng sản phẩm"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_navigation_pillar__family_ids
+msgid "Families in this pillar"
+msgstr "Dòng sản phẩm thuộc nhóm này"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile__family_count
+msgid "Families using this profile"
+msgstr "Dòng sản phẩm dùng hồ sơ này"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_card
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_products_item_inherit
+msgid "Family"
+msgstr "Dòng sản phẩm"
+
+#. module: mechanic_workshop
+#: model:ir.model.constraint,message:mechanic_workshop.constraint_sre_product_family_slug_unique
+msgid "Family slug must be unique."
+msgstr "Slug dòng sản phẩm phải là duy nhất."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Family · Brand · Specification"
+msgstr "Dòng sản phẩm · Thương hiệu · Thông số kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid ""
+"Fields marked * are required. Customer identity is verified by staff before "
+"quotation creation."
+msgstr ""
+"Các trường có dấu * là bắt buộc. Thông tin khách hàng sẽ được nhân viên xác "
+"thực trước khi lập báo giá."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Find SKU, MPN, OEM and brand references in one search."
+msgstr "Tra cứu SKU, MPN, mã OEM và thương hiệu chỉ trong một lượt tìm kiếm."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid ""
+"Find parts by exact technical identity, compare engineering data and build "
+"one multi-product request for quotation."
+msgstr ""
+"Tìm kiếm phụ tùng theo đúng định danh kỹ thuật, so sánh thông số và tạo yêu "
+"cầu báo giá nhiều sản phẩm."
+
+#. module: mechanic_workshop
+#: model:sre.industry,name:mechanic_workshop.sre_industry_home_food_beverage
+msgid "Food & Beverage"
+msgstr "Thực phẩm & Đồ uống (F&B)"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid ""
+"For replacement parts, include the equipment model, serial context and a "
+"photo of the nameplate."
+msgstr ""
+"Đối với phụ tùng thay thế, vui lòng cung cấp model thiết bị, số serial và "
+"ảnh chụp tem mác."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Grid view"
+msgstr "Dạng lưới"
+
+#. module: mechanic_workshop
+#: model:sre.navigation.pillar,short_label:mechanic_workshop.sre_pillar_hvac_building
+msgid "HVAC"
+msgstr "HVAC"
+
+#. module: mechanic_workshop
+#: model:sre.navigation.pillar,name:mechanic_workshop.sre_pillar_hvac_building
+msgid "HVAC & Building"
+msgstr "Hệ thống HVAC & Tòa nhà"
+
+#. module: mechanic_workshop
+#: model:sre.application,name:mechanic_workshop.sre_application_home_hvac_control
+msgid "HVAC Control"
+msgstr "Điều khiển HVAC"
+
+#. module: mechanic_workshop
+#: model:sre.attribute.profile,name:mechanic_workshop.sre_profile_hvac_instrument
+msgid "HVAC Instrument profile"
+msgstr "Hồ sơ thiết bị đo HVAC"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Have a part list or an engineering requirement?"
+msgstr "Bạn có danh sách vật tư hoặc yêu cầu kỹ thuật?"
+
+#. module: mechanic_workshop
+#: model:sre.navigation.pillar,short_label:mechanic_workshop.sre_pillar_heat_exchangers
+msgid "Heat Exch."
+msgstr "Trao đổi nhiệt"
+
+#. module: mechanic_workshop
+#: model:sre.navigation.pillar,name:mechanic_workshop.sre_pillar_heat_exchangers
+msgid "Heat Exchangers"
+msgstr "Thiết bị Trao đổi nhiệt"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_index
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_index
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Home"
+msgstr "Trang chủ"
+
+#. module: mechanic_workshop
+#: model:sre.industry,name:mechanic_workshop.sre_industry_home_hospital
+msgid "Hospital & Healthcare"
+msgstr "Bệnh viện & Y tế"
+
+#. module: mechanic_workshop
+#: model:sre.industry,name:mechanic_workshop.sre_industry_home_hotel_resort
+msgid "Hotel & Resort"
+msgstr "Khách sạn & Khu nghỉ dưỡng"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_crm_lead__id
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_template__id
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sale_order__id
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_application__id
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile__id
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile_attribute__id
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_industry__id
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_navigation_pillar__id
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_oem_pn__id
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_family__id
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__id
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq_line__id
+#: model:ir.model.fields,field_description:mechanic_workshop.field_website__id
+msgid "ID"
+msgstr "ID"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_navigation_pillar__icon
+msgid "Icon"
+msgstr "Biểu tượng"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_attribute_profile_attribute__is_filter_shown
+msgid "If False, attribute is in the profile but hidden from facets."
+msgstr "Nếu Sai, thuộc tính có trong hồ sơ nhưng bị ẩn khỏi bộ lọc."
+
+#. module: mechanic_workshop
+#: model:sre.application,name:mechanic_workshop.sre_application_home_industrial_pumping
+msgid "Industrial / HVAC Pumping"
+msgstr "Bơm công nghiệp & Bơm tuần hoàn HVAC"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Industrial HVAC, Boiler &amp; Process Equipment"
+msgstr "Thiết bị Công nghiệp HVAC, Lò hơi &amp; Dây chuyền sản xuất"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+msgid "Industrial HVAC, boiler, process equipment and technical spare parts."
+msgstr ""
+"Thiết bị HVAC công nghiệp, lò hơi, thiết bị công nghệ và phụ tùng cơ khí kỹ "
+"thuật."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_index
+msgid "Industrial Solutions by Industry"
+msgstr "Giải pháp Kỹ thuật theo Ngành Công nghiệp"
+
+#. module: mechanic_workshop
+#: model:sre.navigation.pillar,name:mechanic_workshop.sre_pillar_spare_parts
+msgid "Industrial Spare Parts"
+msgstr "Phụ tùng & Linh kiện Cơ khí"
+
+#. module: mechanic_workshop
+#: model:ir.actions.act_window,name:mechanic_workshop.sre_industry_action
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_product__industry_ids
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_template__industry_ids
+#: model:ir.ui.menu,name:mechanic_workshop.sre_industry_menu_items
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_desktop_header
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_mobile_header
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+msgid "Industries"
+msgstr "Ngành công nghiệp"
+
+#. module: mechanic_workshop
+#: model:ir.model.constraint,message:mechanic_workshop.constraint_sre_industry_slug_unique
+msgid "Industry slug must be unique."
+msgstr "Slug ngành công nghiệp phải là duy nhất."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid "Industry standards"
+msgstr "Tiêu chuẩn ngành"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Industry taxonomy is ready for governed PIM data."
+msgstr "Phân loại ngành công nghiệp đã sẵn sàng cho dữ liệu PIM."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Industry · System · Duty"
+msgstr "Ngành công nghiệp · Hệ thống · Chế độ vận hành"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Industry:"
+msgstr "Ngành công nghiệp:"
+
+#. module: mechanic_workshop
+#: model:sre.navigation.pillar,name:mechanic_workshop.sre_pillar_instrumentation
+msgid "Instrumentation"
+msgstr "Thiết bị Đo lường & Cảm biến"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_attr_profile_form
+msgid "Internal note"
+msgstr "Ghi chú nội bộ"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_oem_pn__notes
+msgid "Internal note, not shown on website."
+msgstr "Ghi chú nội bộ, không hiển thị trên website."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_attribute_profile__note
+msgid "Internal note; not exposed on website."
+msgstr "Ghi chú nội bộ; không hiển thị trên website."
+
+#. module: mechanic_workshop
+#. odoo-python
+#: code:addons/mechanic_workshop/models/sre_rfq.py:0
+msgid "Invalid quantity."
+msgstr "Số lượng không hợp lệ."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile_attribute__is_filter_shown
+msgid "Is Filter Shown"
+msgstr "Hiển thị trên bộ lọc"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_navigation_pillar__is_published
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_family__is_published
+msgid "Is Published"
+msgstr "Đã công bố"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Known part"
+msgstr "Mã phụ tùng đã biết"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_application__write_uid
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile__write_uid
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile_attribute__write_uid
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_industry__write_uid
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_navigation_pillar__write_uid
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_oem_pn__write_uid
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_family__write_uid
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__write_uid
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq_line__write_uid
+msgid "Last Updated by"
+msgstr "Cập nhật lần cuối bởi"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_application__write_date
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile__write_date
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile_attribute__write_date
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_industry__write_date
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_navigation_pillar__write_date
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_oem_pn__write_date
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_family__write_date
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__write_date
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq_line__write_date
+msgid "Last Updated on"
+msgstr "Cập nhật lần cuối vào"
+
+#. module: mechanic_workshop
+#: model:ir.model,name:mechanic_workshop.model_crm_lead
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__lead_id
+msgid "Lead"
+msgstr "Cơ hội / Đầu mối"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_oem_pn__manufacturer_id
+msgid ""
+"Legal entity that issued the OEM part number. May be the same as or "
+"different from the product's Brand. Internal supply status is not exposed on"
+" the website."
+msgstr ""
+"Pháp nhân phát hành mã phụ tùng OEM. Có thể trùng hoặc khác thương hiệu của "
+"sản phẩm. Trạng thái nguồn cung nội bộ không hiển thị trên website."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__line_ids
+msgid "Line"
+msgstr "Dòng"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "List view"
+msgstr "Dạng danh sách"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "MPN"
+msgstr "Mã MPN"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_oem_pn__manufacturer_id
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_card
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Manufacturer"
+msgstr "Nhà sản xuất"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_product__manufacturer_public_name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_template__manufacturer_public_name
+msgid "Manufacturer (public)"
+msgstr "Nhà sản xuất (công khai)"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Manufacturer PN"
+msgstr "Mã MPN"
+
+#. module: mechanic_workshop
+#: model:sre.industry,name:mechanic_workshop.sre_industry_home_manufacturing
+msgid "Manufacturing"
+msgstr "Sản xuất công nghiệp"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_products_item_inherit
+msgid "Mfr"
+msgstr "Nhà SX"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Move from identification to quotation"
+msgstr "Từ nhận diện thiết bị đến nhận báo giá"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_application__name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile__name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_industry__name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_navigation_pillar__name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_family__name
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__name
+msgid "Name"
+msgstr "Tên"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Name A–Z"
+msgstr "Tên A–Z"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Name Z–A"
+msgstr "Tên Z–A"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__nameplate_filename
+msgid "Nameplate Filename"
+msgstr "Tên file ảnh tem mác"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__nameplate_image
+msgid "Nameplate Photo / Spec Document"
+msgstr "Ảnh tem mác / Tài liệu thông số"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_attribute_profile_attribute__attribute_id
+msgid ""
+"Native Odoo product.attribute. Its values are rendered as facets on the "
+"category page."
+msgstr ""
+"Thuộc tính sản phẩm gốc của Odoo. Giá trị được hiển thị thành bộ lọc trên "
+"trang danh mục."
+
+#. module: mechanic_workshop
+#: model:ir.actions.act_window,name:mechanic_workshop.sre_pillar_action
+#: model:ir.ui.menu,name:mechanic_workshop.sre_pillar_menu_items
+msgid "Navigation Pillars"
+msgstr "Trụ cột điều hướng"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_product_family__pillar_id
+msgid ""
+"Navigation pillar that groups this family in the site top-nav and the pillar"
+" landing page. Brief §04."
+msgstr ""
+"Trụ cột điều hướng nhóm dòng sản phẩm này trên menu đầu trang và trang danh "
+"mục."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Need help specifying the right part?"
+msgstr "Cần hỗ trợ chọn đúng thông số phụ tùng?"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid "Need sizing assistance for this application?"
+msgstr "Bạn cần hỗ trợ tính toán thông số cho ứng dụng này?"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid "Need technical sizing or project pricing for this industry?"
+msgstr "Bạn cần tính toán thông số kỹ thuật hoặc giá dự án cho ngành này?"
+
+#. module: mechanic_workshop
+#. odoo-python
+#: code:addons/mechanic_workshop/models/sre_rfq.py:0
+msgid "New"
+msgstr "Mới"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Next page"
+msgstr "Trang tiếp"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "No matching product found"
+msgstr "Không tìm thấy sản phẩm phù hợp"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_products_item_inherit
+msgid "No public price"
+msgstr "Giá theo yêu cầu"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile__note
+msgid "Note"
+msgstr "Ghi chú"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_oem_pn__notes
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__notes
+msgid "Notes"
+msgstr "Ghi chú"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_product_family__product_count
+msgid "Number of published products in this family."
+msgstr "Số lượng sản phẩm đã công bố trong dòng này."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "OEM / cross reference"
+msgstr "Mã OEM / Tra cứu chéo"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_card
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_products_item_inherit
+msgid "OEM PN"
+msgstr "Mã OEM"
+
+#. module: mechanic_workshop
+#: model:ir.actions.act_window,name:mechanic_workshop.sre_oem_pn_action
+#: model:ir.ui.menu,name:mechanic_workshop.sre_oem_pn_menu_items
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_oem_pn_inline_product
+msgid "OEM Part Numbers"
+msgstr "Mã phụ tùng OEM"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields.selection,name:mechanic_workshop.selection__sre_oem_pn__source__oem
+msgid "OEM part number"
+msgstr "Mã phụ tùng OEM"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_product__sre_oem_pn_ids
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_template__sre_oem_pn_ids
+msgid "OEM part numbers"
+msgstr "Mã phụ tùng OEM"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_product__sre_public_oem_part_numbers
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_template__sre_public_oem_part_numbers
+msgid "OEM part numbers (public)"
+msgstr "Mã phụ tùng OEM (công khai)"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_oem_pn__oem_part_number
+msgid "Oem Part Number"
+msgstr "Mã phụ tùng OEM"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Open RFQ list"
+msgstr "Mở danh sách RFQ"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Open technical catalog"
+msgstr "Mở danh mục kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid ""
+"Operating conditions, target model, connection standard, required documents…"
+msgstr ""
+"Điều kiện vận hành, model thiết bị, tiêu chuẩn kết nối, tài liệu yêu cầu…"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_navigation_pillar__icon
+msgid ""
+"Optional icon identifier (Font Awesome class or Bootstrap icon name). Leave "
+"empty to render plain text."
+msgstr ""
+"Mã định danh biểu tượng tùy chọn (Font Awesome hoặc Bootstrap). Để trống để "
+"hiển thị chữ thuần."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_navigation_pillar__short_label
+msgid "Optional shorter label for the top nav (e.g. 'HVAC')."
+msgstr "Nhãn rút gọn tùy chọn cho menu đầu trang (ví dụ 'HVAC')."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_attribute_profile_attribute__value_ids
+msgid ""
+"Optional whitelist of values shown for this attribute. Leave empty to show "
+"all values used by products in scope."
+msgstr ""
+"Danh sách giá trị tùy chọn hiển thị cho thuộc tính này. Để trống để hiển thị"
+" tất cả giá trị đang dùng."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_card
+msgid "Options"
+msgstr "Tùy chọn"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__order_id
+msgid "Order"
+msgstr "Đơn hàng"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid ""
+"Our engineering team can source and specify valves, pumps and "
+"instrumentation meeting your plant's operating duty."
+msgstr ""
+"Đội ngũ kỹ sư của chúng tôi sẵn sàng tìm kiếm và chỉ định các dòng van, bơm,"
+" thiết bị đo lường đáp ứng đúng điều kiện vận hành của nhà máy."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "PIM classification pending"
+msgstr "Đang chờ phân loại PIM"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Per page"
+msgstr "Hiển thị"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__phone
+msgid "Phone"
+msgstr "Số điện thoại"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_family__pillar_id
+msgid "Pillar"
+msgstr "Trụ cột thiết bị"
+
+#. module: mechanic_workshop
+#: model:ir.model.constraint,message:mechanic_workshop.constraint_sre_navigation_pillar_slug_unique
+msgid "Pillar slug must be unique."
+msgstr "Slug trụ cột phải là duy nhất."
+
+#. module: mechanic_workshop
+#: model:sre.industry,name:mechanic_workshop.sre_industry_home_power_generation
+msgid "Power Generation"
+msgstr "Năng lượng & Nhiệt điện"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Previous page"
+msgstr "Trang trước"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid ""
+"Price, stock position, MOQ and lead time are confirmed for your quantity and"
+" delivery location."
+msgstr ""
+"Giá cả, tồn kho, MOQ và tiến độ giao hàng được xác nhận theo đúng số lượng "
+"và địa điểm nhận hàng của bạn."
+
+#. module: mechanic_workshop
+#: model:ir.model,name:mechanic_workshop.model_product_template
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq_line__product_id
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Product"
+msgstr "Sản phẩm"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_product
+msgid "Product / variant"
+msgstr "Sản phẩm / Biến thể"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_family__product_count
+msgid "Product Count"
+msgstr "Số lượng sản phẩm"
+
+#. module: mechanic_workshop
+#: model:ir.actions.act_window,name:mechanic_workshop.sre_family_action
+#: model:ir.ui.menu,name:mechanic_workshop.sre_family_menu_items
+msgid "Product Families"
+msgstr "Dòng sản phẩm"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_product__family_id
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_template__family_id
+msgid "Product Family"
+msgstr "Dòng sản phẩm"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_oem_pn__product_tmpl_id
+msgid "Product Tmpl"
+msgstr "Mẫu sản phẩm"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Product family"
+msgstr "Dòng sản phẩm"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Product identification"
+msgstr "Nhận diện sản phẩm"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_search_form
+msgid "Product suggestions"
+msgstr "Gợi ý sản phẩm"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Product type"
+msgstr "Loại sản phẩm"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_application__product_ids
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_industry__product_ids
+msgid "Products"
+msgstr "Sản phẩm"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_header
+msgid "Products in your RFQ"
+msgstr "Sản phẩm trong RFQ"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile_attribute__profile_id
+msgid "Profile"
+msgstr "Hồ sơ thuộc tính"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__project_location
+msgid "Project Location"
+msgstr "Địa điểm dự án"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__project_name
+msgid "Project Name"
+msgstr "Tên dự án"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "Project details"
+msgstr "Thông tin dự án / liên hệ"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_product__public_price_approved
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_template__public_price_approved
+msgid "Public Price Approved"
+msgstr "Đã duyệt giá công khai"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Public category"
+msgstr "Danh mục"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_navigation_pillar__description
+msgid "Public copy for the pillar landing page."
+msgstr "Nội dung giới thiệu công khai cho trang nhóm trụ cột."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_application__description
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_industry__description
+msgid "Public landing page copy. No supplier or pricing info."
+msgstr ""
+"Nội dung giới thiệu công khai cho trang đích. Không chứa thông tin nhà cung "
+"cấp hoặc giá."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Public product data prepared for technical review."
+msgstr "Dữ liệu kỹ thuật công khai phục vụ xem xét kỹ thuật."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_product_family__description
+msgid ""
+"Public-facing description for the family landing page. Plain technical text;"
+" do not embed supplier or pricing."
+msgstr ""
+"Mô tả công khai cho trang dòng sản phẩm. Nội dung kỹ thuật thuần túy; không "
+"chứa nhà cung cấp hoặc giá."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_product_product__manufacturer_public_name
+#: model:ir.model.fields,help:mechanic_workshop.field_product_template__manufacturer_public_name
+msgid ""
+"Public-safe manufacturer name. Stored and indexed so the public ``/shop`` "
+"search can ``ilike`` it. Computed as superuser to bypass the default "
+"``res.partner`` record rule; the public user only ever sees the cached "
+"display name string. No phone, email or supplier info exposed."
+msgstr ""
+"Tên nhà sản xuất công khai an toàn. Được lưu trữ và đánh chỉ mục để tìm "
+"kiếm. Không hiển thị email, điện thoại hoặc thông tin nhà cung cấp."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_product_product__sre_public_oem_part_numbers
+#: model:ir.model.fields,help:mechanic_workshop.field_product_template__sre_public_oem_part_numbers
+msgid ""
+"Public-safe, searchable OEM part-number list. Internal OEM notes and "
+"manufacturer records are never exposed to website users."
+msgstr ""
+"Danh sách mã phụ tùng OEM an toàn tra cứu công khai. Ghi chú nội bộ và thông"
+" tin đối tác không bị lộ ra website."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_website__sre_visible_pillars
+msgid ""
+"Published and active SRE business pillars, used by the public top "
+"navigation. Ordered by sequence then name."
+msgstr ""
+"Các trụ cột SRE đã công bố và đang hoạt động, hiển thị trên menu điều hướng "
+"trên cùng."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_application__product_count
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_industry__product_count
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_navigation_pillar__product_count
+msgid "Published products"
+msgstr "Sản phẩm đã công bố"
+
+#. module: mechanic_workshop
+#: model:sre.attribute.profile,name:mechanic_workshop.sre_profile_pump
+msgid "Pump profile"
+msgstr "Hồ sơ thông số máy bơm"
+
+#. module: mechanic_workshop
+#: model:sre.navigation.pillar,name:mechanic_workshop.sre_pillar_pumps
+msgid "Pumps"
+msgstr "Bơm & Xử lý Lưu chất"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq_line__quantity
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_product
+msgid "Quantity"
+msgstr "Số lượng"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "Quantity ("
+msgstr "Số lượng ("
+
+#. module: mechanic_workshop
+#. odoo-python
+#: code:addons/mechanic_workshop/models/sre_rfq.py:0
+msgid "Quantity must be greater than zero and at most 1,000,000."
+msgstr "Số lượng phải lớn hơn 0 và tối đa 1.000.000."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields.selection,name:mechanic_workshop.selection__sre_rfq__state__quoted
+msgid "Quotation created"
+msgstr "Đã tạo báo giá"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_thanks
+msgid "RFQ received"
+msgstr "Đã nhận RFQ"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Recently prioritized technical products"
+msgstr "Sản phẩm kỹ thuật tiêu biểu"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid "Recommended components for"
+msgstr "Linh kiện khuyên dùng cho"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid "Recommended products for"
+msgstr "Sản phẩm khuyên dùng cho"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_thanks
+msgid "Reference"
+msgstr "Mã tham chiếu"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Relevance"
+msgstr "Độ liên quan"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "Remove"
+msgstr "Xóa"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields.selection,name:mechanic_workshop.selection__sre_oem_pn__source__replacement
+msgid "Replacement"
+msgstr "Thay thế"
+
+#. module: mechanic_workshop
+#: model:ir.model.constraint,message:mechanic_workshop.constraint_sre_rfq_submission_unique
+msgid "Request already submitted."
+msgstr "Yêu cầu đã được gửi trước đó."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid "Request an RFQ for this Industry"
+msgstr "Yêu cầu báo giá cho ngành này"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_mobile_header
+msgid "Request for quotation"
+msgstr "Yêu cầu báo giá"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__required_delivery_date
+msgid "Required Delivery Date"
+msgstr "Ngày yêu cầu giao hàng"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "Required delivery date"
+msgstr "Ngày yêu cầu giao hàng"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_desktop_header
+msgid "Resources"
+msgstr "Tài nguyên kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "Review products"
+msgstr "Kiểm tra sản phẩm"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq_line__rfq_id
+msgid "Rfq"
+msgstr "RFQ"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "SKU · MPN · OEM PN"
+msgstr "SKU · MPN · OEM PN"
+
+#. module: mechanic_workshop
+#: model:ir.model,name:mechanic_workshop.model_sre_application
+msgid "SRE Application (taxonomy, independent of product category)"
+msgstr "Ứng dụng SRE (phân loại kỹ thuật độc lập với danh mục)"
+
+#. module: mechanic_workshop
+#: model:ir.model,name:mechanic_workshop.model_sre_attribute_profile
+msgid "SRE Attribute Profile (per-family filter set)"
+msgstr "Hồ sơ thuộc tính SRE (bộ lọc theo dòng sản phẩm)"
+
+#. module: mechanic_workshop
+#: model:ir.ui.menu,name:mechanic_workshop.sre_pillar_menu
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_oem_pn_inline_product
+msgid "SRE Catalog"
+msgstr "Danh mục SRE"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_desktop_header
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_mobile_header
+msgid "SRE Commercial home"
+msgstr "Trang chủ SRE Commercial"
+
+#. module: mechanic_workshop
+#: model:ir.model,name:mechanic_workshop.model_sre_industry
+msgid "SRE Industry (taxonomy, independent of product category)"
+msgstr "Ngành công nghiệp SRE (phân loại kỹ thuật độc lập với danh mục)"
+
+#. module: mechanic_workshop
+#: model:ir.model,name:mechanic_workshop.model_sre_navigation_pillar
+msgid "SRE Navigation Pillar (top-level site section)"
+msgstr "Trụ cột điều hướng SRE (nhóm danh mục cấp cao nhất)"
+
+#. module: mechanic_workshop
+#: model:ir.model,name:mechanic_workshop.model_sre_oem_pn
+msgid "SRE OEM Part Number"
+msgstr "Mã phụ tùng OEM SRE"
+
+#. module: mechanic_workshop
+#: model:ir.model,name:mechanic_workshop.model_sre_product_family
+msgid "SRE Product Family (filter scope under a Pillar)"
+msgstr "Dòng sản phẩm SRE (phạm vi lọc thuộc Trụ cột)"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "SRE SKU"
+msgstr "Mã SKU SRE"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_product_product__family_id
+#: model:ir.model.fields,help:mechanic_workshop.field_product_template__family_id
+msgid ""
+"SRE business pillar that scopes the technical filters and the navigation "
+"entry for this product. Brief §04."
+msgstr ""
+"Trụ cột điều hướng SRE định phạm vi bộ lọc kỹ thuật và mục điều hướng cho "
+"sản phẩm này."
+
+#. module: mechanic_workshop
+#: model:ir.model,name:mechanic_workshop.model_sale_order
+msgid "Sales Order"
+msgstr "Đơn bán hàng"
+
+#. module: mechanic_workshop
+#: model:sre.application,name:mechanic_workshop.sre_application_home_sanitary_fluid
+msgid "Sanitary & Hygienic Fluid Handling"
+msgstr "Lưu chất vi sinh & Vệ sinh an toàn"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_search_form
+msgid "Search"
+msgstr "Tìm kiếm"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_search_form
+msgid "Search SKU, MPN, OEM part, brand or product"
+msgstr "Tìm SKU, MPN, mã OEM, thương hiệu hoặc sản phẩm"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_search_inherit
+msgid "Search by Part Number, Model, Brand or Product"
+msgstr "Tìm theo Mã phụ tùng, Model, Thương hiệu hoặc Sản phẩm"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Search product identity and review public specifications."
+msgstr ""
+"Tra cứu định danh sản phẩm và kiểm tra các thông số kỹ thuật công khai."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Search results"
+msgstr "Kết quả tìm kiếm"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_search_inherit
+msgid "Search the SRE catalog"
+msgstr "Tìm kiếm trong danh mục SRE"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_search_form
+msgid "Search the SRE technical catalog"
+msgstr "Tìm kiếm trong danh mục kỹ thuật SRE"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid ""
+"Search the technical catalog and add the products or variants you need."
+msgstr "Tra cứu danh mục kỹ thuật và thêm sản phẩm hoặc biến thể bạn cần."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Search: “"
+msgstr "Tìm kiếm: “"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_card
+msgid "Select Variant ("
+msgstr "Chọn biến thể ("
+
+#. module: mechanic_workshop
+#. odoo-python
+#: code:addons/mechanic_workshop/models/sre_rfq.py:0
+msgid "Select a verified customer and add at least one product."
+msgstr "Vui lòng chọn khách hàng đã xác thực và thêm ít nhất một sản phẩm."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_form
+msgid ""
+"Select a verified customer before creating a quotation. Submitted email does"
+" not verify account ownership."
+msgstr ""
+"Vui lòng chọn khách hàng đã xác thực trước khi tạo báo giá. Email gửi không "
+"thay thế cho xác thực tài khoản."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid ""
+"Send operating pressure, medium, temperature and connection standard. We "
+"will review the application before quoting."
+msgstr ""
+"Gửi áp suất làm việc, môi chất, nhiệt độ và tiêu chuẩn kết nối. Đội ngũ kỹ "
+"sư sẽ thẩm định ứng dụng trước khi báo giá."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid ""
+"Send us your operating pressure, fluid media, flow requirements and "
+"connection standard. Our engineering team will review the system problem and"
+" prepare an itemized B2B quotation."
+msgstr ""
+"Hãy gửi thông tin áp suất làm việc, môi chất, yêu cầu lưu lượng và tiêu "
+"chuẩn kết nối. Đội ngũ kỹ sư SRE sẽ phân tích hệ thống và lập bảng báo giá "
+"B2B chi tiết."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_application__sequence
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile_attribute__sequence
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_industry__sequence
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_navigation_pillar__sequence
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_oem_pn__sequence
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_family__sequence
+msgid "Sequence"
+msgstr "Thứ tự"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Service principles"
+msgstr "Nguyên tắc dịch vụ"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_navigation_pillar__short_label
+msgid "Short Label"
+msgstr "Nhãn rút gọn"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Showing"
+msgstr "Đang hiển thị"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_application__slug
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_industry__slug
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_navigation_pillar__slug
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_family__slug
+msgid "Slug"
+msgstr "Slug (đường dẫn)"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Sort"
+msgstr "Sắp xếp"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_oem_pn__source
+msgid "Source"
+msgstr "Nguồn mã"
+
+#. module: mechanic_workshop
+#: model:sre.navigation.pillar,short_label:mechanic_workshop.sre_pillar_spare_parts
+msgid "Spare Parts"
+msgstr "Phụ tùng"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_oem_pn__source
+msgid ""
+"Sprint 2 will use this field to build the cross-reference graph on the "
+"product page. Sprint 1 only uses it to control which OEM PN rows are "
+"surfaced in search."
+msgstr ""
+"Trường này dùng để kiểm soát các dòng mã OEM hiển thị khi tìm kiếm và xây "
+"dựng liên kết tra cứu chéo."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_crm_lead__sre_rfq_id
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sale_order__sre_rfq_id
+msgid "Sre Rfq"
+msgstr "RFQ SRE"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_website__sre_visible_pillars
+msgid "Sre Visible Pillars"
+msgstr "Trụ cột SRE hiển thị"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid ""
+"Standard list price shown. For quantity discounts, project pricing or "
+"delivery schedule, add to RFQ."
+msgstr ""
+"Hiển thị giá niêm yết tiêu chuẩn. Để nhận chiết khấu số lượng, giá dự án "
+"hoặc tiến độ giao hàng, vui lòng thêm vào RFQ."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid "Start Application RFQ"
+msgstr "Tạo RFQ cho ứng dụng này"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Start an RFQ"
+msgstr "Bắt đầu yêu cầu báo giá"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Start from the system problem"
+msgstr "Bắt đầu từ sự cố hệ thống"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__state
+msgid "State"
+msgstr "Trạng thái"
+
+#. module: mechanic_workshop
+#: model:sre.application,name:mechanic_workshop.sre_application_home_steam
+msgid "Steam System"
+msgstr "Hệ thống hơi (Steam)"
+
+#. module: mechanic_workshop
+#: model:sre.industry,name:mechanic_workshop.sre_industry_home_steel_metals
+msgid "Steel & Metals"
+msgstr "Thép & Luyện kim"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid ""
+"Structured technical data has not been published for this item. Include your"
+" operating conditions in the RFQ for verification."
+msgstr ""
+"Dữ liệu kỹ thuật có cấu trúc chưa được công bố cho sản phẩm này. Hãy cung "
+"cấp điều kiện vận hành trong RFQ để thẩm định."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__submission_key
+msgid "Submission Key"
+msgstr "Mã khóa gửi RFQ"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "Submit RFQ for review"
+msgstr "Gửi yêu cầu báo giá"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+msgid "Submit an RFQ"
+msgstr "Gửi yêu cầu báo giá"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid "Submit an RFQ for this application"
+msgstr "Gửi yêu cầu báo giá cho ứng dụng này"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid "Submit an RFQ for this industry"
+msgstr "Gửi yêu cầu báo giá cho ngành này"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Submit quantities, project context and delivery requirements."
+msgstr "Gửi số lượng yêu cầu, thông tin dự án và tiến độ giao hàng."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid ""
+"Submit your required flow rates, operating temperature, line pressure, and "
+"existing manufacturer part numbers. Our engineering desk verifies "
+"specifications before issuing an official quotation."
+msgstr ""
+"Gửi yêu cầu lưu lượng, nhiệt độ vận hành, áp suất đường ống và mã phụ tùng "
+"hiện tại. Bộ phận kỹ thuật sẽ thẩm định thông số trước khi phát hành báo giá"
+" chính thức."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields.selection,name:mechanic_workshop.selection__sre_rfq__state__submitted
+msgid "Submitted"
+msgstr "Đã gửi"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_index
+msgid "System Applications &amp; Duty Architecture"
+msgstr "Kiến trúc Ứng dụng &amp; Chế độ Vận hành Hệ thống"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid ""
+"Targeted mechanical components, valves, pumps and instrumentation configured"
+" for system operating duty, pressure control and reliability."
+msgstr ""
+"Linh kiện cơ khí, van, bơm và đo lường chuyên dụng được cấu hình tối ưu cho "
+"điều kiện vận hành, kiểm soát áp lực và độ tin cậy của hệ thống."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "Technical / commercial requirements"
+msgstr "Yêu cầu kỹ thuật / Thương mại"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_desktop_header
+msgid "Technical catalogue navigation"
+msgstr "Điều hướng danh mục kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_card
+msgid "Technical details"
+msgstr "Chi tiết kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Technical product catalog"
+msgstr "Danh mục sản phẩm kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid ""
+"Technical product record for engineering selection and request for "
+"quotation."
+msgstr "Hồ sơ sản phẩm kỹ thuật phục vụ lựa chọn kỹ thuật và yêu cầu báo giá."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_form
+msgid "Technical requirements, operating conditions..."
+msgstr "Yêu cầu kỹ thuật, điều kiện vận hành..."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_mobile_header
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+msgid "Technical resources"
+msgstr "Tài nguyên kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_index
+msgid "Technical solutions"
+msgstr "Giải pháp kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Technical specification"
+msgstr "Thông số kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+msgid "Technical support"
+msgstr "Hỗ trợ kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Technical table view"
+msgstr "Dạng bảng kỹ thuật"
+
+#. module: mechanic_workshop
+#: model:sre.industry,name:mechanic_workshop.sre_industry_home_textile
+msgid "Textile & Dyeing"
+msgstr "Dệt may & Nhuộm"
+
+#. module: mechanic_workshop
+#: model:sre.application,name:mechanic_workshop.sre_application_home_thermal_oil
+msgid "Thermal Oil Heat Transfer"
+msgstr "Dầu truyền nhiệt & Nhiệt độ cao"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_product_family__slug
+msgid "URL slug, e.g. 'valve'. Lowercase, hyphenated."
+msgstr ""
+"Đường dẫn URL slug, ví dụ: 'valve'. Chữ thường, nối bằng dấu gạch ngang."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,help:mechanic_workshop.field_sre_navigation_pillar__slug
+msgid "URL slug, e.g. 'valves'. Lowercase, hyphenated."
+msgstr ""
+"Đường dẫn URL slug, ví dụ: 'valves'. Chữ thường, nối bằng dấu gạch ngang."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "Unavailable products were removed from your RFQ list."
+msgstr "Các sản phẩm không khả dụng đã được xóa khỏi danh sách RFQ của bạn."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq_line__uom_id
+msgid "Unit"
+msgstr "Đơn vị"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "Update"
+msgstr "Cập nhật"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_attribute_profile__family_ids
+msgid "Used by families"
+msgstr "Được dùng bởi các dòng sản phẩm"
+
+#. module: mechanic_workshop
+#: model:sre.attribute.profile,name:mechanic_workshop.sre_profile_valve
+msgid "Valve profile"
+msgstr "Hồ sơ thông số van công nghiệp"
+
+#. module: mechanic_workshop
+#: model:sre.navigation.pillar,name:mechanic_workshop.sre_pillar_valves
+msgid "Valves"
+msgstr "Van & Thiết bị Truyền động"
+
+#. module: mechanic_workshop
+#: model:sre.navigation.pillar,short_label:mechanic_workshop.sre_pillar_valves
+msgid "Van"
+msgstr "Van"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__partner_id
+msgid "Verified customer"
+msgstr "Khách hàng đã xác thực"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Verify before ordering"
+msgstr "Xác thực trước khi đặt hàng"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_products_item_inherit
+msgid "View &amp; RFQ"
+msgstr "Xem &amp; Báo giá"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_thanks
+msgid "View RFQ"
+msgstr "Xem RFQ"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "View all products"
+msgstr "Xem tất cả sản phẩm"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+msgid "View all products in catalog for this application →"
+msgstr "Xem tất cả sản phẩm trong danh mục cho ứng dụng này →"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+msgid "View all products in catalog for this industry →"
+msgstr "Xem tất cả sản phẩm trong danh mục cho ngành này →"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_header
+msgid "View current RFQ"
+msgstr "Xem danh sách RFQ"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_product
+msgid "View current RFQ list"
+msgstr "Xem danh sách RFQ hiện tại"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "View mode"
+msgstr "Chế độ xem"
+
+#. module: mechanic_workshop
+#: model:sre.application,name:mechanic_workshop.sre_application_home_wastewater
+msgid "Water & Wastewater Treatment"
+msgstr "Cấp nước & Xử lý nước thải"
+
+#. module: mechanic_workshop
+#: model:ir.model,name:mechanic_workshop.model_website
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_rfq__website_id
+msgid "Website"
+msgstr "Trang web"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid ""
+"When the exact part is unknown, browse by application or describe the duty "
+"to our engineering team."
+msgstr ""
+"Khi chưa biết chính xác mã linh kiện, tra cứu theo ứng dụng hoặc mô tả điều "
+"kiện vận hành cho đội ngũ kỹ sư của chúng tôi."
+
+#. module: mechanic_workshop
+#: model:sre.industry,name:mechanic_workshop.sre_industry_home_wood_paper
+msgid "Wood & Paper"
+msgstr "Gỗ, Giấy & Bột giấy"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_thanks
+msgid "Your RFQ has been received"
+msgstr "Đã nhận yêu cầu báo giá của bạn"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "Your RFQ list is empty"
+msgstr "Danh sách RFQ của bạn đang trống"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_index
+msgid "applications"
+msgstr "ứng dụng"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "catalog products"
+msgstr "sản phẩm danh mục"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "line items"
+msgstr "mặt hàng"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_detail
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_index
+msgid "mapped products"
+msgstr "sản phẩm liên kết"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "of"
+msgstr "trên"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_detail
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_application_index
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "products"
+msgstr "sản phẩm"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_industry_index
+msgid "sectors"
+msgstr "lĩnh vực"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_card
+msgid "variants"
+msgstr "biến thể"
+
+#. module: mechanic_workshop
+#: model:sre.navigation.pillar,short_label:mechanic_workshop.sre_pillar_instrumentation
+msgid "Đo lường"
+msgstr "Đo lường"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Technical specifications"
+msgstr "Thông số kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Operating Pressure"
+msgstr "Áp suất vận hành"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Operating Temperature"
+msgstr "Nhiệt độ làm việc"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Flow Rate"
+msgstr "Lưu lượng định mức"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_product_detail_inherit
+msgid "Operating Flow Rate"
+msgstr "Lưu lượng định mức"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_template__operating_pressure_min
+msgid "Min Operating Pressure (bar)"
+msgstr "Áp suất vận hành tối thiểu (bar)"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_template__operating_pressure_max
+msgid "Max Operating Pressure (bar)"
+msgstr "Áp suất vận hành tối đa (bar)"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_template__operating_temp_min
+msgid "Min Operating Temp (°C)"
+msgstr "Nhiệt độ làm việc tối thiểu (°C)"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_template__operating_temp_max
+msgid "Max Operating Temp (°C)"
+msgstr "Nhiệt độ làm việc tối đa (°C)"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_template__flow_rate_min
+msgid "Min Flow Rate (m³/h)"
+msgstr "Lưu lượng tối thiểu (m³/h)"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_template__flow_rate_max
+msgid "Max Flow Rate (m³/h)"
+msgstr "Lưu lượng tối đa (m³/h)"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Pressure:"
+msgstr "Áp suất:"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Temp:"
+msgstr "Nhiệt độ:"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_catalog_page
+msgid "Flow:"
+msgstr "Lưu lượng:"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Boiler Part Finder | Technical Replacement Discovery"
+msgstr "Tra cứu phụ tùng nồi hơi | Định danh linh kiện kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_desktop_header
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_mobile_header
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Boiler Part Finder"
+msgstr "Tra cứu phụ tùng nồi hơi"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_desktop_header
+msgid "Boiler Finder"
+msgstr "Tìm phụ tùng nồi hơi"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Boiler Equipment Discovery Engine · Brief §11"
+msgstr "Công cụ định danh thiết bị nồi hơi · Brief §11"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid ""
+"Identify 100% verified replacement valves, feed pumps, level probes, blowdown stations and burner components by boiler manufacturer and model."
+msgstr ""
+"Định danh 100% van thay thế, bơm cấp, que đo mức, cụm xả đáy và linh kiện đầu đốt đã kiểm định theo hãng và model nồi hơi."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Direct Fit Guarantee"
+msgstr "Cam kết lắp đặt chính xác 100%"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Engineering-verified compatibility"
+msgstr "Tương thích đã được kỹ sư kiểm định"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Step 1"
+msgstr "Bước 1"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Step 2"
+msgstr "Bước 2"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Step 3"
+msgstr "Bước 3"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Step 4"
+msgstr "Bước 4"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Manufacturer"
+msgstr "Hãng sản xuất"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Boiler Model"
+msgstr "Model nồi hơi"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Subsystem"
+msgstr "Phân hệ thiết bị"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Verified Parts"
+msgstr "Phụ tùng đã kiểm định"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Current Configuration:"
+msgstr "Cấu hình hiện tại:"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Make:"
+msgstr "Hãng:"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Model:"
+msgstr "Model:"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Subsystem:"
+msgstr "Phân hệ:"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Reset All"
+msgstr "Đặt lại tất cả"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "1. Select Boiler Manufacturer"
+msgstr "1. Chọn hãng sản xuất nồi hơi"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Choose your boiler equipment manufacturer to inspect compatible product lines and series."
+msgstr "Chọn hãng sản xuất nồi hơi của bạn để xem các dòng sản phẩm và series tương thích."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "series / models"
+msgstr "dòng / model"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "2. Select Boiler Model for"
+msgstr "2. Chọn model nồi hơi cho"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Select your boiler model series to view engineered replacement components."
+msgstr "Chọn series model nồi hơi của bạn để xem các phụ tùng thay thế kỹ thuật."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Max Pressure"
+msgstr "Áp suất tối đa"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Steam Output"
+msgstr "Sản lượng hơi"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "verified parts"
+msgstr "phụ tùng đã kiểm định"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Select Model →"
+msgstr "Chọn model →"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Subsystems:"
+msgstr "Phân hệ thiết bị:"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "All Subsystems"
+msgstr "Tất cả phân hệ"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Verified Replacement Parts for"
+msgstr "Phụ tùng thay thế đã kiểm định cho"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Request Custom Parts"
+msgstr "Yêu cầu phụ tùng đặc biệt"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Critical Spare"
+msgstr "Phụ tùng dự phòng trọng yếu"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Position:"
+msgstr "Vị trí lắp đặt:"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "No parts registered for this subsystem yet"
+msgstr "Chưa có phụ tùng nào đăng ký cho phân hệ này"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Our boiler engineering team maintains specifications for all series. Upload your nameplate or part photo for immediate matching."
+msgstr "Đội ngũ kỹ sư nồi hơi lưu trữ thông số cho mọi series. Tải lên ảnh tem mác hoặc ảnh phụ tùng để được khớp mã ngay lập tức."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "View all parts for this model"
+msgstr "Xem tất cả phụ tùng cho model này"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Request Engineering Match"
+msgstr "Yêu cầu kỹ sư đối chiếu mã"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Industrial Boiler Engineering Desk"
+msgstr "Bộ phận kỹ thuật nồi hơi công nghiệp"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Don't see your specific boiler series or obsolete component?"
+msgstr "Không tìm thấy series nồi hơi cụ thể hoặc linh kiện đã ngưng sản xuất?"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid ""
+"Send our steam specialists your boiler nameplate photo, serial number, and operating steam pressure. We will cross-reference original drawing records and dispatch a formal quotation within 24 hours."
+msgstr ""
+"Gửi cho chuyên gia hơi nhiệt của chúng tôi ảnh tem mác nồi hơi, số seri và áp suất hơi vận hành. Chúng tôi sẽ tra cứu chéo bản vẽ kỹ thuật gốc và gửi báo giá chính thức trong vòng 24 giờ."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_boiler_finder_page
+msgid "Submit Boiler Nameplate Photo"
+msgstr "Gửi ảnh tem mác nồi hơi"
+
+#. module: mechanic_workshop
+#: model:ir.ui.menu,name:mechanic_workshop.sre_boiler_menu_root
+msgid "Boiler Discovery"
+msgstr "Tra cứu nồi hơi"
+
+#. module: mechanic_workshop
+#: model:ir.ui.menu,name:mechanic_workshop.sre_boiler_mfg_menu
+msgid "Boiler Manufacturers"
+msgstr "Hãng sản xuất nồi hơi"
+
+#. module: mechanic_workshop
+#: model:ir.ui.menu,name:mechanic_workshop.sre_boiler_type_menu
+msgid "Boiler Types"
+msgstr "Loại nồi hơi"
+
+#. module: mechanic_workshop
+#: model:ir.ui.menu,name:mechanic_workshop.sre_boiler_subsystem_menu
+msgid "Boiler Subsystems"
+msgstr "Phân hệ nồi hơi"
+
+#. module: mechanic_workshop
+#: model:ir.ui.menu,name:mechanic_workshop.sre_boiler_model_menu
+msgid "Boiler Models"
+msgstr "Model nồi hơi"
+
+#. module: mechanic_workshop
+#: model:ir.ui.menu,name:mechanic_workshop.sre_boiler_mapping_menu
+msgid "Part Mappings"
+msgstr "Khớp nối phụ tùng"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_boiler_manufacturer__country_name
+msgid "Origin / Headquarters"
+msgstr "Xuất xứ / Trụ sở chính"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_boiler_manufacturer__model_count
+msgid "Models Count"
+msgstr "Số lượng model"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_boiler_manufacturer__part_count
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_boiler_model__part_count
+msgid "Verified Parts Count"
+msgstr "Số phụ tùng đã kiểm định"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_boiler_model__steam_capacity_kg_h
+msgid "Steam Capacity (kg/h)"
+msgstr "Sản lượng hơi (kg/h)"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_boiler_model__design_pressure_bar
+msgid "Design Pressure (bar)"
+msgstr "Áp suất thiết kế (bar)"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_boiler_part_mapping__position_ref
+msgid "Position / Role"
+msgstr "Vị trí / Vai trò"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_boiler_part_mapping__is_critical_spare
+msgid "Critical Spare Part"
+msgstr "Phụ tùng dự phòng trọng yếu"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_boiler_part_mapping__notes
+msgid "Engineering Notes"
+msgstr "Ghi chú kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "4-step discovery wizard for verified replacement parts by boiler manufacturer and series."
+msgstr "Quy trình tìm kiếm 4 bước cho phụ tùng thay thế đã kiểm định theo hãng và model nồi hơi."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Cross Reference Engine | Competitor & OEM Replacement Finder"
+msgstr "Công cụ tra cứu mã chéo | Tìm linh kiện thay thế OEM & Đối thủ"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_desktop_header
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_mobile_header
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Cross Reference"
+msgstr "Tra cứu mã chéo"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Part Number Cross Reference"
+msgstr "Tra cứu mã phụ tùng chéo"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Cross Reference Engine · Brief §12"
+msgstr "Công cụ tra cứu mã chéo · Brief §12"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid ""
+"Cross-reference competitor and OEM part numbers from Spirax Sarco, TLV, Armstrong, Yoshitake, Grundfos, and KSB to SRE-stocked direct replacement products."
+msgstr ""
+"Tra cứu đối chiếu mã phụ tùng OEM và đối thủ từ Spirax Sarco, TLV, Armstrong, Yoshitake, Grundfos, và KSB sang các sản phẩm thay thế tương đương do SRE phân phối."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Equivalence Guarantee"
+msgstr "Cam kết tương đương kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Dimensional & duty verification"
+msgstr "Kiểm định kích thước & thông số vận hành"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Enter competitor or OEM part number, code or brand (e.g. TD-52, FT-14, 811, CR-15, Spirax, TLV)..."
+msgstr "Nhập mã phụ tùng OEM hoặc đối thủ, mã hoặc thương hiệu (ví dụ: TD-52, FT-14, 811, CR-15, Spirax, TLV)..."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Cross Reference Lookup"
+msgstr "Tra cứu đối chiếu mã"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Filter by Brand:"
+msgstr "Lọc theo thương hiệu:"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "All Brands"
+msgstr "Tất cả thương hiệu"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "All Equivalences"
+msgstr "Tất cả cấp độ tương đương"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Direct Replacement"
+msgstr "Thay thế trực tiếp 100%"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Drop-in Alternative"
+msgstr "Tương đương chức năng"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Obsolete Upgrade"
+msgstr "Thay thế mã ngưng sản xuất"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Direct Fit"
+msgstr "Lắp vừa trực tiếp"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Drop-in"
+msgstr "Tương đương"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Technical Note:"
+msgstr "Ghi chú kỹ thuật:"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "No exact cross-reference found for this part number"
+msgstr "Không tìm thấy mã đối chiếu chính xác cho phụ tùng này"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Our engineering database indexes thousands of industrial part numbers. Let our specialists match your specifications manually."
+msgstr "Cơ sở dữ liệu kỹ thuật của chúng tôi lập chỉ mục hàng ngàn mã phụ tùng công nghiệp. Hãy để chuyên gia của chúng tôi đối chiếu thông số giúp bạn."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "View All Cross References"
+msgstr "Xem tất cả mã đối chiếu"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Submit Part for Engineering Match"
+msgstr "Gửi mã phụ tùng để kỹ sư đối chiếu"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "OEM & Legacy Equipment Cross Referencing"
+msgstr "Đối chiếu phụ tùng OEM & Thiết bị đời cũ"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Have a competitor part number or legacy equipment manual?"
+msgstr "Có mã phụ tùng đối thủ hoặc tài liệu máy móc cũ?"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid ""
+"Send our applications desk your part number, operating pressure, temperature, and media. We will identify the direct SRE replacement and provide formal CAD drawings and submittals."
+msgstr ""
+"Gửi cho bàn ứng dụng kỹ thuật của chúng tôi mã phụ tùng, áp suất, nhiệt độ và môi chất vận hành. Chúng tôi sẽ xác định sản phẩm SRE thay thế trực tiếp và cung cấp bản vẽ CAD cùng hồ sơ kỹ thuật chính thức."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_cross_reference_page
+msgid "Request Cross-Reference Match"
+msgstr "Yêu cầu đối chiếu mã thay thế"
+
+#. module: mechanic_workshop
+#: model:ir.ui.menu,name:mechanic_workshop.sre_cross_reference_menu
+msgid "Cross References"
+msgstr "Tra cứu mã chéo"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_cross_reference__source_part_number
+msgid "Competitor / OEM Part Number"
+msgstr "Mã phụ tùng OEM / Đối thủ"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_cross_reference__source_brand
+msgid "Brand / Manufacturer"
+msgstr "Thương hiệu / Hãng"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_cross_reference__source_specs
+msgid "Original Specifications"
+msgstr "Thông số ban đầu"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_cross_reference__target_product_id
+msgid "SRE Replacement Product"
+msgstr "Sản phẩm SRE thay thế"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_cross_reference__replacement_type
+msgid "Equivalence Grade"
+msgstr "Cấp độ tương đương"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_sre_product_cross_reference__notes
+msgid "Engineering & Fitment Notes"
+msgstr "Ghi chú lắp đặt & Kỹ thuật"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_mobile_header
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+msgid "Cross Reference Finder"
+msgstr "Bộ tìm kiếm mã chéo"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Part-number & Cross Reference"
+msgstr "Mã phụ tùng & Tra cứu mã chéo"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_home_page
+msgid "Find OEM and competitor replacements for Spirax, TLV, Armstrong and more."
+msgstr "Tìm sản phẩm thay thế cho Spirax, TLV, Armstrong và nhiều hãng khác."
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_document__document_type
+msgid "Document Type"
+msgstr "Loại tài liệu"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_document__governance_type
+msgid "Document Governance"
+msgstr "Phân quyền tài liệu"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields,field_description:mechanic_workshop.field_product_document__cad_format
+msgid "File Format"
+msgstr "Định dạng tệp"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields.selection,name:mechanic_workshop.selection__product_document__document_type__datasheet
+msgid "Datasheet / Technical Spec"
+msgstr "Datasheet / Thông số kỹ thuật"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields.selection,name:mechanic_workshop.selection__product_document__document_type__manual
+msgid "Installation & Operation Manual"
+msgstr "Sổ tay lắp đặt & Vận hành"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields.selection,name:mechanic_workshop.selection__product_document__document_type__cad_drawing
+msgid "2D/3D CAD Drawing"
+msgstr "Bản vẽ kỹ thuật 2D/3D CAD"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields.selection,name:mechanic_workshop.selection__product_document__document_type__certificate
+msgid "Certificate & Compliance (CO/CQ, CE)"
+msgstr "Chứng chỉ xuất xưởng & Tiêu chuẩn (CO/CQ, CE)"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields.selection,name:mechanic_workshop.selection__product_document__document_type__brochure
+msgid "Catalog & Brochure"
+msgstr "Tài liệu & Catalog tổng quan"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields.selection,name:mechanic_workshop.selection__product_document__governance_type__public
+msgid "Public (Direct Download)"
+msgstr "Công khai (Tải trực tiếp)"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields.selection,name:mechanic_workshop.selection__product_document__governance_type__gated
+msgid "Gated (Business Contact Required)"
+msgstr "Bảo mật B2B (Yêu cầu thông tin)"
+
+#. module: mechanic_workshop
+#: model:ir.model.fields.selection,name:mechanic_workshop.selection__product_document__governance_type__internal
+msgid "Internal Only (Engineering Staging)"
+msgstr "Lưu hành nội bộ (Kỹ thuật)"
+
+#. module: mechanic_workshop
+#: model:ir.actions.act_window,name:mechanic_workshop.action_sre_product_documents
+#: model:ir.ui.menu,name:mechanic_workshop.menu_sre_product_documents
+msgid "Technical Documents & CAD"
+msgstr "Tài liệu kỹ thuật & CAD"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.technical_library_page
+msgid "Technical Library & CAD Center"
+msgstr "Thư viện Kỹ thuật & Bản vẽ CAD"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_mobile_header
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+msgid "Technical Library & CAD"
+msgstr "Thư viện Kỹ thuật & CAD"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_site_footer
+msgid "Unknown Part Identification"
+msgstr "Định danh phụ tùng chưa rõ mã"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_unknown_part_page
+msgid "Identify Replacement Part from Nameplate & Specs"
+msgstr "Định danh phụ tùng thay thế từ tem mác & thông số"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_unknown_part_page
+msgid "1. Equipment Context & Application"
+msgstr "1. Ngữ cảnh thiết bị & Ứng dụng"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_unknown_part_page
+msgid "2. Operating Parameters"
+msgstr "2. Thông số vận hành"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_unknown_part_page
+msgid "3. Photo of Nameplate / Equipment Plate"
+msgstr "3. Ảnh chụp tem mác / Nhãn kim loại thiết bị"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_unknown_part_page
+msgid "4. Contact & Plant Information"
+msgstr "4. Thông tin liên hệ & Nhà máy"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_unknown_part_page
+msgid "Submit for Identification"
+msgstr "Gửi yêu cầu định danh"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_my_home_inherit
+msgid "My RFQs"
+msgstr "Yêu cầu báo giá của tôi"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_my_home_inherit
+msgid "Track quotation requests, unknown part inquiries and status"
+msgstr "Theo dõi các yêu cầu báo giá, thẩm định linh kiện chưa rõ mã và tiến độ xử lý"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_my_home_inherit
+msgid "My Plant Equipment"
+msgstr "Thiết bị nhà máy của tôi"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_my_home_inherit
+msgid "Manage factory machinery and order verified direct-fit spare parts"
+msgstr "Quản lý danh mục máy móc tại xưởng và đặt mua linh kiện thay thế đã kiểm định"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_my_rfqs
+msgid "My Technical RFQs"
+msgstr "Danh sách RFQ kỹ thuật của tôi"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_my_rfqs
+msgid "Track engineering inquiries, unknown part verifications, and draft quotations."
+msgstr "Theo dõi yêu cầu kỹ thuật, thẩm định phụ tùng chưa rõ mã và dự thảo báo giá."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_my_rfqs
+msgid "RFQ Ref"
+msgstr "Mã RFQ"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_my_rfqs
+msgid "Project / Plant"
+msgstr "Dự án / Nhà máy"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_my_rfqs
+msgid "Unknown Part"
+msgstr "Linh kiện chưa rõ mã"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_my_rfqs
+msgid "Standard RFQ"
+msgstr "Báo giá tiêu chuẩn"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_my_rfqs
+msgid "Re-order"
+msgstr "Đặt lại"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_my_plant
+msgid "Installed machinery in your factory with pre-verified direct-fit replacement parts."
+msgstr "Danh mục máy móc trong xưởng kèm linh kiện thay thế đã kiểm định tương thích 100%."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_my_plant
+msgid "Register New Machine"
+msgstr "Đăng ký thiết bị mới"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_my_plant
+msgid "View Spares & Order"
+msgstr "Xem phụ tùng & Đặt hàng"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_equipment_page
+msgid "Add All Spares to RFQ"
+msgstr "Thêm tất cả phụ tùng vào RFQ"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_equipment_page
+msgid "Verified Replacement Spare Parts"
+msgstr "Linh kiện thay thế đã kiểm định"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_equipment_form
+msgid "Register Factory Machinery / Equipment"
+msgstr "Đăng ký máy móc / thiết bị nhà máy"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_equipment_form
+msgid "Add equipment installed in your plant to enable instant direct-fit spare part lookup."
+msgstr "Thêm thiết bị lắp đặt tại xưởng để tra cứu nhanh linh kiện thay thế tương thích."
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_equipment_form
+msgid "Equipment Name"
+msgstr "Tên thiết bị"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_equipment_form
+msgid "Plant Tag / Asset ID"
+msgstr "Mã máy / Thẻ tài sản xưởng"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_equipment_form
+msgid "Equipment Type"
+msgstr "Loại thiết bị"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_equipment_form
+msgid "Location / Factory Department"
+msgstr "Vị trí / Phân xưởng"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_equipment_form
+msgid "Select Boiler Make & Model (Auto-links Spare Parts)"
+msgstr "Chọn Hãng & Model lò hơi (Tự động liên kết phụ tùng)"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_equipment_form
+msgid "Selecting a known boiler model will automatically pull all verified replacement parts!"
+msgstr "Chọn model lò hơi chuẩn sẽ tự động nạp toàn bộ linh kiện thay thế đã kiểm định!"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.sre_portal_equipment_form
+msgid "Register Machine"
+msgstr "Lưu thiết bị"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "Upload Excel/CSV"
+msgstr "Tải file Excel/CSV"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "Paste Lines"
+msgstr "Dán danh sách"
+
+#. module: mechanic_workshop
+#: model_terms:ir.ui.view,arch_db:mechanic_workshop.rfq_basket
+msgid "Upload & Add"
+msgstr "Tải lên & Thêm vào giỏ"
+
+
+
+

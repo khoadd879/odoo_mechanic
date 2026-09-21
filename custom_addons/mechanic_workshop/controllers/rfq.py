@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import math
 import re
 import secrets
@@ -121,6 +122,13 @@ class CustomerRfq(http.Controller):
             "submission_key": expected,
             "line_ids": [Command.create({"product_id": p.id, "quantity": self._quantity(basket[str(p.id)])}) for p in products],
         })
+        uploaded_file = request.httprequest.files.get("nameplate_file")
+        if uploaded_file and uploaded_file.filename:
+            file_data = uploaded_file.read()
+            if len(file_data) > 10 * 1024 * 1024:
+                raise BadRequest("Nameplate file size exceeds 10MB limit")
+            values["nameplate_image"] = base64.b64encode(file_data)
+            values["nameplate_filename"] = uploaded_file.filename[:250]
         # Do not resolve an existing customer from an unverified email.
         rfq = Rfq.create(values)
         rfq._create_opportunity()
@@ -134,3 +142,232 @@ class CustomerRfq(http.Controller):
         if not reference:
             return request.redirect("/rfq")
         return request.render("mechanic_workshop.rfq_thanks", {"reference": reference})
+
+    @http.route("/rfq/unknown-part", type="http", auth="public", website=True, methods=["GET"], sitemap=True)
+    def unknown_part_page(self, **kw):
+        """Render dedicated Unknown Part Identification wizard/form."""
+        return request.render("mechanic_workshop.rfq_unknown_part_page", {})
+
+    @http.route("/rfq/unknown-part/submit", type="http", auth="public", website=True, methods=["POST"])
+    def unknown_part_submit(self, **post):
+        """Handle Unknown Part identification request submission."""
+        values = {}
+        for key in ("contact_name", "company_name", "email", "phone", "project_name", "project_location", "notes",
+                    "equipment_make_model", "operating_medium", "connection_type"):
+            values[key] = str(post.get(key, "")).strip()
+            if len(values[key]) > (4000 if key == "notes" else 250):
+                raise BadRequest("Input too long")
+
+        if not all(values[k] for k in ("contact_name", "company_name", "email")):
+            raise BadRequest("Company, contact name and email are required")
+        if not re.fullmatch(r"[^\s@]+@[^\s@]+\.[^\s@]+", values["email"]):
+            raise BadRequest("Invalid email")
+
+        for num_key in ("operating_pressure", "operating_temperature"):
+            val_str = str(post.get(num_key, "")).strip()
+            if val_str:
+                try:
+                    values[num_key] = float(val_str)
+                except (ValueError, TypeError):
+                    pass
+
+        delivery = post.get("required_delivery_date")
+        if delivery:
+            try:
+                date.fromisoformat(delivery)
+                values["required_delivery_date"] = delivery
+            except ValueError:
+                pass
+
+        values.update({
+            "is_unknown_part": True,
+            "company_id": request.website.company_id.id,
+            "website_id": request.website.id,
+        })
+
+        uploaded_file = request.httprequest.files.get("nameplate_file")
+        if uploaded_file and uploaded_file.filename:
+            file_data = uploaded_file.read()
+            if len(file_data) > 10 * 1024 * 1024:
+                raise BadRequest("Nameplate file size exceeds 10MB limit")
+            values["nameplate_image"] = base64.b64encode(file_data)
+            values["nameplate_filename"] = uploaded_file.filename[:250]
+
+        Rfq = request.env["sre.rfq"].sudo().with_company(request.website.company_id)
+        rfq = Rfq.create(values)
+        rfq._create_opportunity()
+
+        request.session[self._basket_key() + "_reference"] = rfq.name
+        return request.redirect("/rfq/thanks")
+
+    def _match_and_add_to_basket(self, items, basket):
+        """Match list of (part_term, qty) tuples against SKU, MPN, Cross References."""
+        Product = request.env["product.product"].sudo()
+        Xref = request.env["sre.product.cross.reference"].sudo()
+        matched = []
+        unmatched = []
+
+        for part_term, qty in items:
+            if not part_term:
+                continue
+
+            # 1. Direct SKU match
+            prod = Product.search([
+                ("default_code", "=ilike", part_term),
+                ("active", "=", True),
+                ("sale_ok", "=", True),
+                ("product_tmpl_id.is_published", "=", True),
+            ], limit=1)
+
+            # 2. Manufacturer PN match
+            if not prod:
+                prod = Product.search([
+                    ("manufacturer_pref", "=ilike", part_term),
+                    ("active", "=", True),
+                    ("sale_ok", "=", True),
+                    ("product_tmpl_id.is_published", "=", True),
+                ], limit=1)
+
+            # 3. Cross Reference match
+            if not prod:
+                xref_rec = Xref.search([
+                    ("source_part_number", "=ilike", part_term),
+                    ("active", "=", True),
+                ], limit=1)
+                if xref_rec and xref_rec.target_product_id:
+                    prod = xref_rec.target_product_id.product_variant_id
+
+            if prod and prod.sale_ok:
+                pid_str = str(prod.id)
+                current_qty = basket.get(pid_str, 0)
+                basket[pid_str] = self._quantity(current_qty + qty)
+                matched.append({
+                    "sku": prod.default_code or prod.name,
+                    "name": prod.name,
+                    "quantity": qty,
+                })
+            else:
+                unmatched.append({
+                    "term": part_term,
+                    "quantity": qty,
+                })
+
+        return matched, unmatched
+
+    @http.route("/rfq/api/bom-parse", type="jsonrpc", auth="public", website=True, methods=["POST"])
+    def bom_parse(self, text="", **kw):
+        """Parse raw multi-line BOM lines (SKU/MPN, Quantity) and add to RFQ basket."""
+        if not text or not str(text).strip():
+            return {"success": False, "error": _("Please enter at least one line with SKU and quantity.")}
+
+        basket = dict(request.session.get(self._basket_key(), {}))
+        lines = str(text).strip().splitlines()
+        items = []
+
+        for raw_line in lines[:100]:  # Limit to 100 lines max
+            line = raw_line.strip()
+            if not line or line.startswith(("#", "//")):
+                continue
+            tokens = re.split(r"[,;\t|]+", line)
+            part_term = tokens[0].strip()
+            qty = 1.0
+            if len(tokens) > 1:
+                try:
+                    qty = self._quantity(tokens[1].strip())
+                except Exception:
+                    qty = 1.0
+            items.append((part_term, qty))
+
+        matched, unmatched = self._match_and_add_to_basket(items, basket)
+        request.session[self._basket_key()] = basket
+
+        return {
+            "success": True,
+            "added_count": len(matched),
+            "unmatched_count": len(unmatched),
+            "basket_total_items": len(basket),
+            "matched": matched,
+            "unmatched": unmatched,
+        }
+
+    @http.route("/rfq/api/bom-upload", type="http", auth="public", website=True, methods=["POST"], csrf=False)
+    def bom_upload(self, **post):
+        """Upload and parse Excel (.xlsx, .xls) or CSV BOM file into RFQ basket."""
+        import io
+        import csv
+
+        bom_file = request.httprequest.files.get("bom_file")
+        if not bom_file or not bom_file.filename:
+            return request.make_json_response({"success": False, "error": _("No file was uploaded.")})
+
+        filename = bom_file.filename.lower()
+        items = []
+
+        try:
+            if filename.endswith((".csv", ".txt")):
+                content = bom_file.read().decode("utf-8", errors="ignore")
+                reader = csv.reader(io.StringIO(content))
+                for row in reader:
+                    if not row or not any(row):
+                        continue
+                    part_term = str(row[0]).strip()
+                    if part_term.lower() in ("sku", "part number", "mpn", "part_number", "part", "mã hàng", "mã vật tư"):
+                        continue
+                    qty = 1.0
+                    if len(row) > 1:
+                        try:
+                            qty = self._quantity(str(row[1]).strip())
+                        except Exception:
+                            qty = 1.0
+                    items.append((part_term, qty))
+
+            elif filename.endswith((".xlsx", ".xls")):
+                import openpyxl
+                file_bytes = io.BytesIO(bom_file.read())
+                wb = openpyxl.load_workbook(filename=file_bytes, data_only=True)
+                sheet = wb.active
+                for row in sheet.iter_rows(values_only=True):
+                    if not row or not any(row):
+                        continue
+                    part_val = row[0]
+                    if part_val is None:
+                        continue
+                    part_term = str(part_val).strip()
+                    if part_term.lower() in ("sku", "part number", "mpn", "part_number", "part", "mã hàng", "mã vật tư"):
+                        continue
+                    qty = 1.0
+                    if len(row) > 1 and row[1] is not None:
+                        try:
+                            qty = self._quantity(str(row[1]).strip())
+                        except Exception:
+                            qty = 1.0
+                    items.append((part_term, qty))
+            else:
+                return request.make_json_response({
+                    "success": False,
+                    "error": _("Unsupported file format. Please upload .xlsx, .xls, or .csv file.")
+                })
+        except Exception as e:
+            return request.make_json_response({
+                "success": False,
+                "error": f"Error parsing spreadsheet file: {str(e)}"
+            })
+
+        if not items:
+            return request.make_json_response({
+                "success": False,
+                "error": _("No valid part numbers found in the uploaded file.")
+            })
+
+        basket = dict(request.session.get(self._basket_key(), {}))
+        matched, unmatched = self._match_and_add_to_basket(items[:200], basket)
+        request.session[self._basket_key()] = basket
+
+        return request.make_json_response({
+            "success": True,
+            "added_count": len(matched),
+            "unmatched_count": len(unmatched),
+            "basket_total_items": len(basket),
+            "matched": matched,
+            "unmatched": unmatched,
+        })

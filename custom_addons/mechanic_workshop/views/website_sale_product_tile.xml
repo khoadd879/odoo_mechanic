@@ -62,7 +62,14 @@
                     <span class="dot"/>
                     <span>Availability on request</span>
                 </div>
-                <div class="sre-tile__meta-row sre-mono" style="color:var(--sre-fg-faint);">No public price</div>
+                <t t-if="product.public_price_approved and product.list_price">
+                    <div class="sre-tile__meta-row sre-mono" style="color:var(--sre-blue-600, #1565c0);font-weight:600;">
+                        <span t-field="product.list_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                    </div>
+                </t>
+                <t t-else="">
+                    <div class="sre-tile__meta-row sre-mono" style="color:var(--sre-fg-faint);">No public price</div>
+                </t>
             </div>
 
             <div class="sre-tile__cta">

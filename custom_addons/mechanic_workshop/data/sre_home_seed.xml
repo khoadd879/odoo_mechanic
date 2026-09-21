@@ -1,45 +1,343 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-        <!-- Homepage industries per brief §14.
-             Landing pages belong to Sprint 3; this seed powers the
-             4 industry tiles on the homepage only. -->
+        <!-- 10 Industries per brief §14. -->
         <record id="sre_industry_home_manufacturing" model="sre.industry">
             <field name="name">Manufacturing</field>
             <field name="slug">manufacturing</field>
             <field name="sequence">10</field>
+            <field name="description"><![CDATA[<p>Robust mechanical and thermal solutions for heavy, general and discrete manufacturing plants. Encompasses process utility valves, feed pumps, heat exchangers and automation instrumentation.</p>]]></field>
         </record>
         <record id="sre_industry_home_food_beverage" model="sre.industry">
             <field name="name">Food &amp; Beverage</field>
             <field name="slug">food-beverage</field>
             <field name="sequence">20</field>
+            <field name="description"><![CDATA[<p>Hygienic processing and utility solutions complying with strict FDA and 3A sanitary standards. Includes sanitary valves, stainless centrifugal pumps, CIP systems and clean steam controls.</p>]]></field>
         </record>
         <record id="sre_industry_home_hotel_resort" model="sre.industry">
             <field name="name">Hotel &amp; Resort</field>
             <field name="slug">hotel-resort</field>
             <field name="sequence">30</field>
+            <field name="description"><![CDATA[<p>Commercial HVAC, domestic hot water and boiler plant engineering for hospitality and resort facilities. Ensures continuous guest comfort, acoustic control and thermal efficiency.</p>]]></field>
         </record>
         <record id="sre_industry_home_chemical" model="sre.industry">
             <field name="name">Chemical</field>
             <field name="slug">chemical</field>
             <field name="sequence">40</field>
+            <field name="description"><![CDATA[<p>Corrosion-resistant fluid handling and containment equipment built for severe process duty. PTFE/PFA-lined valves, API pumps, chemical dosing skids and ATEX-certified actuators.</p>]]></field>
+        </record>
+        <record id="sre_industry_home_textile" model="sre.industry">
+            <field name="name">Textile &amp; Dyeing</field>
+            <field name="slug">textile-dyeing</field>
+            <field name="sequence">50</field>
+            <field name="description"><![CDATA[<p>High-volume steam distribution, heat recovery systems and chemical dye dosing controls tailored for textile and fabric processing facilities.</p>]]></field>
+        </record>
+        <record id="sre_industry_home_wood_paper" model="sre.industry">
+            <field name="name">Wood &amp; Paper</field>
+            <field name="slug">wood-paper</field>
+            <field name="sequence">60</field>
+            <field name="description"><![CDATA[<p>Heavy slurry pumping, high-pressure steam drying cylinders and thermal oil loop equipment engineered for pulp, paper and timber manufacturing.</p>]]></field>
+        </record>
+        <record id="sre_industry_home_steel_metals" model="sre.industry">
+            <field name="name">Steel &amp; Metals</field>
+            <field name="slug">steel-metals</field>
+            <field name="sequence">70</field>
+            <field name="description"><![CDATA[<p>High-temperature metallurgy, hydraulic control valves and high-flow cooling water pumps designed for continuous duty in metal fabrication and smelting works.</p>]]></field>
+        </record>
+        <record id="sre_industry_home_commercial_building" model="sre.industry">
+            <field name="name">Commercial Building</field>
+            <field name="slug">commercial-building</field>
+            <field name="sequence">80</field>
+            <field name="description"><![CDATA[<p>Central plant chilled water, booster pumping systems, air handling unit (AHU) balancing valves and building management system (BMS) controls.</p>]]></field>
+        </record>
+        <record id="sre_industry_home_hospital" model="sre.industry">
+            <field name="name">Hospital &amp; Healthcare</field>
+            <field name="slug">hospital</field>
+            <field name="sequence">90</field>
+            <field name="description"><![CDATA[<p>Clean steam sterilization, medical gas pressure regulation, reliable hot water generation and positive-pressure cleanroom HVAC components.</p>]]></field>
+        </record>
+        <record id="sre_industry_home_power_generation" model="sre.industry">
+            <field name="name">Power Generation</field>
+            <field name="slug">power-generation</field>
+            <field name="sequence">100</field>
+            <field name="description"><![CDATA[<p>Supercritical boiler feedwater valves, turbine bypass stations, cooling tower pumps and instrumentation built to withstand extreme pressure and temperature cycles.</p>]]></field>
         </record>
 
-        <!-- Homepage applications per brief §15. -->
+        <!-- 10 Applications per brief §15. -->
         <record id="sre_application_home_boiler_water" model="sre.application">
             <field name="name">Boiler Water Level Control</field>
             <field name="slug">boiler-water-level-control</field>
             <field name="sequence">10</field>
+            <field name="description"><![CDATA[<p>Direct level sensing, modulating feedwater regulation valves, low-water cutoff switches and gauge glass assemblies ensuring safe boiler operation.</p>]]></field>
         </record>
         <record id="sre_application_home_steam" model="sre.application">
             <field name="name">Steam System</field>
             <field name="slug">steam-system</field>
             <field name="sequence">20</field>
+            <field name="description"><![CDATA[<p>Pressure reducing stations, thermodynamic &amp; float steam traps, condensate return pumps, separators and pipeline strainers maximizing thermodynamic efficiency.</p>]]></field>
         </record>
         <record id="sre_application_home_hvac_control" model="sre.application">
             <field name="name">HVAC Control</field>
             <field name="slug">hvac-control</field>
             <field name="sequence">30</field>
+            <field name="description"><![CDATA[<p>Modulating control valves, pressure independent balancing valves (PIBCV), motorized dampers and differential pressure transmitters for hydronic HVAC systems.</p>]]></field>
+        </record>
+        <record id="sre_application_home_boiler_burner" model="sre.application">
+            <field name="name">Boiler Burner &amp; Combustion</field>
+            <field name="slug">boiler-burner-combustion</field>
+            <field name="sequence">40</field>
+            <field name="description"><![CDATA[<p>Gas trains, fuel safety shut-off solenoid valves, flame detectors, combustion air controls and air-fuel ratio modulation systems.</p>]]></field>
+        </record>
+        <record id="sre_application_home_industrial_pumping" model="sre.application">
+            <field name="name">Industrial / HVAC Pumping</field>
+            <field name="slug">industrial-hvac-pumping</field>
+            <field name="sequence">50</field>
+            <field name="description"><![CDATA[<p>End-suction, split-case and vertical multistage pumps for process transfer, cooling water loops, booster sets and boiler feed service.</p>]]></field>
+        </record>
+        <record id="sre_application_home_thermal_oil" model="sre.application">
+            <field name="name">Thermal Oil Heat Transfer</field>
+            <field name="slug">thermal-oil</field>
+            <field name="sequence">60</field>
+            <field name="description"><![CDATA[<p>High-temperature bellow-sealed globe valves, thermal oil circulation pumps, expansion tank fittings and thermal relief valves up to 350°C.</p>]]></field>
+        </record>
+        <record id="sre_application_home_compressed_air" model="sre.application">
+            <field name="name">Compressed Air System</field>
+            <field name="slug">compressed-air</field>
+            <field name="sequence">70</field>
+            <field name="description"><![CDATA[<p>Air filtration units, zero-air-loss automatic condensate drains, pressure regulators and isolation ball valves for industrial compressed air networks.</p>]]></field>
+        </record>
+        <record id="sre_application_home_wastewater" model="sre.application">
+            <field name="name">Water &amp; Wastewater Treatment</field>
+            <field name="slug">wastewater-treatment</field>
+            <field name="sequence">80</field>
+            <field name="description"><![CDATA[<p>Submersible sewage pumps, resilient-seated butterfly valves, non-slam check valves and magnetic flowmeters for industrial wastewater plants.</p>]]></field>
+        </record>
+        <record id="sre_application_home_sanitary_fluid" model="sre.application">
+            <field name="name">Sanitary &amp; Hygienic Fluid Handling</field>
+            <field name="slug">sanitary-hygienic</field>
+            <field name="sequence">90</field>
+            <field name="description"><![CDATA[<p>Tri-clamp aseptic diaphragm valves, stainless sanitary centrifugal pumps, sampling valves and sanitary pipe fittings for beverage and pharma processing.</p>]]></field>
+        </record>
+        <record id="sre_application_home_chemical_dosing" model="sre.application">
+            <field name="name">Chemical Dosing &amp; Metering</field>
+            <field name="slug">chemical-dosing</field>
+            <field name="sequence">100</field>
+            <field name="description"><![CDATA[<p>Precision solenoid and motor-driven metering pumps, back-pressure valves, pulsation dampeners and calibration cylinders for chemical treatment.</p>]]></field>
+        </record>
+
+        <!-- Sub-families for 8 Navigation Pillars per McMaster MagicPath Catalog -->
+        <!-- Valves -->
+        <record id="sre_fam_control_valves" model="sre.product.family">
+            <field name="name">Pressure-Relieved Control Valves</field>
+            <field name="slug">control-valves</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_valves"/>
+            <field name="sequence">10</field>
+        </record>
+        <record id="sre_fam_steam_traps" model="sre.product.family">
+            <field name="name">Thermostatic &amp; Inverted Steam Traps</field>
+            <field name="slug">steam-traps</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_valves"/>
+            <field name="sequence">20</field>
+        </record>
+        <record id="sre_fam_isolation_valves" model="sre.product.family">
+            <field name="name">Ball &amp; Butterfly Isolation Valves</field>
+            <field name="slug">isolation-valves</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_valves"/>
+            <field name="sequence">30</field>
+        </record>
+        <record id="sre_fam_safety_valves" model="sre.product.family">
+            <field name="name">Safety Relief &amp; Blowdown Valves</field>
+            <field name="slug">safety-relief-valves</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_valves"/>
+            <field name="sequence">40</field>
+        </record>
+        <record id="sre_fam_pressure_regulators" model="sre.product.family">
+            <field name="name">Pilot-Operated Pressure Regulators</field>
+            <field name="slug">pressure-regulators</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_valves"/>
+            <field name="sequence">50</field>
+        </record>
+
+        <!-- Boiler & Thermal -->
+        <record id="sre_fam_level_probes" model="sre.product.family">
+            <field name="name">Conductivity Level Electrode Probes</field>
+            <field name="slug">conductivity-level-probes</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_boiler_thermal"/>
+            <field name="sequence">10</field>
+        </record>
+        <record id="sre_fam_surface_blowdown" model="sre.product.family">
+            <field name="name">Continuous Surface Blowdown Valves</field>
+            <field name="slug">continuous-surface-blowdown</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_boiler_thermal"/>
+            <field name="sequence">20</field>
+        </record>
+        <record id="sre_fam_flame_scanners" model="sre.product.family">
+            <field name="name">Burner Flame Scanners &amp; Photocells</field>
+            <field name="slug">burner-flame-scanners</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_boiler_thermal"/>
+            <field name="sequence">30</field>
+        </record>
+        <record id="sre_fam_feedwater_valves" model="sre.product.family">
+            <field name="name">Boiler Feedwater Non-Return Valves</field>
+            <field name="slug">boiler-feedwater-valves</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_boiler_thermal"/>
+            <field name="sequence">40</field>
+        </record>
+
+        <!-- Pumps -->
+        <record id="sre_fam_multistage_pumps" model="sre.product.family">
+            <field name="name">Vertical Multistage Centrifugal Pumps</field>
+            <field name="slug">vertical-multistage-pumps</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_pumps"/>
+            <field name="sequence">10</field>
+        </record>
+        <record id="sre_fam_end_suction_pumps" model="sre.product.family">
+            <field name="name">End-Suction Chilled Water Pumps</field>
+            <field name="slug">end-suction-pumps</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_pumps"/>
+            <field name="sequence">20</field>
+        </record>
+        <record id="sre_fam_boiler_feed_pumps" model="sre.product.family">
+            <field name="name">Boiler Feedwater High-Pressure Pumps</field>
+            <field name="slug">high-pressure-feed-pumps</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_pumps"/>
+            <field name="sequence">30</field>
+        </record>
+        <record id="sre_fam_shaft_seals" model="sre.product.family">
+            <field name="name">Cartridge Mechanical Shaft Seals</field>
+            <field name="slug">mechanical-shaft-seals</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_pumps"/>
+            <field name="sequence">40</field>
+        </record>
+
+        <!-- HVAC & Building -->
+        <record id="sre_fam_motoric_actuators" model="sre.product.family">
+            <field name="name">Modulating Electro-Motoric Actuators</field>
+            <field name="slug">modulating-actuators</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_hvac_building"/>
+            <field name="sequence">10</field>
+        </record>
+        <record id="sre_fam_picv_valves" model="sre.product.family">
+            <field name="name">Dynamic Balancing PICV Valves</field>
+            <field name="slug">dynamic-picv-valves</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_hvac_building"/>
+            <field name="sequence">20</field>
+        </record>
+        <record id="sre_fam_temp_sensors" model="sre.product.family">
+            <field name="name">Duct &amp; Immersion Temperature Sensors</field>
+            <field name="slug">duct-immersion-sensors</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_hvac_building"/>
+            <field name="sequence">30</field>
+        </record>
+        <record id="sre_fam_ahu_dampers" model="sre.product.family">
+            <field name="name">Air Handling Unit Dampers &amp; Actuators</field>
+            <field name="slug">ahu-dampers-actuators</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_hvac_building"/>
+            <field name="sequence">40</field>
+        </record>
+
+        <!-- Heat Exchangers -->
+        <record id="sre_fam_brazed_plate" model="sre.product.family">
+            <field name="name">Brazed Plate Heat Exchangers</field>
+            <field name="slug">brazed-plate-exchangers</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_heat_exchangers"/>
+            <field name="sequence">10</field>
+        </record>
+        <record id="sre_fam_plate_frame" model="sre.product.family">
+            <field name="name">Gasketed Plate &amp; Frame Units</field>
+            <field name="slug">gasketed-plate-frame</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_heat_exchangers"/>
+            <field name="sequence">20</field>
+        </record>
+        <record id="sre_fam_condensate_recovery" model="sre.product.family">
+            <field name="name">Condensate Heat Recovery Shells</field>
+            <field name="slug">condensate-heat-recovery</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_heat_exchangers"/>
+            <field name="sequence">30</field>
+        </record>
+        <record id="sre_fam_heatex_gaskets" model="sre.product.family">
+            <field name="name">Replacement Heat Exchanger Gaskets</field>
+            <field name="slug">heatex-replacement-gaskets</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_heat_exchangers"/>
+            <field name="sequence">40</field>
+        </record>
+
+        <!-- Instrumentation -->
+        <record id="sre_fam_pressure_transmitters" model="sre.product.family">
+            <field name="name">Heavy-Duty Pressure Transmitters 4-20mA</field>
+            <field name="slug">pressure-transmitters-4-20ma</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_instrumentation"/>
+            <field name="sequence">10</field>
+        </record>
+        <record id="sre_fam_pressure_gauges" model="sre.product.family">
+            <field name="name">Stainless Steel Pressure Gauges</field>
+            <field name="slug">stainless-pressure-gauges</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_instrumentation"/>
+            <field name="sequence">20</field>
+        </record>
+        <record id="sre_fam_flowmeters" model="sre.product.family">
+            <field name="name">Electromagnetic &amp; Vortex Flowmeters</field>
+            <field name="slug">mag-vortex-flowmeters</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_instrumentation"/>
+            <field name="sequence">30</field>
+        </record>
+        <record id="sre_fam_dp_transmitters" model="sre.product.family">
+            <field name="name">Differential Pressure (DP) Transmitters</field>
+            <field name="slug">differential-pressure-transmitters</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_instrumentation"/>
+            <field name="sequence">40</field>
+        </record>
+
+        <!-- Controls & Automation -->
+        <record id="sre_fam_ddc_controllers" model="sre.product.family">
+            <field name="name">DDC Direct Digital Controllers</field>
+            <field name="slug">direct-digital-controllers</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_controls_automation"/>
+            <field name="sequence">10</field>
+        </record>
+        <record id="sre_fam_flame_safeguard" model="sre.product.family">
+            <field name="name">Boiler Flame Safeguard Modules</field>
+            <field name="slug">flame-safeguard-modules</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_controls_automation"/>
+            <field name="sequence">20</field>
+        </record>
+        <record id="sre_fam_signal_isolators" model="sre.product.family">
+            <field name="name">4-20mA Signal Isolators &amp; Transducers</field>
+            <field name="slug">signal-isolators-transducers</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_controls_automation"/>
+            <field name="sequence">30</field>
+        </record>
+        <record id="sre_fam_din_rail_supplies" model="sre.product.family">
+            <field name="name">DIN-Rail Power Supplies &amp; Relays</field>
+            <field name="slug">din-rail-power-supplies</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_controls_automation"/>
+            <field name="sequence">40</field>
+        </record>
+
+        <!-- Industrial Spare Parts -->
+        <record id="sre_fam_spiral_gaskets" model="sre.product.family">
+            <field name="name">Spiral Wound Metal Gaskets PN16-PN40</field>
+            <field name="slug">spiral-wound-metal-gaskets</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_spare_parts"/>
+            <field name="sequence">10</field>
+        </record>
+        <record id="sre_fam_valve_packing" model="sre.product.family">
+            <field name="name">Valve Packing &amp; Seal Overhaul Kits</field>
+            <field name="slug">valve-packing-seal-kits</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_spare_parts"/>
+            <field name="sequence">20</field>
+        </record>
+        <record id="sre_fam_sight_glasses" model="sre.product.family">
+            <field name="name">Sight Glasses &amp; Reflex Gauge Glass</field>
+            <field name="slug">reflex-gauge-sight-glass</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_spare_parts"/>
+            <field name="sequence">30</field>
+        </record>
+        <record id="sre_fam_stud_kits" model="sre.product.family">
+            <field name="name">Flange Fastener Stud Kits Grade B7</field>
+            <field name="slug">flange-fastener-stud-kits</field>
+            <field name="pillar_id" ref="mechanic_workshop.sre_pillar_spare_parts"/>
+            <field name="sequence">40</field>
         </record>
     </data>
 </odoo>

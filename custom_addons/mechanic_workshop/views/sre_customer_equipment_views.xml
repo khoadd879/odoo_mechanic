@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Customer Plant Equipment Views (Brief §18) -->
+    <record id="sre_customer_equipment_list" model="ir.ui.view">
+        <field name="name">sre.customer.equipment.list</field>
+        <field name="model">sre.customer.equipment</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="plant_tag"/>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="equipment_type"/>
+                <field name="location"/>
+                <field name="boiler_manufacturer_id"/>
+                <field name="boiler_model_id"/>
+                <field name="compatible_part_count" string="Compatible Spares"/>
+                <field name="critical_part_count" string="Critical Spares"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sre_customer_equipment_form" model="ir.ui.view">
+        <field name="name">sre.customer.equipment.form</field>
+        <field name="model">sre.customer.equipment</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="e.g. Lò hơi đốt gas số 1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identity &amp; Location">
+                            <field name="plant_tag" placeholder="e.g. BLR-01"/>
+                            <field name="partner_id"/>
+                            <field name="location" placeholder="e.g. Boiler House, Line 1"/>
+                            <field name="equipment_type"/>
+                            <field name="serial_number"/>
+                            <field name="commissioning_year"/>
+                        </group>
+                        <group string="Technical Specification">
+                            <field name="boiler_manufacturer_id" invisible="equipment_type != 'boiler'"/>
+                            <field name="boiler_model_id" invisible="equipment_type != 'boiler'"/>
+                            <field name="operating_medium"/>
+                            <field name="operating_pressure"/>
+                            <field name="operating_temperature"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Verified Compatible Spares" name="compatible_parts">
+                            <field name="compatible_part_ids">
+                                <list>
+                                    <field name="default_code" string="SKU"/>
+                                    <field name="name" string="Product Name"/>
+                                    <field name="product_brand_id" string="Brand"/>
+                                    <field name="manufacturer_pref" string="MPN"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Pinned Custom Spares" name="pinned_parts">
+                            <field name="saved_part_ids">
+                                <list editable="bottom">
+                                    <field name="default_code" string="SKU"/>
+                                    <field name="name" string="Product Name"/>
+                                    <field name="product_brand_id" string="Brand"/>
+                                    <field name="manufacturer_pref" string="MPN"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Maintenance Notes" name="notes">
+                            <field name="notes" placeholder="Engineering service history, overhaul schedule, overhaul checklist..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sre_customer_equipment_search" model="ir.ui.view">
+        <field name="name">sre.customer.equipment.search</field>
+        <field name="model">sre.customer.equipment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="plant_tag"/>
+                <field name="partner_id"/>
+                <field name="location"/>
+                <filter string="Boilers" name="filter_boiler" domain="[('equipment_type', '=', 'boiler')]"/>
+                <filter string="Pumps" name="filter_pump" domain="[('equipment_type', '=', 'pump')]"/>
+                <filter string="Valve Stations" name="filter_valve" domain="[('equipment_type', '=', 'valve_station')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_sre_customer_equipment" model="ir.actions.act_window">
+        <field name="name">Customer Plant Equipment</field>
+        <field name="res_model">sre.customer.equipment</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="sre_customer_equipment_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Register a factory machine / plant asset to track verified compatible spares.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_sre_customer_equipment"
+              name="Customer Equipment (My Plant)"
+              parent="mechanic_workshop.sre_pillar_menu"
+              action="action_sre_customer_equipment"
+              sequence="55"/>
+</odoo>

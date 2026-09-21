@@ -5,6 +5,23 @@
         <field name="active" eval="False"/>
     </record>
 
+    <template id="sre_top_ticker" name="SRE top reassurance ticker">
+        <div class="sre-top-ticker">
+            <div class="container sre-top-ticker__inner">
+                <div class="sre-top-ticker__left">
+                    <span class="fw-bold text-white">SRE Commercial Vietnam</span>
+                    <span class="sre-top-ticker__sep">|</span>
+                    <span class="d-none d-md-inline sre-top-ticker__copy">98% of in-stock items ship today • 100% Genuine OEM Traceability • 3D CAD Available</span>
+                </div>
+                <div class="sre-top-ticker__right">
+                    <span class="sre-top-ticker__hotline sre-mono"><i class="fa fa-phone text-warning me-1"/> <strong>+84 (0) 28 3988 8868</strong></span>
+                    <span class="sre-top-ticker__sep">|</span>
+                    <a href="/rfq" class="sre-top-ticker__orderpad">Fast RFQ / Order Pad</a>
+                </div>
+            </div>
+        </div>
+    </template>
+
     <template id="sre_search_form" name="SRE global search form">
         <form t-att-action="search_action or '/sre/catalog'"
               method="get"
@@ -16,10 +33,10 @@
                 <input type="search"
                        name="search"
                        t-att-value="search_value or ''"
-                       placeholder="Search SKU, MPN, OEM part, brand or product"
+                       placeholder="Enter Part Number, MPN, Brand, or Spec (e.g. DMV-001, Spirax)..."
                        autocomplete="off"
                        aria-label="Search the SRE technical catalog"/>
-                <button type="submit">Search</button>
+                <button type="submit">FIND</button>
             </div>
             <div class="sre-search-suggestions"
                  role="listbox"
@@ -33,12 +50,13 @@
               name="SRE professional desktop header"
               priority="90">
         <xpath expr="//div[@id='o_main_nav']" position="replace">
+            <t t-call="mechanic_workshop.sre_top_ticker"/>
             <div id="o_main_nav" class="o_main_nav container sre-header__desktop">
                 <a href="/" class="sre-brand" aria-label="SRE Commercial home">
                     <span class="sre-brand__mark" aria-hidden="true">SRE</span>
                     <span class="sre-brand__copy">
                         <strong>SRE Commercial</strong>
-                        <small>Industrial engineering supply</small>
+                        <small>Industrial &amp; Plant Equipment</small>
                     </span>
                 </a>
                 <div class="sre-header__search">
@@ -48,18 +66,21 @@
                     </t>
                 </div>
                 <div class="sre-header__actions">
-                    <div class="sre-header__support">
-                        <span>Engineering desk</span>
-                        <strong>Technical sourcing support</strong>
-                    </div>
-                    <a href="/my" class="sre-header__account">
-                        <span class="fa fa-user-o" aria-hidden="true"/>
-                        <span>Account</span>
+                    <a href="/boiler-finder" class="sre-header__launcher sre-header__launcher--boiler d-none d-xl-inline-flex">
+                        <i class="fa fa-fire text-warning me-1.5"/>
+                        <span>Boiler Part Finder</span>
                     </a>
-                    <a href="/rfq"
-                       class="sre-header__rfq">
-                        <span class="fa fa-file-text-o" aria-hidden="true"/>
-                        <span>RFQ list</span>
+                    <a href="/rfq" class="sre-header__launcher sre-header__launcher--pad d-none d-lg-inline-flex">
+                        <i class="fa fa-list-alt me-1.5"/>
+                        <span>Fast Order Pad</span>
+                    </a>
+                    <a href="/my" class="sre-header__account" title="Account">
+                        <span class="fa fa-user-o" aria-hidden="true"/>
+                        <span class="d-none d-xl-inline">Account</span>
+                    </a>
+                    <a href="/rfq" class="sre-header__rfq">
+                        <span class="fa fa-shopping-cart" aria-hidden="true"/>
+                        <span>RFQ Basket</span>
                         <strong class="sre-rfq-count" t-esc="len(request.session.get('sre_rfq_basket_%s' % request.website.id, {}))"/>
                     </a>
                 </div>
@@ -72,19 +93,21 @@
                     <a href="/sre/catalog"
                        t-att-class="'sre-primary-nav__all ' + ('is-active' if request.httprequest.path == '/sre/catalog' else '')">
                         <span class="fa fa-th-list" aria-hidden="true"/>
-                        All products
+                        All Products
                     </a>
                     <div class="sre-primary-nav__pillars">
                         <a t-foreach="request.website.sre_visible_pillars"
                            t-as="pillar"
                            t-att-href="'/sre/catalog/pillar/%s' % pillar.slug"
                            t-att-class="'sre-primary-nav__link ' + ('is-active' if request.httprequest.path.startswith('/sre/catalog/pillar/%s' % pillar.slug) else '')"
-                           t-esc="pillar.short_label or pillar.name"/>
+                           t-esc="pillar.name"/>
                     </div>
                     <div class="sre-primary-nav__more">
+                        <a href="/boiler-finder" class="sre-boiler-nav-highlight"><i class="fa fa-fire text-warning me-1"/>Boiler Finder</a>
+                        <a href="/cross-reference" class="sre-cross-nav-highlight"><i class="fa fa-exchange text-info me-1"/>Cross Reference</a>
+                        <a href="/technical-library"><i class="fa fa-book text-success me-1"/>Technical Library</a>
                         <a href="/#industries">Industries</a>
                         <a href="/#applications">Applications</a>
-                        <a href="/#technical-resources">Resources</a>
                     </div>
                 </div>
             </nav>
@@ -115,10 +138,14 @@
                    t-as="pillar"
                    t-att-href="'/sre/catalog/pillar/%s' % pillar.slug"
                    t-esc="pillar.name"/>
+                <span class="sre-mobile-menu__label">Discovery tools</span>
+                <a href="/boiler-finder" class="fw-bold text-primary"><i class="fa fa-fire text-danger me-1"/>Boiler Part Finder</a>
+                <a href="/cross-reference" class="fw-bold text-primary"><i class="fa fa-exchange text-info me-1"/>Cross Reference Finder</a>
+                <a href="/technical-library" class="fw-bold text-primary"><i class="fa fa-book text-success me-1"/>Technical Library &amp; CAD</a>
                 <span class="sre-mobile-menu__label">Browse by</span>
                 <a href="/#industries">Industries</a>
                 <a href="/#applications">Applications</a>
-                <a href="/#technical-resources">Technical resources</a>
+                <a href="/rfq/unknown-part"><i class="fa fa-camera text-warning me-1"/>Unknown Part RFQ</a>
                 <a href="/rfq">Request for quotation</a>
             </li>
         </xpath>
@@ -142,15 +169,18 @@
                         </div>
                     </div>
                     <div>
-                        <h2>Catalogue</h2>
+                        <h2>Catalogue &amp; Discovery</h2>
                         <a href="/sre/catalog">All products</a>
+                        <a href="/boiler-finder">Boiler Part Finder</a>
+                        <a href="/cross-reference">Cross Reference Finder</a>
+                        <a href="/technical-library">Technical Library &amp; CAD</a>
                         <a href="/#industries">Industries</a>
                         <a href="/#applications">Applications</a>
                     </div>
                     <div>
                         <h2>Technical support</h2>
                         <a href="/rfq">Submit an RFQ</a>
-                        <a href="/#technical-resources">Technical resources</a>
+                        <a href="/rfq/unknown-part">Unknown Part Identification</a>
                         <a href="/contactus">Contact engineering</a>
                     </div>
                     <div class="sre-footer__standard">

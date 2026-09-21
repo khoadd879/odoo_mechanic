@@ -15,8 +15,11 @@
             </a>
             <div class="sre-product-card__identity">
                 <div class="sre-product-card__eyebrow">
-                    <span t-if="product.default_code" class="sre-mono" itemprop="sku" t-esc="product.default_code"/>
-                    <span t-if="product.product_brand_id" t-esc="product.product_brand_id.name"/>
+                    <span t-if="product.default_code" class="sre-mono sre-badge-sku" itemprop="sku" t-esc="product.default_code"/>
+                    <span t-if="product.product_brand_id" class="sre-badge-brand" t-esc="product.product_brand_id.name"/>
+                    <t t-if="product.sudo().product_document_ids.filtered(lambda d: d.cad_format in ('step', 'dwg', 'dxf') or d.document_type == 'cad_drawing')">
+                        <span class="sre-badge-cad">3D CAD</span>
+                    </t>
                 </div>
                 <h2>
                     <a t-att-href="product.website_url" itemprop="url">
@@ -24,8 +27,8 @@
                     </a>
                 </h2>
                 <p t-if="product.manufacturer_pref" class="sre-product-card__mpn">
-                    <span>MPN</span>
-                    <strong t-esc="product.manufacturer_pref"/>
+                    <span>MPN:</span>
+                    <strong class="sre-mono sre-mpn-text" t-esc="product.manufacturer_pref"/>
                 </p>
             </div>
             <dl class="sre-product-card__specs">
@@ -38,13 +41,35 @@
                 <t t-if="product.sre_public_oem_part_numbers">
                     <dt>OEM PN</dt><dd t-esc="product.sre_public_oem_part_numbers"/>
                 </t>
+                <t t-if="product.operating_pressure_max">
+                    <dt>Pressure</dt><dd><t t-esc="'%.1f' % product.operating_pressure_max"/> bar</dd>
+                </t>
+                <t t-if="product.operating_temp_max or product.operating_temp_min">
+                    <dt>Temp</dt><dd><t t-esc="'%.0f' % product.operating_temp_min"/> to <t t-esc="'%.0f' % product.operating_temp_max"/> °C</dd>
+                </t>
+                <t t-if="product.flow_rate_max">
+                    <dt>Flow</dt><dd><t t-esc="'%.1f' % product.flow_rate_max"/> m³/h</dd>
+                </t>
                 <t t-if="len(product.product_variant_ids) &gt; 1">
                     <dt>Options</dt><dd><t t-esc="len(product.product_variant_ids)"/> variants</dd>
                 </t>
             </dl>
             <div class="sre-product-card__commercial">
                 <span class="sre-status"><i aria-hidden="true"/>Availability on request</span>
-                <span class="sre-quote-price-tag"><i class="fa fa-calculator" aria-hidden="true"/> B2B Quote on Request</span>
+                <t t-set="contract_price" t-value="product._get_b2b_contract_price()"/>
+                <t t-if="contract_price">
+                    <span class="sre-quote-price-tag sre-quote-price-tag--approved text-primary border-primary" title="B2B Contract Price">
+                        <i class="fa fa-handshake-o me-1"/>Contract: <span t-esc="contract_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                    </span>
+                </t>
+                <t t-elif="product.public_price_approved and product.list_price">
+                    <span class="sre-quote-price-tag sre-quote-price-tag--approved">
+                        <span t-field="product.list_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                    </span>
+                </t>
+                <t t-else="">
+                    <span class="sre-quote-price-tag"><i class="fa fa-calculator" aria-hidden="true"/>Quote on Request</span>
+                </t>
             </div>
             <div class="sre-product-card__actions">
                 <a t-att-href="product.website_url" class="sre-link-arrow">Technical details</a>
@@ -96,14 +121,7 @@
                                     <t t-elif="search">Search results</t>
                                     <t t-else="">Technical product catalog</t>
                                 </h1>
-                                <p>
-                                    Search verified identity fields and compare technical product data.
-                                    Pricing, availability and lead time are confirmed through RFQ.
-                                </p>
-                            </div>
-                            <div class="sre-catalog-hero__count">
-                                <strong t-esc="products_count"/>
-                                <span>matching products</span>
+                                
                             </div>
                         </div>
                         <div class="sre-catalog-hero__search">
@@ -111,41 +129,54 @@
                                 <t t-set="search_action" t-value="base_path"/>
                                 <t t-set="search_value" t-value="search"/>
                             </t>
-                            <p>Search priority: exact SKU → MPN → OEM part number → brand → keyword.</p>
-                        </div>
-                        <div class="sre-procurement-steps" aria-label="B2B procurement process">
-                            <div class="sre-procurement-step">
-                                <span class="sre-step-num">01</span>
-                                <div class="sre-step-text">
-                                    <strong>Identify Part</strong>
-                                    <span>Search SKU, MPN, Brand</span>
-                                </div>
-                            </div>
-                            <span class="sre-step-arrow" aria-hidden="true">→</span>
-                            <div class="sre-procurement-step">
-                                <span class="sre-step-num">02</span>
-                                <div class="sre-step-text">
-                                    <strong>Add to RFQ</strong>
-                                    <span>1-click add or configure</span>
-                                </div>
-                            </div>
-                            <span class="sre-step-arrow" aria-hidden="true">→</span>
-                            <div class="sre-procurement-step">
-                                <span class="sre-step-num">03</span>
-                                <div class="sre-step-text">
-                                    <strong>Receive Official Quote</strong>
-                                    <span>Pricing &amp; lead-time confirmed</span>
-                                </div>
-                            </div>
+                           
                         </div>
                     </div>
                 </section>
+
+                <!-- McMaster Visual Category Quick-Access Bar -->
+                <div class="container sre-catalog-cat-bar-container">
+                    <t t-set="pillar_img_map" t-value="{
+                        'valves': '/mechanic_workshop/static/src/img/cat_valves.jpg',
+                        'pumps': '/mechanic_workshop/static/src/img/cat_pumps.jpg',
+                        'boiler-thermal': '/mechanic_workshop/static/src/img/cat_boiler.jpg',
+                        'hvac-building': '/mechanic_workshop/static/src/img/cat_hvac.svg',
+                        'instrumentation': '/mechanic_workshop/static/src/img/cat_instrumentation.svg',
+                        'controls-automation': '/mechanic_workshop/static/src/img/cat_controls.svg',
+                        'heat-exchangers': '/mechanic_workshop/static/src/img/diagram_valve_cutaway.svg',
+                        'industrial-spare-parts': '/mechanic_workshop/static/src/img/cat_gaskets.svg',
+                    }"/>
+                    <div class="sre-catalog-cat-bar">
+                        <a href="/sre/catalog" t-att-class="'sre-cat-chip ' + ('is-active' if not pillar else '')">
+                            <div class="sre-cat-chip__thumb">
+                                <span class="fa fa-th text-muted"/>
+                            </div>
+                            <div class="sre-cat-chip__meta">
+                                <span class="sre-cat-chip__name">All Categories</span>
+                                <span class="sre-cat-chip__count" t-esc="'%s SKUs' % products_count"/>
+                            </div>
+                        </a>
+                        <t t-foreach="visible_pillars" t-as="p_item">
+                            <a t-att-href="'/sre/catalog/pillar/%s' % p_item.slug"
+                               t-att-class="'sre-cat-chip ' + ('is-active' if pillar and pillar.id == p_item.id else '')">
+                                <div class="sre-cat-chip__thumb">
+                                    <t t-set="p_img" t-value="pillar_img_map.get(p_item.slug, '/mechanic_workshop/static/src/img/cat_valves.jpg')"/>
+                                    <img t-att-src="p_img" t-att-alt="p_item.name" loading="lazy"/>
+                                </div>
+                                <div class="sre-cat-chip__meta">
+                                    <span class="sre-cat-chip__name" t-esc="p_item.short_label or p_item.name.split()[0]"/>
+                                    <span class="sre-cat-chip__count"><t t-esc="p_item.product_count"/> SKUs</span>
+                                </div>
+                            </a>
+                        </t>
+                    </div>
+                </div>
 
                 <div class="container sre-catalog-shell">
                     <aside class="sre-catalog-filters" aria-label="Catalog filters">
                         <div class="sre-catalog-filters__head">
                             <div><span>Refine results</span><strong t-esc="products_count"/></div>
-                            <a t-att-href="query_url(brand=None, attr=None, page=None)">Clear</a>
+                            <a t-att-href="query_url(brand=None, attr=None, pressure_min=None, pressure_max=None, temp_min=None, temp_max=None, flow_min=None, flow_max=None, page=None)">Clear</a>
                         </div>
 
                         <section t-if="pillar and families" class="sre-filter-group">
@@ -191,6 +222,104 @@
                                     <span t-esc="filter_value.name"/>
                                 </label>
                             </section>
+
+                            <section class="sre-filter-group sre-filter-group--numeric">
+                                <h2>Technical specifications</h2>
+
+                                <!-- Pressure Range (bar) -->
+                                <div class="sre-numeric-field" data-range-slider="pressure" data-min="0" data-max="100" data-step="1">
+                                    <div class="sre-numeric-field__header">
+                                        <label>Operating Pressure</label>
+                                        <span class="sre-unit-badge">bar</span>
+                                    </div>
+                                    <div class="sre-range-inputs">
+                                        <input type="number"
+                                               name="pressure_min"
+                                               t-att-value="'%.1f' % pressure_min if pressure_min is not None else ''"
+                                               placeholder="Min"
+                                               min="0" max="100" step="any"
+                                               class="sre-range-input sre-range-input--min"
+                                               aria-label="Min operating pressure in bar"/>
+                                        <span class="sre-range-sep">–</span>
+                                        <input type="number"
+                                               name="pressure_max"
+                                               t-att-value="'%.1f' % pressure_max if pressure_max is not None else ''"
+                                               placeholder="Max"
+                                               min="0" max="100" step="any"
+                                               class="sre-range-input sre-range-input--max"
+                                               aria-label="Max operating pressure in bar"/>
+                                    </div>
+                                    <div class="sre-dual-slider">
+                                        <input type="range" class="sre-slider-thumb sre-slider-thumb--min" min="0" max="100" step="1"
+                                               t-att-value="pressure_min if pressure_min is not None else 0"/>
+                                        <input type="range" class="sre-slider-thumb sre-slider-thumb--max" min="0" max="100" step="1"
+                                               t-att-value="pressure_max if pressure_max is not None else 100"/>
+                                    </div>
+                                </div>
+
+                                <!-- Temperature Range (°C) -->
+                                <div class="sre-numeric-field" data-range-slider="temp" data-min="-50" data-max="400" data-step="5">
+                                    <div class="sre-numeric-field__header">
+                                        <label>Operating Temperature</label>
+                                        <span class="sre-unit-badge">°C</span>
+                                    </div>
+                                    <div class="sre-range-inputs">
+                                        <input type="number"
+                                               name="temp_min"
+                                               t-att-value="'%.0f' % temp_min if temp_min is not None else ''"
+                                               placeholder="Min"
+                                               min="-50" max="400" step="any"
+                                               class="sre-range-input sre-range-input--min"
+                                               aria-label="Min operating temperature in Celsius"/>
+                                        <span class="sre-range-sep">–</span>
+                                        <input type="number"
+                                               name="temp_max"
+                                               t-att-value="'%.0f' % temp_max if temp_max is not None else ''"
+                                               placeholder="Max"
+                                               min="-50" max="400" step="any"
+                                               class="sre-range-input sre-range-input--max"
+                                               aria-label="Max operating temperature in Celsius"/>
+                                    </div>
+                                    <div class="sre-dual-slider">
+                                        <input type="range" class="sre-slider-thumb sre-slider-thumb--min" min="-50" max="400" step="5"
+                                               t-att-value="temp_min if temp_min is not None else -50"/>
+                                        <input type="range" class="sre-slider-thumb sre-slider-thumb--max" min="-50" max="400" step="5"
+                                               t-att-value="temp_max if temp_max is not None else 400"/>
+                                    </div>
+                                </div>
+
+                                <!-- Flow Rate Range (m³/h) -->
+                                <div class="sre-numeric-field" data-range-slider="flow" data-min="0" data-max="500" data-step="5">
+                                    <div class="sre-numeric-field__header">
+                                        <label>Flow Rate</label>
+                                        <span class="sre-unit-badge">m³/h</span>
+                                    </div>
+                                    <div class="sre-range-inputs">
+                                        <input type="number"
+                                               name="flow_min"
+                                               t-att-value="'%.1f' % flow_min if flow_min is not None else ''"
+                                               placeholder="Min"
+                                               min="0" max="500" step="any"
+                                               class="sre-range-input sre-range-input--min"
+                                               aria-label="Min flow rate in cubic meters per hour"/>
+                                        <span class="sre-range-sep">–</span>
+                                        <input type="number"
+                                               name="flow_max"
+                                               t-att-value="'%.1f' % flow_max if flow_max is not None else ''"
+                                               placeholder="Max"
+                                               min="0" max="500" step="any"
+                                               class="sre-range-input sre-range-input--max"
+                                               aria-label="Max flow rate in cubic meters per hour"/>
+                                    </div>
+                                    <div class="sre-dual-slider">
+                                        <input type="range" class="sre-slider-thumb sre-slider-thumb--min" min="0" max="500" step="5"
+                                               t-att-value="flow_min if flow_min is not None else 0"/>
+                                        <input type="range" class="sre-slider-thumb sre-slider-thumb--max" min="0" max="500" step="5"
+                                               t-att-value="flow_max if flow_max is not None else 500"/>
+                                    </div>
+                                </div>
+                            </section>
+
                             <button type="submit" class="sre-button sre-button--full">Apply filters</button>
                         </form>
 
@@ -201,12 +330,59 @@
                     </aside>
 
                     <main class="sre-catalog-results">
-                        <div t-if="search or industry or application or brand or selected_attribute_keys" class="sre-active-filters">
+                        <div t-if="search or industry or application or brand or selected_attribute_keys or pressure_min is not None or pressure_max is not None or temp_min is not None or temp_max is not None or flow_min is not None or flow_max is not None" class="sre-active-filters">
                             <span>Active:</span>
                             <a t-if="search" t-att-href="query_url(search=None, page=None)">Search: “<t t-esc="search"/>” ×</a>
                             <a t-if="industry" t-att-href="query_url(industry=None, page=None)">Industry: <t t-esc="industry.name"/> ×</a>
                             <a t-if="application" t-att-href="query_url(application=None, page=None)">Application: <t t-esc="application.name"/> ×</a>
                             <a t-if="brand" t-att-href="query_url(brand=None, page=None)">Brand: <t t-esc="brand.name"/> ×</a>
+                            <a t-if="pressure_min is not None or pressure_max is not None"
+                               t-att-href="query_url(pressure_min=None, pressure_max=None, page=None)">
+                                Pressure: <t t-esc="'%.1f' % pressure_min if pressure_min is not None else '0'"/>–<t t-esc="'%.1f' % pressure_max if pressure_max is not None else '∞'"/> bar ×
+                            </a>
+                            <a t-if="temp_min is not None or temp_max is not None"
+                               t-att-href="query_url(temp_min=None, temp_max=None, page=None)">
+                                Temp: <t t-esc="'%.0f' % temp_min if temp_min is not None else '-∞'"/>–<t t-esc="'%.0f' % temp_max if temp_max is not None else '∞'"/> °C ×
+                            </a>
+                            <a t-if="flow_min is not None or flow_max is not None"
+                               t-att-href="query_url(flow_min=None, flow_max=None, page=None)">
+                                Flow: <t t-esc="'%.1f' % flow_min if flow_min is not None else '0'"/>–<t t-esc="'%.1f' % flow_max if flow_max is not None else '∞'"/> m³/h ×
+                            </a>
+                        </div>
+
+                        <!-- Parametric Quick-Filter Chips Bar (McMaster Style) -->
+                        <div class="sre-filter-chips-bar">
+                            <div class="sre-filter-chips-row">
+                                <span class="sre-chips-label">Product Line:</span>
+                                <div class="sre-chips-group">
+                                    <a href="/sre/catalog" t-att-class="'sre-chip ' + ('is-active' if not pillar and not family else '')">All</a>
+                                    <t t-foreach="visible_pillars" t-as="p_chip">
+                                        <a t-att-href="'/sre/catalog/pillar/%s' % p_chip.slug"
+                                           t-att-class="'sre-chip ' + ('is-active' if pillar and pillar.id == p_chip.id else '')"
+                                           t-esc="p_chip.short_label or p_chip.name.split()[0]"/>
+                                    </t>
+                                </div>
+                            </div>
+                            <div t-if="brands" class="sre-filter-chips-row">
+                                <span class="sre-chips-label">Manufacturer:</span>
+                                <div class="sre-chips-group">
+                                    <a t-att-href="query_url(brand=None, page=None)" t-att-class="'sre-chip ' + ('is-active' if not brand else '')">All</a>
+                                    <t t-foreach="brands[:6]" t-as="b_chip">
+                                        <a t-att-href="query_url(brand=b_chip.id, page=None)"
+                                           t-att-class="'sre-chip ' + ('is-active' if brand and brand.id == b_chip.id else '')"
+                                           t-esc="b_chip.name"/>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="sre-filter-chips-row">
+                                <span class="sre-chips-label">Pressure Class:</span>
+                                <div class="sre-chips-group">
+                                    <a t-att-href="query_url(pressure_max=None, page=None)" t-att-class="'sre-chip ' + ('is-active' if pressure_max is None else '')">All</a>
+                                    <a t-att-href="query_url(pressure_max=16, page=None)" t-att-class="'sre-chip ' + ('is-active' if pressure_max == 16 else '')">PN 16</a>
+                                    <a t-att-href="query_url(pressure_max=25, page=None)" t-att-class="'sre-chip ' + ('is-active' if pressure_max == 25 else '')">PN 25</a>
+                                    <a t-att-href="query_url(pressure_max=40, page=None)" t-att-class="'sre-chip ' + ('is-active' if pressure_max == 40 else '')">PN 40</a>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="sre-catalog-toolbar">
@@ -237,27 +413,171 @@
                             </div>
                             <div t-else="" class="sre-table-wrap">
                                 <table class="sre-products-table">
-                                    <thead><tr><th>Product</th><th>Brand</th><th>MPN</th><th>OEM PN</th><th>Availability</th><th>Actions</th></tr></thead>
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 52px;">Visual</th>
+                                            <th style="min-width: 200px;">Part &amp; Description</th>
+                                            <th style="min-width: 120px;">Brand</th>
+                                            <th style="min-width: 110px;">MPN</th>
+                                            <th style="min-width: 120px;">OEM PN</th>
+                                            <th style="min-width: 120px;">Availability</th>
+                                            <th class="text-end" style="min-width: 160px;">Actions</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                         <tr t-foreach="products" t-as="product">
-                                            <td><a t-att-href="product.website_url" t-esc="product.name"/><code t-if="product.default_code" t-esc="product.default_code"/></td>
-                                            <td t-esc="product.product_brand_id.name or '—'"/>
-                                            <td class="sre-mono" t-esc="product.manufacturer_pref or '—'"/>
-                                            <td class="sre-mono" t-esc="product.sre_public_oem_part_numbers or '—'"/>
-                                            <td><span class="sre-status"><i/>On request</span></td>
-                                            <td class="text-nowrap">
-                                                <a t-att-href="product.website_url" class="sre-link-arrow">Details</a>
+                                            <td class="sre-products-table__thumb">
+                                                <a t-att-href="product.website_url" tabindex="-1">
+                                                    <img t-if="product.image_128"
+                                                         t-att-src="'/web/image/product.template/%s/image_128' % product.id"
+                                                         t-att-alt="product.name"
+                                                         loading="lazy"/>
+                                                    <span t-else="" class="sre-thumb-placeholder">
+                                                        <i class="fa fa-cog"/>
+                                                    </span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <div class="sre-table-identity">
+                                                    <a t-att-href="product.website_url" class="sre-table-identity__name" t-esc="product.name"/>
+                                                    <div class="sre-table-identity__codes">
+                                                        <span t-if="product.default_code" class="sre-mono sre-badge-sku" t-esc="product.default_code"/>
+                                                        <t t-if="product.sudo().product_document_ids.filtered(lambda d: d.cad_format in ('step', 'dwg', 'dxf') or d.document_type == 'cad_drawing')">
+                                                            <span class="sre-badge-cad">3D CAD</span>
+                                                        </t>
+                                                    </div>
+                                                    <button type="button" class="sre-table-expand-btn text-primary border-0 bg-transparent p-0 mt-1 small font-monospace d-flex align-items-center gap-1"
+                                                            t-att-data-target="'#sre-row-detail-%s' % product.id">
+                                                        <span class="sre-expand-icon">▼</span> <span>Technical Detail &amp; CAD</span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="sre-table-brand" t-esc="product.product_brand_id.name or '—'"/>
+                                            </td>
+                                            <td class="sre-mono text-nowrap">
+                                                <a t-att-href="product.website_url" class="sre-mpn-link" t-esc="product.manufacturer_pref or '—'"/>
+                                            </td>
+                                            <td class="sre-mono text-nowrap" t-esc="product.sre_public_oem_part_numbers or '—'"/>
+                                            <td>
+                                                <t t-set="contract_price" t-value="product._get_b2b_contract_price()"/>
+                                                <t t-if="contract_price">
+                                                    <span class="fw-semibold text-primary" title="B2B Contract Price">
+                                                        <i class="fa fa-handshake-o me-1"/><span t-esc="contract_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                                    </span>
+                                                </t>
+                                                <t t-elif="product.public_price_approved and product.list_price">
+                                                    <span class="fw-semibold text-primary" t-field="product.list_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <span class="sre-status"><i/>On request</span>
+                                                </t>
+                                            </td>
+                                            <td class="text-end text-nowrap">
+                                                <a t-att-href="product.website_url" class="sre-link-arrow me-2">Details</a>
                                                 <t t-if="len(product.product_variant_ids) == 1">
-                                                    <form action="/rfq/add" method="post" class="sre-rfq-add d-inline-block ms-2">
+                                                    <form action="/rfq/add" method="post" class="sre-rfq-add d-inline-block">
                                                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                                         <input type="hidden" name="product_id" t-att-value="product.product_variant_ids[0].id"/>
                                                         <input type="hidden" name="quantity" value="1"/>
                                                         <button class="sre-button sre-button--compact sre-button--rfq py-1 px-2" type="submit" title="Add 1 unit to RFQ">
-                                                            <i class="fa fa-plus-circle" aria-hidden="true"/> RFQ
+                                                            <i class="fa fa-plus-circle" aria-hidden="true"/> +RFQ
                                                         </button>
                                                         <span class="sre-rfq-feedback ms-1" role="status" aria-live="polite" data-success="Added!" data-error="Error"/>
                                                     </form>
                                                 </t>
+                                            </td>
+                                        </tr>
+                                        <tr t-att-id="'sre-row-detail-%s' % product.id" class="sre-table-detail-row d-none">
+                                            <td colspan="7" class="p-3 bg-light border-bottom">
+                                                <div class="row g-3">
+                                                    <!-- Blueprint preview -->
+                                                    <div class="col-md-3">
+                                                        <div class="p-2 bg-white border rounded text-center shadow-xs">
+                                                            <span class="small fw-bold text-success text-uppercase d-block mb-1">Engineering Blueprint</span>
+                                                            <div class="d-flex align-items-center justify-content-center bg-light border p-2 mb-2" style="height: 110px;">
+                                                                <img src="/mechanic_workshop/static/src/img/diagram_valve_cutaway.svg" alt="Blueprint" style="max-height: 95px; max-width: 100%; object-fit: contain;"/>
+                                                            </div>
+                                                            <a t-att-href="product.website_url + '#sre_section_documents'" class="small text-success fw-bold text-decoration-none">
+                                                                View Hi-Res Drawing &amp; Tolerances →
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Attribute Specs -->
+                                                    <div class="col-md-3">
+                                                        <div class="p-2 bg-white border rounded h-100 shadow-xs">
+                                                            <span class="small fw-bold text-success text-uppercase d-block mb-1">Full Attribute Profile (PIM V2)</span>
+                                                            <dl class="small mb-0 font-monospace">
+                                                                <t t-if="product.operating_pressure_max">
+                                                                    <div class="d-flex justify-content-between border-bottom py-1">
+                                                                        <dt class="text-muted fw-normal">Pressure:</dt>
+                                                                        <dd class="fw-bold mb-0"><t t-esc="'%.1f' % product.operating_pressure_max"/> bar</dd>
+                                                                    </div>
+                                                                </t>
+                                                                <t t-if="product.operating_temp_max or product.operating_temp_min">
+                                                                    <div class="d-flex justify-content-between border-bottom py-1">
+                                                                        <dt class="text-muted fw-normal">Temp:</dt>
+                                                                        <dd class="fw-bold mb-0"><t t-esc="'%.0f' % product.operating_temp_min"/>–<t t-esc="'%.0f' % product.operating_temp_max"/> °C</dd>
+                                                                    </div>
+                                                                </t>
+                                                                <t t-if="product.flow_rate_max">
+                                                                    <div class="d-flex justify-content-between border-bottom py-1">
+                                                                        <dt class="text-muted fw-normal">Flow:</dt>
+                                                                        <dd class="fw-bold mb-0"><t t-esc="'%.1f' % product.flow_rate_max"/> m³/h</dd>
+                                                                    </div>
+                                                                </t>
+                                                                <t t-foreach="product.attribute_line_ids[:3]" t-as="aline">
+                                                                    <div class="d-flex justify-content-between border-bottom py-1">
+                                                                        <dt class="text-muted fw-normal" t-esc="aline.attribute_id.name + ':'"/>
+                                                                        <dd class="fw-bold mb-0" t-esc="', '.join(aline.value_ids.mapped('name'))"/>
+                                                                    </div>
+                                                                </t>
+                                                            </dl>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Compatibility Matrix -->
+                                                    <div class="col-md-3">
+                                                        <div class="p-2 bg-white border rounded h-100 shadow-xs">
+                                                            <span class="small fw-bold text-success text-uppercase d-block mb-1">Verified Compatibility Matrix</span>
+                                                            <ul class="list-unstyled small mb-0">
+                                                                <t t-if="product.boiler_mapping_ids">
+                                                                    <li t-foreach="product.boiler_mapping_ids[:3]" t-as="bmap" class="mb-1">
+                                                                        <span class="text-success fw-bold me-1">✓</span>
+                                                                        <span t-esc="bmap.boiler_model_id.manufacturer_id.name"/> <span t-esc="bmap.boiler_model_id.name"/>
+                                                                    </li>
+                                                                </t>
+                                                                <t t-if="product.cross_reference_ids">
+                                                                    <li t-foreach="product.cross_reference_ids[:2]" t-as="xref" class="mb-1 text-warning-emphasis">
+                                                                        <span class="fw-bold me-1">⇄</span>
+                                                                        Repl: <strong t-esc="xref.source_brand"/> <code t-esc="xref.source_part_number"/>
+                                                                    </li>
+                                                                </t>
+                                                                <t t-if="not product.boiler_mapping_ids and not product.cross_reference_ids">
+                                                                    <li class="text-muted">Standard industrial flange and process fitment verified.</li>
+                                                                </t>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Engineering Documents & CAD -->
+                                                    <div class="col-md-3">
+                                                        <div class="p-2 bg-white border rounded h-100 d-flex flex-column justify-content-between shadow-xs">
+                                                            <div>
+                                                                <span class="small fw-bold text-success text-uppercase d-block mb-1">Engineering Documents &amp; CAD</span>
+                                                                <t t-set="p_docs" t-value="product.sudo().product_document_ids.filtered(lambda d: d.active and d.shown_on_product_page)"/>
+                                                                <div t-if="p_docs">
+                                                                    <div t-foreach="p_docs[:3]" t-as="doc" class="d-flex align-items-center justify-content-between small border p-1 rounded bg-light mb-1">
+                                                                        <span class="text-truncate me-1" t-esc="doc.name"/>
+                                                                        <span class="badge bg-secondary text-uppercase" t-esc="doc.cad_format"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div t-else="" class="small text-muted mb-2">3D STEP model available on request.</div>
+                                                            </div>
+                                                            <a t-att-href="product.website_url + '#sre_section_documents'" class="btn btn-sm btn-outline-success w-100 fw-bold mt-2">
+                                                                <i class="fa fa-cube me-1"/> Download CAD Assets
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>

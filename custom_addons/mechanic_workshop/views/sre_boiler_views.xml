@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Boiler Manufacturer Views -->
+    <record id="sre_boiler_mfg_list" model="ir.ui.view">
+        <field name="name">sre.boiler.manufacturer.list</field>
+        <field name="model">sre.boiler.manufacturer</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="slug"/>
+                <field name="country_name"/>
+                <field name="model_count"/>
+                <field name="part_count"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sre_boiler_mfg_form" model="ir.ui.view">
+        <field name="name">sre.boiler.manufacturer.form</field>
+        <field name="model">sre.boiler.manufacturer</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="e.g. Miura"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="slug"/>
+                            <field name="country_name"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                            <field name="model_count"/>
+                            <field name="part_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="desc">
+                            <field name="description"/>
+                        </page>
+                        <page string="Boiler Models" name="models">
+                            <field name="model_ids">
+                                <list>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="boiler_type_id"/>
+                                    <field name="steam_capacity_kg_h"/>
+                                    <field name="design_pressure_bar"/>
+                                    <field name="part_count"/>
+                                    <field name="active"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sre_boiler_mfg_action" model="ir.actions.act_window">
+        <field name="name">Boiler Manufacturers</field>
+        <field name="res_model">sre.boiler.manufacturer</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Boiler Subsystems Views -->
+    <record id="sre_boiler_subsystem_list" model="ir.ui.view">
+        <field name="name">sre.boiler.subsystem.list</field>
+        <field name="model">sre.boiler.subsystem</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="slug"/>
+                <field name="icon"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sre_boiler_subsystem_form" model="ir.ui.view">
+        <field name="name">sre.boiler.subsystem.form</field>
+        <field name="model">sre.boiler.subsystem</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="e.g. Water Level Control"/></h1>
+                    </div>
+                    <group>
+                        <field name="slug"/>
+                        <field name="icon"/>
+                        <field name="sequence"/>
+                        <field name="active"/>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="desc">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sre_boiler_subsystem_action" model="ir.actions.act_window">
+        <field name="name">Boiler Subsystems</field>
+        <field name="res_model">sre.boiler.subsystem</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Boiler Model Views -->
+    <record id="sre_boiler_model_list" model="ir.ui.view">
+        <field name="name">sre.boiler.model.list</field>
+        <field name="model">sre.boiler.model</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="slug"/>
+                <field name="manufacturer_id"/>
+                <field name="boiler_type_id"/>
+                <field name="steam_capacity_kg_h"/>
+                <field name="design_pressure_bar"/>
+                <field name="part_count"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sre_boiler_model_form" model="ir.ui.view">
+        <field name="name">sre.boiler.model.form</field>
+        <field name="model">sre.boiler.model</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="e.g. Miura LX Series"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="slug"/>
+                            <field name="manufacturer_id"/>
+                            <field name="boiler_type_id"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="steam_capacity_kg_h"/>
+                            <field name="design_pressure_bar"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="desc">
+                            <field name="description"/>
+                        </page>
+                        <page string="Verified Compatible Parts" name="parts">
+                            <field name="mapping_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="subsystem_id"/>
+                                    <field name="product_tmpl_id"/>
+                                    <field name="position_ref"/>
+                                    <field name="is_critical_spare"/>
+                                    <field name="notes"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sre_boiler_model_action" model="ir.actions.act_window">
+        <field name="name">Boiler Models</field>
+        <field name="res_model">sre.boiler.model</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Boiler Part Mapping Views -->
+    <record id="sre_boiler_mapping_list" model="ir.ui.view">
+        <field name="name">sre.boiler.part.mapping.list</field>
+        <field name="model">sre.boiler.part.mapping</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="boiler_model_id"/>
+                <field name="subsystem_id"/>
+                <field name="product_tmpl_id"/>
+                <field name="position_ref"/>
+                <field name="is_critical_spare"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sre_boiler_mapping_action" model="ir.actions.act_window">
+        <field name="name">Boiler Part Mappings</field>
+        <field name="res_model">sre.boiler.part.mapping</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu items under SRE Catalog -->
+    <menuitem id="sre_boiler_menu_root" name="Boiler Discovery"
+              parent="sre_pillar_menu" sequence="70"/>
+    <menuitem id="sre_boiler_model_menu" name="Boiler Models"
+              parent="sre_boiler_menu_root" action="sre_boiler_model_action"
+              sequence="10"/>
+    <menuitem id="sre_boiler_mfg_menu" name="Boiler Manufacturers"
+              parent="sre_boiler_menu_root" action="sre_boiler_mfg_action"
+              sequence="20"/>
+    <menuitem id="sre_boiler_subsystem_menu" name="Boiler Subsystems"
+              parent="sre_boiler_menu_root" action="sre_boiler_subsystem_action"
+              sequence="30"/>
+    <menuitem id="sre_boiler_mapping_menu" name="Part Compatibility Mappings"
+              parent="sre_boiler_menu_root" action="sre_boiler_mapping_action"
+              sequence="40"/>
+</odoo>

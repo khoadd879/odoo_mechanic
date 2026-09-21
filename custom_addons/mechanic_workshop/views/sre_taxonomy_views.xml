@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- =============================================================
+         Industry Detail Landing Page
+         Route: /sre/industry/<slug>
+         ============================================================= -->
+    <template id="sre_industry_detail" name="SRE Industry Landing Page">
+        <t t-call="website.layout">
+            <t t-set="page_title" t-value="'%s · Industrial Solutions · SRE Commercial' % industry.name"/>
+            <div class="sre-page sre-industry-page">
+                <!-- McMaster-Carr Breadcrumb Bar -->
+                <div class="sre-category-banner">
+                    <div class="container">
+                        <nav class="sre-breadcrumb" aria-label="Breadcrumb">
+                            <a href="/">Home</a><span>/</span>
+                            <a href="/sre/industry">Industries</a><span>/</span>
+                            <span t-esc="industry.name"/>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Technical Section Header -->
+                <header class="sre-page-header">
+                    <div class="container">
+                        <div class="sre-page-header__row">
+                            <div>
+                                <span class="sre-kicker">Industrial Solution · SRE Technical Distribution</span>
+                                <h1 class="sre-page-header__title" t-esc="industry.name"/>
+                                <div t-if="industry.description" class="sre-page-header__desc" t-raw="industry.description"/>
+                                <p t-else="" class="sre-page-header__desc">
+                                    Engineered valve, pump, heat transfer and instrumentation solutions tailored for demanding industrial operating conditions.
+                                </p>
+                            </div>
+                            <div class="sre-page-header__meta">
+                                <span t-if="total_products"><t t-esc="total_products"/> mapped products</span>
+                                <span t-else="">Engineering selection active</span>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Technical Solution Details / Standards Strip -->
+                <section class="sre-confidence-strip py-3" aria-label="Industry standards">
+                    <div class="container d-flex flex-wrap gap-4 align-items-center justify-content-between">
+                        <div><i class="fa fa-shield text-primary me-2"/><strong>Engineering compliance:</strong> ASME, API, DIN and sanitary-grade standards verified</div>
+                        <div><i class="fa fa-cogs text-primary me-2"/><strong>Operating duty:</strong> High pressure, continuous thermal cycles and aggressive fluid media</div>
+                        <div><i class="fa fa-file-text-o text-primary me-2"/><strong>B2B Procurement:</strong> Consolidated multi-product quotation and technical submittals</div>
+                    </div>
+                </section>
+
+                <!-- Mapped Products Section -->
+                <section class="sre-home-section">
+                    <div class="container">
+                        <div class="sre-section-heading">
+                            <div>
+                                <span class="sre-kicker">Equipment &amp; Components</span>
+                                <h2>Recommended products for <t t-esc="industry.name"/></h2>
+                            </div>
+                            <a t-att-href="'/sre/catalog?industry=%s' % industry.slug" class="sre-link-arrow">
+                                View all products in catalog for this industry →
+                            </a>
+                        </div>
+
+                        <div t-if="products" class="sre-product-results sre-product-results--grid">
+                            <t t-foreach="products" t-as="product">
+                                <t t-call="mechanic_workshop.sre_product_card">
+                                    <t t-set="card_layout" t-value="'grid'"/>
+                                </t>
+                            </t>
+                        </div>
+                        <div t-else="" class="sre-empty-state text-center py-5 border">
+                            <i class="fa fa-wrench fa-3x text-muted mb-3"/>
+                            <h3>Direct catalog mapping in progress</h3>
+                            <p class="text-muted">
+                                Our engineering team can source and specify valves, pumps and instrumentation meeting your plant's operating duty.
+                            </p>
+                            <a href="/rfq" class="sre-button mt-2">Submit an RFQ for this industry</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Engineering RFQ Consultation Callout -->
+                <section class="sre-home-quote">
+                    <div class="container sre-home-quote__inner">
+                        <div>
+                            <span class="sre-kicker">Specialized procurement</span>
+                            <h2>Need technical sizing or project pricing for this industry?</h2>
+                            <p>
+                                Submit your required flow rates, operating temperature, line pressure, and existing manufacturer part numbers. Our engineering desk verifies specifications before issuing an official quotation.
+                            </p>
+                        </div>
+                        <div class="sre-home-quote__actions">
+                            <a href="/rfq" class="sre-button sre-button--light">Request an RFQ for this Industry</a>
+                            <a t-att-href="'/sre/catalog?industry=%s' % industry.slug" class="sre-link-arrow sre-link-arrow--light">Browse catalog</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Cross-Navigation: Other Industries -->
+                <section t-if="other_industries" class="sre-home-section sre-home-section--muted">
+                    <div class="container">
+                        <div class="sre-section-heading">
+                            <div>
+                                <span class="sre-kicker">Sectors</span>
+                                <h2>Explore other industries</h2>
+                            </div>
+                            <a href="/sre/industry" class="sre-link-arrow">All industries</a>
+                        </div>
+                        <div class="sre-taxonomy-grid">
+                            <a t-foreach="other_industries" t-as="other" t-att-href="'/sre/industry/%s' % other.slug">
+                                <span class="sre-taxonomy-grid__index" t-esc="'%02d' % (other_index + 1)"/>
+                                <strong t-esc="other.name"/>
+                                <small t-if="other.product_count"><t t-esc="other.product_count"/> mapped products</small>
+                                <small t-else="">Explore solutions</small>
+                                <span>View industry →</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- =============================================================
+         Industry Index Directory
+         Route: /sre/industry
+         ============================================================= -->
+    <template id="sre_industry_index" name="SRE Industries Directory">
+        <t t-call="website.layout">
+            <t t-set="page_title" t-value="'Industries Directory · SRE Commercial'"/>
+            <div class="sre-page sre-industry-index-page">
+                <div class="sre-category-banner">
+                    <div class="container">
+                        <nav class="sre-breadcrumb" aria-label="Breadcrumb">
+                            <a href="/">Home</a><span>/</span>
+                            <span>Industries</span>
+                        </nav>
+                    </div>
+                </div>
+
+                <header class="sre-page-header">
+                    <div class="container">
+                        <div class="sre-page-header__row">
+                            <div>
+                                <span class="sre-kicker">Industrial Solutions</span>
+                                <h1 class="sre-page-header__title">Industrial Solutions by Industry</h1>
+                                <p class="sre-page-header__desc">
+                                    Explore industrial sectors supported by SRE technical supply. Navigate specialized landing pages for equipment standards, component fitment and quotation requests.
+                                </p>
+                            </div>
+                            <div class="sre-page-header__meta">
+                                <span><t t-esc="len(industries)"/> sectors</span>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <section class="sre-home-section">
+                    <div class="container">
+                        <div class="sre-taxonomy-grid">
+                            <a t-foreach="industries" t-as="ind" t-att-href="'/sre/industry/%s' % ind.slug">
+                                <span class="sre-taxonomy-grid__index" t-esc="'%02d' % (ind_index + 1)"/>
+                                <strong t-esc="ind.name"/>
+                                <small t-if="ind.product_count"><t t-esc="ind.product_count"/> mapped products</small>
+                                <small t-else="">Technical solutions</small>
+                                <span>Explore industry →</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- =============================================================
+         Application Detail Landing Page
+         Route: /sre/application/<slug>
+         ============================================================= -->
+    <template id="sre_application_detail" name="SRE Application Landing Page">
+        <t t-call="website.layout">
+            <t t-set="page_title" t-value="'%s · System Applications · SRE Commercial' % application.name"/>
+            <div class="sre-page sre-application-page">
+                <!-- McMaster-Carr Breadcrumb Bar -->
+                <div class="sre-category-banner">
+                    <div class="container">
+                        <nav class="sre-breadcrumb" aria-label="Breadcrumb">
+                            <a href="/">Home</a><span>/</span>
+                            <a href="/sre/application">Applications</a><span>/</span>
+                            <span t-esc="application.name"/>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Technical Section Header -->
+                <header class="sre-page-header">
+                    <div class="container">
+                        <div class="sre-page-header__row">
+                            <div>
+                                <span class="sre-kicker">Application Architecture · System Duty &amp; Sizing</span>
+                                <h1 class="sre-page-header__title" t-esc="application.name"/>
+                                <div t-if="application.description" class="sre-page-header__desc" t-raw="application.description"/>
+                                <p t-else="" class="sre-page-header__desc">
+                                    Targeted mechanical components, valves, pumps and instrumentation configured for system operating duty, pressure control and reliability.
+                                </p>
+                            </div>
+                            <div class="sre-page-header__meta">
+                                <span t-if="total_products"><t t-esc="total_products"/> mapped products</span>
+                                <span t-else="">Engineering duty verified</span>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Technical Duty Strip -->
+                <section class="sre-confidence-strip py-3" aria-label="Application duty">
+                    <div class="container d-flex flex-wrap gap-4 align-items-center justify-content-between">
+                        <div><i class="fa fa-sliders text-primary me-2"/><strong>Sizing parameters:</strong> Flow rate, differential pressure, fluid temperature, connection rating</div>
+                        <div><i class="fa fa-exchange text-primary me-2"/><strong>Cross-reference:</strong> Direct and drop-in replacements for obsolete or OEM components</div>
+                        <div><i class="fa fa-check-circle text-primary me-2"/><strong>Fitment review:</strong> Engineering review of physical dimensions and port standards before quote</div>
+                    </div>
+                </section>
+
+                <!-- Mapped Products Section -->
+                <section class="sre-home-section">
+                    <div class="container">
+                        <div class="sre-section-heading">
+                            <div>
+                                <span class="sre-kicker">System Components</span>
+                                <h2>Recommended components for <t t-esc="application.name"/></h2>
+                            </div>
+                            <a t-att-href="'/sre/catalog?application=%s' % application.slug" class="sre-link-arrow">
+                                View all products in catalog for this application →
+                            </a>
+                        </div>
+
+                        <div t-if="products" class="sre-product-results sre-product-results--grid">
+                            <t t-foreach="products" t-as="product">
+                                <t t-call="mechanic_workshop.sre_product_card">
+                                    <t t-set="card_layout" t-value="'grid'"/>
+                                </t>
+                            </t>
+                        </div>
+                        <div t-else="" class="sre-empty-state text-center py-5 border">
+                            <i class="fa fa-cogs fa-3x text-muted mb-3"/>
+                            <h3>Application component mapping in progress</h3>
+                            <p class="text-muted">
+                                Contact our engineering team with your operating pressure, temperature and flow requirements for tailored component selection.
+                            </p>
+                            <a href="/rfq" class="sre-button mt-2">Submit an RFQ for this application</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Engineering RFQ Consultation Callout -->
+                <section class="sre-home-quote">
+                    <div class="container sre-home-quote__inner">
+                        <div>
+                            <span class="sre-kicker">System duty inquiry</span>
+                            <h2>Need sizing assistance for this application?</h2>
+                            <p>
+                                Send us your operating pressure, fluid media, flow requirements and connection standard. Our engineering team will review the system problem and prepare an itemized B2B quotation.
+                            </p>
+                        </div>
+                        <div class="sre-home-quote__actions">
+                            <a href="/rfq" class="sre-button sre-button--light">Start Application RFQ</a>
+                            <a t-att-href="'/sre/catalog?application=%s' % application.slug" class="sre-link-arrow sre-link-arrow--light">Browse catalog</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Cross-Navigation: Other Applications -->
+                <section t-if="other_applications" class="sre-home-section sre-home-section--muted">
+                    <div class="container">
+                        <div class="sre-section-heading">
+                            <div>
+                                <span class="sre-kicker">Applications</span>
+                                <h2>Explore other system applications</h2>
+                            </div>
+                            <a href="/sre/application" class="sre-link-arrow">All applications</a>
+                        </div>
+                        <div class="sre-taxonomy-grid">
+                            <a t-foreach="other_applications" t-as="other_app" t-att-href="'/sre/application/%s' % other_app.slug">
+                                <span class="sre-taxonomy-grid__index" t-esc="'%02d' % (other_app_index + 1)"/>
+                                <strong t-esc="other_app.name"/>
+                                <small t-if="other_app.product_count"><t t-esc="other_app.product_count"/> products</small>
+                                <small t-else="">Engineering duty</small>
+                                <span>View application →</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- =============================================================
+         Application Index Directory
+         Route: /sre/application
+         ============================================================= -->
+    <template id="sre_application_index" name="SRE Applications Directory">
+        <t t-call="website.layout">
+            <t t-set="page_title" t-value="'Applications Directory · SRE Commercial'"/>
+            <div class="sre-page sre-application-index-page">
+                <div class="sre-category-banner">
+                    <div class="container">
+                        <nav class="sre-breadcrumb" aria-label="Breadcrumb">
+                            <a href="/">Home</a><span>/</span>
+                            <span>Applications</span>
+                        </nav>
+                    </div>
+                </div>
+
+                <header class="sre-page-header">
+                    <div class="container">
+                        <div class="sre-page-header__row">
+                            <div>
+                                <span class="sre-kicker">System Applications</span>
+                                <h1 class="sre-page-header__title">System Applications &amp; Duty Architecture</h1>
+                                <p class="sre-page-header__desc">
+                                    Browse technical components by operating system and mechanical duty. Select an application to review sizing requirements, compatible product families and B2B quote dispatch.
+                                </p>
+                            </div>
+                            <div class="sre-page-header__meta">
+                                <span><t t-esc="len(applications)"/> applications</span>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <section class="sre-home-section">
+                    <div class="container">
+                        <div class="sre-taxonomy-grid">
+                            <a t-foreach="applications" t-as="app" t-att-href="'/sre/application/%s' % app.slug">
+                                <span class="sre-taxonomy-grid__index" t-esc="'%02d' % (app_index + 1)"/>
+                                <strong t-esc="app.name"/>
+                                <small t-if="app.product_count"><t t-esc="app.product_count"/> products</small>
+                                <small t-else="">Engineering duty</small>
+                                <span>Explore application →</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>

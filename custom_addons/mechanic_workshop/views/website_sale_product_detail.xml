@@ -15,23 +15,93 @@
 
                     <div class="sre-product-page__hero">
                         <div class="sre-product-page__visual">
-                            <div class="sre-product-page__image">
-                                <img t-if="product.image_1920"
-                                     t-att-src="'/web/image/product.template/%s/image_1024' % product.id"
-                                     t-att-alt="product.name"/>
-                                <div t-else="" class="sre-product-page__placeholder">
-                                    <span class="fa fa-cogs" aria-hidden="true"/>
-                                    <strong>Technical image pending</strong>
-                                    <small>Product identity is available below.</small>
+                            <!-- McMaster Multi-View Tabs -->
+                            <div class="sre-detail-view-tabs" role="tablist">
+                                <button type="button" class="sre-detail-view-tab is-active" data-view-target="photo">📷 Product Photo</button>
+                                <button type="button" class="sre-detail-view-tab" data-view-target="diagram">📐 Dimension Sheet</button>
+                                <button type="button" class="sre-detail-view-tab" data-view-target="schematic">⚡ Wiring Hookup</button>
+                            </div>
+
+                            <!-- Main Stage Display -->
+                            <div class="sre-product-page__image sre-detail-stage">
+                                <div id="sre-stage-photo" class="sre-stage-view">
+                                    <img t-if="product.image_1920"
+                                         t-att-src="'/web/image/product.template/%s/image_1024' % product.id"
+                                         t-att-alt="product.name"
+                                         class="sre-stage-img"/>
+                                    <div t-else="" class="sre-product-page__placeholder">
+                                        <span class="fa fa-cogs" aria-hidden="true"/>
+                                        <strong>Technical image pending</strong>
+                                        <small>Product identity is available below.</small>
+                                    </div>
+                                </div>
+                                <div id="sre-stage-diagram" class="sre-stage-view d-none">
+                                    <img src="/mechanic_workshop/static/src/img/diagram_valve_cutaway.svg"
+                                         alt="Engineering Dimension Drawing"
+                                         class="sre-stage-img"/>
+                                </div>
+                                <div id="sre-stage-schematic" class="sre-stage-view d-none">
+                                    <img src="/mechanic_workshop/static/src/img/diagram_wiring_schematic.svg"
+                                         alt="Electrical and Wiring Schematic"
+                                         class="sre-stage-img"/>
                                 </div>
                             </div>
-                            <div class="sre-product-page__image-note"><span class="fa fa-shield"/> Public assets are shown only after document-rights review.</div>
+
+                            <!-- Dimensional Callouts Footer -->
+                            <div class="sre-stage-callouts">
+                                <span>DIM: Standard DIN / ANSI</span>
+                                <span>CONN: Flanged / Process Port</span>
+                                <span>WT: Certified Spec</span>
+                            </div>
+
+                            <!-- Mini Thumbnail Selector -->
+                            <div class="sre-detail-thumb-strip">
+                                <div class="sre-detail-thumb-btn is-active" data-view-target="photo">
+                                    <span class="fa fa-camera"/>
+                                    <small>Product</small>
+                                </div>
+                                <div class="sre-detail-thumb-btn" data-view-target="diagram">
+                                    <span class="fa fa-file-image-o"/>
+                                    <small>Blueprint</small>
+                                </div>
+                                <div class="sre-detail-thumb-btn" data-view-target="schematic">
+                                    <span class="fa fa-bolt"/>
+                                    <small>Schematic</small>
+                                </div>
+                            </div>
+
+                            <!-- CAD 3D Model Download Box (McMaster Style) -->
+                            <div class="sre-cad-download-box">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="sre-cad-download-title">
+                                        <i class="fa fa-cube text-primary me-1"/> Download 3D CAD Solid Model
+                                    </span>
+                                    <span class="text-muted small font-monospace">Direct Export</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <select class="form-select form-select-sm font-monospace" id="sreDetailCadFormat">
+                                        <option value="step">3D STEP (.step) — Recommended</option>
+                                        <option value="sldprt">SolidWorks Part (.sldprt)</option>
+                                        <option value="igs">3D IGES Solid (.igs)</option>
+                                        <option value="dwg">AutoCAD 2D (.dwg)</option>
+                                        <option value="pdf">2D PDF Drawing (.pdf)</option>
+                                    </select>
+                                    <a t-att-href="product.website_url + '#sre_section_documents'" class="btn btn-sm btn-primary text-nowrap fw-bold">
+                                        <i class="fa fa-download me-1"/> CAD
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="sre-product-page__image-note"><span class="fa fa-shield text-success"/> 100% Genuine OEM Traceability · Public assets rights-verified</div>
                         </div>
 
                         <div class="sre-product-page__summary">
                             <div class="sre-product-page__eyebrow">
-                                <span t-if="product.product_brand_id" t-esc="product.product_brand_id.name"/>
-                                <code t-if="product.default_code" t-esc="product.default_code"/>
+                                <span t-if="product.product_brand_id" class="sre-badge-brand" t-esc="product.product_brand_id.name"/>
+                                <code t-if="product.default_code" class="sre-badge-sku" t-esc="product.default_code"/>
+                                <t t-if="product.sudo().product_document_ids.filtered(lambda d: d.cad_format in ('step', 'dwg', 'dxf') or d.document_type == 'cad_drawing')">
+                                    <span class="sre-badge-cad">3D CAD Model</span>
+                                </t>
                             </div>
                             <h1 t-esc="product.name"/>
                             <p class="sre-product-page__intro">Technical product record for engineering selection and request for quotation.</p>
@@ -50,8 +120,27 @@
                             </div>
 
                             <div class="sre-commercial-note">
-                                <span class="sre-status"><i/>Available for RFQ</span>
-                                <p>Price, stock position, MOQ and lead time are confirmed for your quantity and delivery location.</p>
+                                <t t-set="contract_price" t-value="product._get_b2b_contract_price()"/>
+                                <t t-if="contract_price">
+                                    <div class="sre-public-price-block mb-2 p-2 bg-light border border-primary rounded">
+                                        <span class="text-primary fw-bold small d-block"><i class="fa fa-handshake-o me-1"/> B2B Contract Price (Your Plant Account)</span>
+                                        <strong class="h3 text-primary mb-0" t-esc="contract_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                    </div>
+                                    <span class="sre-status"><i/>Applied from your framework contract agreement</span>
+                                    <p>Your contract pricing is applied automatically. For delivery scheduling or specialized engineering support, add to RFQ.</p>
+                                </t>
+                                <t t-elif="product.public_price_approved and product.list_price">
+                                    <div class="sre-public-price-block mb-2">
+                                        <span class="text-muted small d-block">Approved Public Price</span>
+                                        <strong class="h3 text-primary mb-0" t-field="product.list_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                    </div>
+                                    <span class="sre-status"><i/>Standard list price · RFQ for project discounts</span>
+                                    <p>Standard list price shown. For quantity discounts, project pricing or delivery schedule, add to RFQ.</p>
+                                </t>
+                                <t t-else="">
+                                    <span class="sre-status"><i/>Available for RFQ</span>
+                                    <p>Price, stock position, MOQ and lead time are confirmed for your quantity and delivery location.</p>
+                                </t>
                             </div>
                         </div>
                     </div>
@@ -60,26 +149,198 @@
                         <main>
                             <section class="sre-tech-section">
                                 <div class="sre-tech-section__head"><span>01</span><div><h2>Technical specification</h2><p>Public product data prepared for technical review.</p></div></div>
-                                <table t-if="product.attribute_line_ids" class="sre-tech-table">
-                                    <tbody><tr t-foreach="product.attribute_line_ids" t-as="attribute_line"><th t-esc="attribute_line.attribute_id.name"/><td t-esc="', '.join(attribute_line.value_ids.mapped('name'))"/></tr></tbody>
+                                <table t-if="product.operating_pressure_max or product.operating_temp_max or product.operating_temp_min or product.flow_rate_max or product.attribute_line_ids" class="sre-tech-table">
+                                    <tbody>
+                                        <tr t-if="product.operating_pressure_max">
+                                            <th>Operating Pressure</th>
+                                            <td><t t-esc="'%.1f' % product.operating_pressure_min"/> – <t t-esc="'%.1f' % product.operating_pressure_max"/> bar</td>
+                                        </tr>
+                                        <tr t-if="product.operating_temp_max or product.operating_temp_min">
+                                            <th>Operating Temperature</th>
+                                            <td><t t-esc="'%.0f' % product.operating_temp_min"/> to <t t-esc="'%.0f' % product.operating_temp_max"/> °C</td>
+                                        </tr>
+                                        <tr t-if="product.flow_rate_max">
+                                            <th>Operating Flow Rate</th>
+                                            <td><t t-esc="'%.1f' % product.flow_rate_min"/> – <t t-esc="'%.1f' % product.flow_rate_max"/> m³/h</td>
+                                        </tr>
+                                        <tr t-foreach="product.attribute_line_ids" t-as="attribute_line"><th t-esc="attribute_line.attribute_id.name"/><td t-esc="', '.join(attribute_line.value_ids.mapped('name'))"/></tr>
+                                    </tbody>
                                 </table>
                                 <div t-if="product.description" class="sre-product-description" t-field="product.description"/>
-                                <p t-if="not product.attribute_line_ids and not product.description" class="sre-tech-empty">Structured technical data has not been published for this item. Include your operating conditions in the RFQ for verification.</p>
+                                <p t-if="not product.operating_pressure_max and not product.operating_temp_max and not product.operating_temp_min and not product.flow_rate_max and not product.attribute_line_ids and not product.description" class="sre-tech-empty">Structured technical data has not been published for this item. Include your operating conditions in the RFQ for verification.</p>
                             </section>
 
-                            <section class="sre-tech-section">
-                                <div class="sre-tech-section__head"><span>02</span><div><h2>Documents</h2><p>Datasheets, installation guides, CAD and certificates.</p></div></div>
-                                <div class="sre-tech-empty"><span class="fa fa-file-pdf-o"/> No rights-approved public document is attached to this product yet.</div>
+                            <section class="sre-tech-section" id="sre_section_documents">
+                                <div class="sre-tech-section__head"><span>02</span><div><h2>Documents &amp; Technical Assets</h2><p>Rights-verified datasheets, 2D/3D CAD models, installation manuals and certificates.</p></div></div>
+                                <t t-set="valid_docs" t-value="product.sudo().product_document_ids.filtered(lambda d: d.active and d.shown_on_product_page and d.governance_type != 'internal')"/>
+                                <t t-if="valid_docs">
+                                    <table class="sre-tech-table sre-doc-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Document</th>
+                                                <th>Type</th>
+                                                <th>Format</th>
+                                                <th>Access Governance</th>
+                                                <th class="text-end">Download</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="valid_docs" t-as="doc">
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <t t-if="doc.cad_format == 'pdf'">
+                                                            <i class="fa fa-file-pdf-o fa-lg text-danger me-2"/>
+                                                        </t>
+                                                        <t t-elif="doc.cad_format in ('step', 'dwg', 'dxf')">
+                                                            <i class="fa fa-cube fa-lg text-primary me-2"/>
+                                                        </t>
+                                                        <t t-elif="doc.cad_format == 'zip'">
+                                                            <i class="fa fa-file-archive-o fa-lg text-warning me-2"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <i class="fa fa-file-text-o fa-lg text-secondary me-2"/>
+                                                        </t>
+                                                        <div>
+                                                            <strong t-esc="doc.name"/>
+                                                            <small t-if="doc.file_size" class="text-muted d-block">
+                                                                <t t-if="doc.file_size &lt; 1048576">
+                                                                    <t t-esc="'%.1f' % (doc.file_size / 1024.0)"/> KB
+                                                                </t>
+                                                                <t t-else="">
+                                                                    <t t-esc="'%.1f' % (doc.file_size / 1048576.0)"/> MB
+                                                                </t>
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-light text-dark border">
+                                                        <t t-if="doc.document_type == 'datasheet'">Datasheet</t>
+                                                        <t t-elif="doc.document_type == 'cad_drawing'">2D/3D CAD</t>
+                                                        <t t-elif="doc.document_type == 'manual'">Manual</t>
+                                                        <t t-elif="doc.document_type == 'certificate'">Certificate</t>
+                                                        <t t-elif="doc.document_type == 'brochure'">Brochure</t>
+                                                        <t t-else="" t-esc="doc.document_type"/>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-secondary text-uppercase" t-esc="doc.cad_format"/>
+                                                </td>
+                                                <td>
+                                                    <t t-if="doc.governance_type == 'public'">
+                                                        <span class="badge bg-success-subtle text-success border border-success-subtle">
+                                                            <i class="fa fa-check-circle me-1"/> Public
+                                                        </span>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">
+                                                            <i class="fa fa-shield me-1"/> B2B Gated
+                                                        </span>
+                                                    </t>
+                                                </td>
+                                                <td class="text-end">
+                                                    <t t-if="doc.governance_type == 'public' or not user_id._is_public()">
+                                                        <a t-att-href="'/shop/' + slug(product) + '/document/' + str(doc.id)"
+                                                           class="btn btn-sm btn-outline-primary"
+                                                           target="_blank">
+                                                            <i class="fa fa-download me-1"/> <t t-if="doc.governance_type == 'public'">Download</t><t t-else="">Download CAD</t>
+                                                        </a>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <button type="button"
+                                                                class="btn btn-sm btn-primary sre-btn-gated-download"
+                                                                t-att-data-doc-id="doc.id"
+                                                                t-att-data-doc-name="doc.name"
+                                                                t-att-data-doc-format="doc.cad_format.upper()"
+                                                                t-att-data-product-name="product.name">
+                                                            <i class="fa fa-download me-1"/> Request CAD
+                                                        </button>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </t>
+                                <div t-else="" class="sre-tech-empty"><span class="fa fa-file-pdf-o"/> No rights-approved public document is attached to this product yet.</div>
                             </section>
 
                             <section class="sre-tech-section">
                                 <div class="sre-tech-section__head"><span>03</span><div><h2>Compatibility</h2><p>Equipment manufacturer, model, series and component position.</p></div></div>
-                                <div class="sre-tech-empty"><span class="fa fa-link"/> Compatibility has not been publicly verified. Ask engineering before substitution.</div>
+                                <t t-if="product.boiler_mapping_ids">
+                                    <table class="sre-tech-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Manufacturer</th>
+                                                <th>Equipment Series</th>
+                                                <th>Subsystem</th>
+                                                <th>Position / Duty</th>
+                                                <th>Fitment</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="product.boiler_mapping_ids" t-as="mapping">
+                                                <td>
+                                                    <strong t-esc="mapping.boiler_model_id.manufacturer_id.name"/>
+                                                </td>
+                                                <td>
+                                                    <a t-att-href="'/boiler-finder?make=%s&amp;model=%s' % (mapping.boiler_model_id.manufacturer_id.slug, mapping.boiler_model_id.slug)" t-esc="mapping.boiler_model_id.name"/>
+                                                </td>
+                                                <td t-esc="mapping.subsystem_id.name"/>
+                                                <td>
+                                                    <span t-if="mapping.position_ref" t-esc="mapping.position_ref"/>
+                                                    <small t-if="mapping.notes" class="d-block text-muted" t-esc="mapping.notes"/>
+                                                </td>
+                                                <td>
+                                                    <span t-if="mapping.is_critical_spare" class="sre-badge sre-badge--critical">Critical Spare</span>
+                                                    <span t-else="" class="badge bg-success">Direct Fit</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </t>
+                                <div t-else="" class="sre-tech-empty"><span class="fa fa-link"/> Compatibility has not been publicly verified. Ask engineering before substitution.</div>
                             </section>
 
                             <section class="sre-tech-section">
                                 <div class="sre-tech-section__head"><span>04</span><div><h2>Cross reference &amp; related products</h2><p>Alternatives, replacements, accessories and related items.</p></div></div>
-                                <div t-if="product.sre_public_oem_part_numbers" class="sre-cross-reference"><span>Verified identifier</span><strong class="sre-mono" t-esc="product.sre_public_oem_part_numbers"/></div>
+                                <t t-if="product.cross_reference_ids">
+                                    <table class="sre-tech-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Competitor / OEM Brand</th>
+                                                <th>Original Part Number</th>
+                                                <th>Original Specs</th>
+                                                <th>Equivalence Grade</th>
+                                                <th>Engineering Fitment Notes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="product.cross_reference_ids" t-as="xref">
+                                                <td><strong t-esc="xref.source_brand"/></td>
+                                                <td><code class="sre-mono fw-bold" t-esc="xref.source_part_number"/></td>
+                                                <td><span t-esc="xref.source_specs or '—'"/></td>
+                                                <td>
+                                                    <t t-if="xref.replacement_type == 'direct'">
+                                                        <span class="badge bg-success">Direct Replacement</span>
+                                                    </t>
+                                                    <t t-elif="xref.replacement_type == 'drop_in'">
+                                                        <span class="badge bg-info text-dark">Drop-in Alternative</span>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <span class="badge bg-warning text-dark">Obsolete Upgrade</span>
+                                                    </t>
+                                                </td>
+                                                <td>
+                                                    <span t-if="xref.notes" t-esc="xref.notes"/>
+                                                    <span t-else="" class="text-muted">—</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </t>
+                                <t t-elif="product.sre_public_oem_part_numbers">
+                                    <div class="sre-cross-reference"><span>Verified identifier</span><strong class="sre-mono" t-esc="product.sre_public_oem_part_numbers"/></div>
+                                </t>
                                 <div t-else="" class="sre-tech-empty"><span class="fa fa-random"/> No public cross-reference relationship is verified for this item.</div>
                             </section>
                         </main>
@@ -91,6 +352,63 @@
                             <a href="/rfq" class="sre-link-arrow">Open RFQ list</a>
                             <a href="/sre/catalog" class="sre-link-arrow">Back to catalog</a>
                         </aside>
+                    </div>
+                </div>
+
+                <!-- Modal for Gated Document Download -->
+                <div class="modal fade" id="sreGatedDocModal" tabindex="-1" aria-labelledby="sreGatedDocModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 shadow">
+                            <div class="modal-header bg-dark text-white">
+                                <h5 class="modal-title h6 mb-0" id="sreGatedDocModalLabel">
+                                    <i class="fa fa-shield text-warning me-2"/> Request Engineering Asset
+                                </h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form id="sreGatedDocForm">
+                                <div class="modal-body p-4">
+                                    <div class="alert alert-light border d-flex align-items-center mb-3">
+                                        <i class="fa fa-cube fa-2x text-primary me-3"/>
+                                        <div>
+                                            <strong id="sreModalDocName" class="d-block text-truncate" style="max-width: 320px;">CAD Model</strong>
+                                            <small class="text-muted">Enter your business information to unlock instant download and direct engineer support.</small>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="sreModalDocId" name="document_id"/>
+                                    <div class="row g-2 mb-2">
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold">Full Name <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control form-control-sm" name="contact_name" required="required" placeholder="Nguyen Van A"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold">Company Name <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control form-control-sm" name="company_name" required="required" placeholder="Industrial Plant Co."/>
+                                        </div>
+                                    </div>
+                                    <div class="row g-2 mb-2">
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold">Business Email <span class="text-danger">*</span></label>
+                                            <input type="email" class="form-control form-control-sm" name="email" required="required" placeholder="engineer@company.com"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label small fw-bold">Phone Number</label>
+                                            <input type="tel" class="form-control form-control-sm" name="phone" placeholder="+84 90 123 4567"/>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label small fw-bold">Project / Application Notes</label>
+                                        <textarea class="form-control form-control-sm" name="notes" rows="2" placeholder="Application, fluid or equipment requirements (optional)..."></textarea>
+                                    </div>
+                                    <div id="sreGatedModalAlert" class="alert d-none mt-3 mb-0 small" role="alert"></div>
+                                </div>
+                                <div class="modal-footer bg-light p-3">
+                                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-sm btn-primary" id="sreGatedSubmitBtn">
+                                        <i class="fa fa-download me-1"/> Unlock &amp; Download
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </section>

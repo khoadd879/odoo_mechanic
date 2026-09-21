@@ -63,6 +63,16 @@ class SreCatalog(http.Controller):
             return default
 
     @staticmethod
+    def _float_or_none(value: object) -> float | None:
+        """Parse a query-string value to float, or None if empty/invalid."""
+        if value in (None, False, ""):
+            return None
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return None
+
+    @staticmethod
     def _query_url(base_path: str, **updates: object) -> str:
         """Build a catalogue URL while preserving active filters."""
 
@@ -76,6 +86,12 @@ class SreCatalog(http.Controller):
             "application",
             "brand",
             "attr",
+            "pressure_min",
+            "pressure_max",
+            "temp_min",
+            "temp_max",
+            "flow_min",
+            "flow_max",
         }
         params: dict[str, list[str]] = {}
         for key in allowed:
@@ -266,6 +282,34 @@ class SreCatalog(http.Controller):
         for value_ids in selected_attributes.values():
             domain &= Domain("attribute_line_ids.value_ids", "in", list(value_ids))
 
+        pressure_min = self._float_or_none(kw.get("pressure_min"))
+        pressure_max = self._float_or_none(kw.get("pressure_max"))
+        temp_min = self._float_or_none(kw.get("temp_min"))
+        temp_max = self._float_or_none(kw.get("temp_max"))
+        flow_min = self._float_or_none(kw.get("flow_min"))
+        flow_max = self._float_or_none(kw.get("flow_max"))
+
+        if pressure_min is not None:
+            domain &= Domain("operating_pressure_max", ">=", pressure_min)
+        if pressure_max is not None:
+            domain &= Domain("operating_pressure_max", ">", 0)
+            domain &= Domain("operating_pressure_max", "<=", pressure_max)
+
+        if temp_min is not None:
+            domain &= Domain("operating_temp_max", ">=", temp_min)
+        if temp_max is not None:
+            domain &= Domain("operating_temp_min", "<=", temp_max)
+            domain &= (
+                Domain("operating_temp_min", "!=", 0)
+                | Domain("operating_temp_max", "!=", 0)
+            )
+
+        if flow_min is not None:
+            domain &= Domain("flow_rate_max", ">=", flow_min)
+        if flow_max is not None:
+            domain &= Domain("flow_rate_max", ">", 0)
+            domain &= Domain("flow_rate_max", "<=", flow_max)
+
         if brand:
             domain &= Domain("product_brand_id", "=", brand.id)
         if search:
@@ -348,6 +392,12 @@ class SreCatalog(http.Controller):
                     for value_id in value_ids
                 },
                 "visible_pillars": request.website.sre_visible_pillars,
+                "pressure_min": pressure_min,
+                "pressure_max": pressure_max,
+                "temp_min": temp_min,
+                "temp_max": temp_max,
+                "flow_min": flow_min,
+                "flow_max": flow_max,
                 "search": search,
                 "layout_mode": layout_mode,
                 "sort_key": sort_key,

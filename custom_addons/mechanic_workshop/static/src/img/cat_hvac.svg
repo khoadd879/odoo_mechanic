@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="hvacHousing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#c2410c"/>
+    </linearGradient>
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d1d5db"/>
+      <stop offset="50%" stop-color="#f3f4f6"/>
+      <stop offset="100%" stop-color="#9ca3af"/>
+    </linearGradient>
+    <linearGradient id="brassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="50%" stop-color="#fde68a"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <filter id="subtleShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Actuator Body (Commercial HVAC Damper Actuator Belimo/Danfoss style) -->
+  <g filter="url(#subtleShadow)">
+    <!-- Base mounting bracket -->
+    <rect x="130" y="270" width="140" height="40" rx="4" fill="url(#metalGrad)" stroke="#4b5563" stroke-width="2"/>
+    <circle cx="150" cy="290" r="8" fill="#374151"/>
+    <circle cx="250" cy="290" r="8" fill="#374151"/>
+    <rect x="185" y="295" width="30" height="55" fill="url(#brassGrad)" stroke="#78350f" stroke-width="2"/>
+    
+    <!-- Drive shaft clamp -->
+    <circle cx="200" cy="230" r="32" fill="#1f2937" stroke="#4b5563" stroke-width="3"/>
+    <circle cx="200" cy="230" r="18" fill="url(#metalGrad)" stroke="#111827" stroke-width="2"/>
+    <rect x="194" y="212" width="12" height="36" fill="#111827"/>
+
+    <!-- Actuator Enclosure (Orange/Charcoal) -->
+    <rect x="110" y="80" width="180" height="150" rx="12" fill="url(#hvacHousing)" stroke="#9a3412" stroke-width="3"/>
+    
+    <!-- Top Display / Control Interface Window -->
+    <rect x="130" y="100" width="140" height="55" rx="6" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+    <text x="140" y="125" fill="#38bdf8" font-family="monospace" font-size="14" font-weight="bold">MOD: 0-10V</text>
+    <text x="140" y="145" fill="#4ade80" font-family="monospace" font-size="12">POS: 78.5%</text>
+
+    <!-- Status LEDs and Keypad -->
+    <circle cx="250" cy="118" r="4" fill="#22c55e"/>
+    <circle cx="250" cy="132" r="4" fill="#eab308"/>
+
+    <!-- Manual Override Button -->
+    <rect x="140" y="170" width="120" height="24" rx="4" fill="#374151" stroke="#1f2937" stroke-width="1.5"/>
+    <text x="200" y="186" fill="#f9fafb" font-family="sans-serif" font-size="10" font-weight="bold" text-anchor="middle">MANUAL OVERRIDE</text>
+
+    <!-- Cable Gland Entry -->
+    <rect x="85" y="130" width="25" height="30" rx="3" fill="#374151" stroke="#1f2937" stroke-width="2"/>
+    <path d="M70,145 Q85,145 85,145" stroke="#111827" stroke-width="6" fill="none"/>
+  </g>
+</svg>

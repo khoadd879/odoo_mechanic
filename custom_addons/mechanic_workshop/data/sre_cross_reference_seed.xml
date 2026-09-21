@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Spirax Sarco TD-52 -> Demo Valve 001 -->
+        <record id="sre_xref_spirax_td52" model="sre.product.cross.reference">
+            <field name="source_part_number">TD-52</field>
+            <field name="source_brand">Spirax Sarco</field>
+            <field name="source_specs">DN15 PN40 Thermodynamic Steam Trap with integral strainer</field>
+            <field name="target_product_id" ref="sre_demo.product_template_demo_v_001"/>
+            <field name="replacement_type">direct</field>
+            <field name="notes">100% direct drop-in replacement. Identical face-to-face dimensions and standard BSP/NPT port configuration.</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- TLV A3N -> Demo Valve 001 -->
+        <record id="sre_xref_tlv_a3n" model="sre.product.cross.reference">
+            <field name="source_part_number">A3N</field>
+            <field name="source_brand">TLV</field>
+            <field name="source_specs">DN20 Free Float Steam Trap with thermostatic air vent</field>
+            <field name="target_product_id" ref="sre_demo.product_template_demo_v_001"/>
+            <field name="replacement_type">drop_in</field>
+            <field name="notes">Functional equivalent for continuous condensate discharge. Verify vertical space for body orientation.</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- Armstrong 811 -> Demo Valve 002 -->
+        <record id="sre_xref_armstrong_811" model="sre.product.cross.reference">
+            <field name="source_part_number">811</field>
+            <field name="source_brand">Armstrong</field>
+            <field name="source_specs">Inverted Bucket Steam Trap, Cast Iron, max 17 bar</field>
+            <field name="target_product_id" ref="sre_demo.product_template_demo_v_002"/>
+            <field name="replacement_type">direct</field>
+            <field name="notes">Direct replacement for heavy process steam duty. Built-in stainless steel bucket mechanism.</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <!-- Yoshitake TB-10 -> Demo Valve 002 -->
+        <record id="sre_xref_yoshitake_tb10" model="sre.product.cross.reference">
+            <field name="source_part_number">TB-10</field>
+            <field name="source_brand">Yoshitake</field>
+            <field name="source_specs">DN25 PN16 Bimetallic Temperature-Controlled Steam Trap</field>
+            <field name="target_product_id" ref="sre_demo.product_template_demo_v_002"/>
+            <field name="replacement_type">drop_in</field>
+            <field name="notes">Drop-in alternative with high resistance to superheated steam and water hammer.</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <!-- Grundfos CR-15 -> Demo Pump 001 -->
+        <record id="sre_xref_grundfos_cr15" model="sre.product.cross.reference">
+            <field name="source_part_number">CR-15</field>
+            <field name="source_brand">Grundfos</field>
+            <field name="source_specs">Vertical Multistage Boiler Feed Pump, 16 bar head</field>
+            <field name="target_product_id" ref="sre_demo.product_template_demo_p_001"/>
+            <field name="replacement_type">direct</field>
+            <field name="notes">Direct hydraulic and mounting equivalent for boiler feed skids and booster systems.</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <!-- KSB Movitec V-10 -> Demo Pump 003 -->
+        <record id="sre_xref_ksb_movitec" model="sre.product.cross.reference">
+            <field name="source_part_number">Movitec V-10</field>
+            <field name="source_brand">KSB</field>
+            <field name="source_specs">High-Pressure Inline Multistage Boiler Feedwater Pump</field>
+            <field name="target_product_id" ref="sre_demo.product_template_demo_p_003"/>
+            <field name="replacement_type">direct</field>
+            <field name="notes">Direct replacement for industrial steam boiler feedwater circuits. Silicon carbide mechanical seal.</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <!-- Spirax Sarco BVA-100 (Obsolete) -> Demo Valve 001 -->
+        <record id="sre_xref_spirax_bva100" model="sre.product.cross.reference">
+            <field name="source_part_number">BVA-100</field>
+            <field name="source_brand">Spirax Sarco</field>
+            <field name="source_specs">Obsolete Bellows Sealed Globe Valve DN20 (Discontinued)</field>
+            <field name="target_product_id" ref="sre_demo.product_template_demo_v_001"/>
+            <field name="replacement_type">obsolete</field>
+            <field name="notes">Modern zero-fugitive-emissions upgrade for discontinued BVA-100 series valves. Face-to-face conforms to EN 558-1.</field>
+            <field name="sequence">70</field>
+        </record>
+    </data>
+</odoo>

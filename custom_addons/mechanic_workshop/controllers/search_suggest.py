@@ -53,17 +53,19 @@ class SreSearchSuggest(http.Controller):
 
         Product = request.env["product.template"].sudo()
         base = Domain(request.website.sale_product_domain())
+        lang = request.env.context.get("lang") or ""
+        is_vi = lang.startswith("vi")
         tier_domains = (
             ("SKU", Domain("default_code", "=ilike", term)),
             ("MPN", Domain("manufacturer_pref", "=ilike", term)),
             (
-                "OEM PN",
+                "Mã OEM" if is_vi else "OEM PN",
                 Domain("sre_public_oem_part_numbers", "=ilike", term)
                 | Domain("sre_public_oem_part_numbers", "ilike", term),
             ),
-            ("Brand", Domain("product_brand_id.name", "=ilike", term)),
+            ("Thương hiệu" if is_vi else "Brand", Domain("product_brand_id.name", "=ilike", term)),
             (
-                "Keyword",
+                "Từ khóa" if is_vi else "Keyword",
                 Domain.OR(
                     [
                         Domain("name", "ilike", term),

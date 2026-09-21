@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============================================================= -->
+    <!-- SRE PRODUCT CROSS REFERENCE BACKEND VIEWS                     -->
+    <!-- ============================================================= -->
+
+    <!-- Search View -->
+    <record id="sre_product_cross_reference_view_search" model="ir.ui.view">
+        <field name="name">sre.product.cross.reference.search</field>
+        <field name="model">sre.product.cross.reference</field>
+        <field name="arch" type="xml">
+            <search string="Search Cross References">
+                <field name="source_part_number" string="Competitor / OEM Part Number"/>
+                <field name="source_brand" string="Brand"/>
+                <field name="target_product_id" string="SRE Product"/>
+                <filter string="Direct Replacement" name="direct" domain="[('replacement_type', '=', 'direct')]"/>
+                <filter string="Drop-in Alternative" name="drop_in" domain="[('replacement_type', '=', 'drop_in')]"/>
+                <filter string="Obsolete Replacement" name="obsolete" domain="[('replacement_type', '=', 'obsolete')]"/>
+                <separator/>
+                <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter string="Brand" name="group_by_brand" context="{'group_by': 'source_brand'}"/>
+                    <filter string="Equivalence Grade" name="group_by_grade" context="{'group_by': 'replacement_type'}"/>
+                    <filter string="SRE Product" name="group_by_product" context="{'group_by': 'target_product_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="sre_product_cross_reference_view_tree" model="ir.ui.view">
+        <field name="name">sre.product.cross.reference.list</field>
+        <field name="model">sre.product.cross.reference</field>
+        <field name="arch" type="xml">
+            <list string="Cross References" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="source_brand"/>
+                <field name="source_part_number"/>
+                <field name="source_specs" optional="show"/>
+                <field name="replacement_type" widget="badge" decoration-success="replacement_type == 'direct'" decoration-info="replacement_type == 'drop_in'" decoration-warning="replacement_type == 'obsolete'"/>
+                <field name="target_product_id"/>
+                <field name="notes" optional="show"/>
+                <field name="active" widget="boolean_toggle" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="sre_product_cross_reference_view_form" model="ir.ui.view">
+        <field name="name">sre.product.cross.reference.form</field>
+        <field name="model">sre.product.cross.reference</field>
+        <field name="arch" type="xml">
+            <form string="Cross Reference">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="source_part_number" string="Competitor / OEM Part Number"/>
+                        <h1><field name="source_part_number" placeholder="e.g. TD-52, FT-14, 811..."/></h1>
+                    </div>
+                    <group>
+                        <group string="Source Part (Competitor / OEM)">
+                            <field name="source_brand" placeholder="e.g. Spirax Sarco, TLV, Armstrong..."/>
+                            <field name="source_specs" placeholder="e.g. DN25 PN16 Thermodynamic Steam Trap"/>
+                            <field name="sequence"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                        <group string="SRE Replacement Product">
+                            <field name="target_product_id"/>
+                            <field name="replacement_type"/>
+                        </group>
+                    </group>
+                    <group string="Engineering &amp; Fitment Notes">
+                        <field name="notes" nolabel="1" placeholder="Specify dimension checks, face-to-face differences, flange ratings, or installation requirements..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="sre_product_cross_reference_action" model="ir.actions.act_window">
+        <field name="name">Cross References</field>
+        <field name="res_model">sre.product.cross.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="sre_product_cross_reference_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Register a cross reference mapping between a competitor or OEM part number and an SRE replacement product.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item under SRE Catalog -->
+    <menuitem id="sre_cross_reference_menu"
+              name="Cross References"
+              parent="mechanic_workshop.sre_pillar_menu"
+              action="sre_product_cross_reference_action"
+              sequence="35"/>
+</odoo>

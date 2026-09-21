@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%" height="100%">
+  <defs>
+    <style>
+      .dim-line { stroke: #2563eb; stroke-width: 1.5; }
+      .dim-text { fill: #1d4ed8; font-family: monospace; font-size: 11px; font-weight: bold; }
+      .center-line { stroke: #dc2626; stroke-width: 1; stroke-dasharray: 8,4,2,4; }
+    </style>
+  </defs>
+
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <rect x="10" y="10" width="480" height="380" fill="none" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="25" y="30" font-family="sans-serif" font-size="10" font-weight="bold" fill="#4b5563">SRE COMMERCIAL • BOILER LEVEL ELECTRODE SCHEMATIC</text>
+  <text x="465" y="30" font-family="monospace" font-size="10" fill="#004b2b" text-anchor="end" font-weight="bold">PN40 / 32 BAR STEAM • EN 12953 / TRD</text>
+
+  <!-- Centerline -->
+  <line x1="250" y1="40" x2="250" y2="350" class="center-line"/>
+
+  <!-- Terminal Head Enclosure (Aluminum IP65) -->
+  <rect x="190" y="60" width="120" height="70" rx="8" fill="#f3f4f6" stroke="#111827" stroke-width="2"/>
+  <rect x="290" y="80" width="30" height="20" rx="2" fill="#d1d5db" stroke="#111827" stroke-width="1.5"/>
+  <text x="250" y="100" font-family="monospace" font-size="10" fill="#004b2b" text-anchor="middle" font-weight="bold">IP65 HEAD</text>
+
+  <!-- Hex Nut Thread Fitting (G 3/4" A) -->
+  <polygon points="215,130 285,130 295,150 285,170 215,170 205,150" fill="#e5e7eb" stroke="#111827" stroke-width="2"/>
+  <text x="250" y="154" font-family="monospace" font-size="9" fill="#111827" text-anchor="middle">SW 36 mm</text>
+
+  <!-- Thread Section -->
+  <rect x="225" y="170" width="50" height="35" fill="#d1d5db" stroke="#111827" stroke-width="1.5"/>
+  <path d="M225,177 L275,177 M225,185 L275,185 M225,193 L275,193 M225,201 L275,201" stroke="#4b5563" stroke-width="1.5"/>
+  <text x="170" y="190" class="dim-text">G 3/4" BSP</text>
+  <line x1="185" y1="187" x2="223" y2="187" stroke="#2563eb" stroke-width="1"/>
+
+  <!-- Insulator Sleeve (PTFE / High Alumina Ceramic) -->
+  <rect x="235" y="205" width="30" height="30" fill="#ffffff" stroke="#111827" stroke-width="1.5"/>
+  <text x="275" y="222" font-family="sans-serif" font-size="9" fill="#6b7280">Ceramic Seal</text>
+
+  <!-- Stainless Steel Electrode Rod (1.4571) -->
+  <rect x="246" y="235" width="8" height="110" fill="#9ca3af" stroke="#111827" stroke-width="1.5"/>
+  
+  <!-- Dimension: Insertion Length -->
+  <line x1="330" y1="205" x2="330" y2="345" class="dim-line"/>
+  <path d="M330,205 L326,215 L334,215 Z M330,345 L326,335 L334,335 Z" fill="#2563eb"/>
+  <line x1="265" y1="205" x2="340" y2="205" stroke="#9ca3af" stroke-width="1"/>
+  <line x1="254" y1="345" x2="340" y2="345" stroke="#9ca3af" stroke-width="1"/>
+  <text x="345" y="278" class="dim-text">L = 500 / 1000 mm (Cut-to-Length)</text>
+
+  <g transform="translate(25, 355)">
+    <text x="0" y="10" font-family="monospace" font-size="9" fill="#4b5563">MAX TEMP: 238°C @ 32 BAR • SUITABLE FOR STEAM BOILER WATER LEVEL MONITORING</text>
+  </g>
+</svg>

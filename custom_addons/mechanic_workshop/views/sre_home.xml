@@ -4,117 +4,326 @@
         <t t-call="website.layout">
             <t t-set="additional_title">Industrial HVAC, Boiler &amp; Process Equipment</t>
             <div id="wrap" class="sre-home">
+                <!-- McMaster-Carr Header Reassurance Banner -->
+                <div class="sre-mcm-banner">
+                    <div class="container sre-mcm-banner__inner">
+                        <div class="sre-mcm-banner__left">
+                            <span class="sre-mcm-banner__source">✓ Complete Plant Source:</span>
+                            <span>Industrial HVAC, High-Pressure Boilers, Pumps, Valves &amp; Instrumentation.</span>
+                        </div>
+                        <div class="sre-mcm-banner__right">
+                            <span class="sre-mcm-banner__badge">● 100% Genuine OEM Traceability</span>
+                            <span class="sre-mcm-banner__sep">|</span>
+                            <span>CAD Models &amp; 3D STEP Available for Engineering</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Directory & Main Catalog Index (Hero) -->
                 <section class="sre-home-hero">
-                    <div class="container sre-home-hero__grid">
-                        <div class="sre-home-hero__content">
-                            <span class="sre-kicker">Technical distribution · Vietnam &amp; international projects</span>
-                            <h1>Industrial HVAC, Boiler &amp; Process Equipment</h1>
-                            <p class="sre-home-hero__lead">Components. Spare Parts. Controls. Instrumentation.</p>
-                            <p class="sre-home-hero__copy">Find parts by exact technical identity, compare engineering data and build one multi-product request for quotation.</p>
-                            <div class="sre-home-hero__search">
-                                <t t-call="mechanic_workshop.sre_search_form">
-                                    <t t-set="search_action">/sre/catalog</t>
-                                    <t t-set="search_value" t-value="''"/>
-                                </t>
-                                <span>Exact part numbers are ranked first.</span>
+                    <div class="container">
+                        <!-- Quick Search Strip inside Hero -->
+                        <div class="sre-home-hero__search-wrap">
+                            <t t-call="mechanic_workshop.sre_search_form">
+                                <t t-set="search_action">/sre/catalog</t>
+                                <t t-set="search_value" t-value="''"/>
+                            </t>
+                            <span class="sre-home-hero__search-hint">Exact part numbers, SKUs, and OEM cross-references are ranked first.</span>
+                        </div>
+
+                        <!-- Directory Heading with Fast Discovery Links -->
+                        <div class="sre-directory-head">
+                            <div>
+                                <h1 class="sre-directory-head__title">Product Directory &amp; Technical Classification</h1>
+                                <p class="sre-directory-head__subtitle">Click any equipment category or sub-discipline to access parametric specifications and 3D CAD files.</p>
+                            </div>
+                            <div class="sre-directory-head__actions">
+                                <a href="/boiler-finder" class="sre-finder-link"><i class="fa fa-fire text-warning me-1"/> Boiler Part Finder Engine</a>
+                                <span class="sre-directory-head__sep">|</span>
+                                <a href="/rfq" class="sre-finder-link"><i class="fa fa-file-text-o text-warning me-1"/> Fast RFQ / Order Pad</a>
                             </div>
                         </div>
-                        <aside class="sre-home-hero__panel">
-                            <div class="sre-home-hero__panel-head"><span>Engineering search protocol</span><strong>01 / IDENTIFY</strong></div>
-                            <dl>
-                                <div><dt>Known part</dt><dd>SKU · MPN · OEM PN</dd></div>
-                                <div><dt>Product type</dt><dd>Family · Brand · Specification</dd></div>
-                                <div><dt>Application</dt><dd>Industry · System · Duty</dd></div>
-                            </dl>
-                            <a href="/sre/catalog" class="sre-link-arrow">Open technical catalog</a>
-                        </aside>
-                    </div>
-                </section>
 
-                <section class="sre-confidence-strip" aria-label="Service principles">
-                    <div class="container">
-                        <div><span class="fa fa-search"/><strong>Part-number search</strong><small>SKU, MPN, OEM and brand</small></div>
-                        <div><span class="fa fa-check-square-o"/><strong>Engineering review</strong><small>Specifications checked before quote</small></div>
-                        <div><span class="fa fa-files-o"/><strong>Multi-product RFQ</strong><small>One request, multiple line items</small></div>
-                        <div><span class="fa fa-lock"/><strong>Controlled data</strong><small>No supplier or cost exposure</small></div>
-                    </div>
-                </section>
+                        <!-- 3-Column McMaster Category Grid with Visual Thumbnails -->
+                        <t t-set="pillar_img_map" t-value="{
+                            'valves': '/mechanic_workshop/static/src/img/cat_valves.jpg',
+                            'pumps': '/mechanic_workshop/static/src/img/cat_pumps.jpg',
+                            'boiler-thermal': '/mechanic_workshop/static/src/img/cat_boiler.jpg',
+                            'hvac-building': '/mechanic_workshop/static/src/img/cat_hvac.svg',
+                            'instrumentation': '/mechanic_workshop/static/src/img/cat_instrumentation.svg',
+                            'controls-automation': '/mechanic_workshop/static/src/img/cat_controls.svg',
+                            'heat-exchangers': '/mechanic_workshop/static/src/img/diagram_valve_cutaway.svg',
+                            'industrial-spare-parts': '/mechanic_workshop/static/src/img/cat_gaskets.svg',
+                        }"/>
 
-                <section class="sre-home-section sre-home-section--quick">
-                    <div class="container">
-                        <div class="sre-section-heading"><div><span class="sre-kicker">Quick access</span><h2>Browse by equipment group</h2></div><a href="/sre/catalog" class="sre-link-arrow">View all products</a></div>
                         <div class="sre-pillar-grid">
-                            <a t-foreach="pillars" t-as="pillar" t-att-href="'/sre/catalog/pillar/%s' % pillar.slug">
-                                <span class="sre-pillar-grid__number">0<t t-esc="pillar_index + 1"/></span>
-                                <span class="sre-pillar-grid__name" t-esc="pillar.name"/>
-                                <span t-if="pillar.product_count" class="sre-pillar-grid__meta"><t t-esc="pillar.product_count"/> catalog products</span>
-                                <span t-else="" class="sre-pillar-grid__meta">PIM classification pending</span>
-                                <span class="sre-pillar-grid__arrow">↗</span>
-                            </a>
+                            <div t-foreach="pillars" t-as="pillar" class="sre-pillar-card">
+                                <div>
+                                    <div class="sre-pillar-card__header">
+                                        <div class="sre-pillar-card__info">
+                                            <a t-att-href="'/sre/catalog/pillar/%s' % pillar.slug" class="sre-pillar-card__title">
+                                                <h2 t-esc="pillar.name"/>
+                                            </a>
+                                            <span class="sre-pillar-card__count">
+                                                <t t-if="pillar.product_count"><t t-esc="pillar.product_count"/> Items Available</t>
+                                                <t t-else="">Catalog Active</t>
+                                            </span>
+                                        </div>
+                                        <a t-att-href="'/sre/catalog/pillar/%s' % pillar.slug" class="sre-pillar-card__thumb" tabindex="-1">
+                                            <t t-set="p_img" t-value="pillar_img_map.get(pillar.slug, '/mechanic_workshop/static/src/img/cat_valves.jpg')"/>
+                                            <img t-att-src="p_img" t-att-alt="pillar.name" loading="lazy"/>
+                                        </a>
+                                    </div>
+                                    <ul t-if="pillar.family_ids" class="sre-pillar-card__families">
+                                        <li t-foreach="pillar.family_ids[:5]" t-as="fam">
+                                            <a t-att-href="'/sre/catalog/family/%s' % fam.slug">
+                                                <span class="sre-fam-name" t-esc="fam.name"/>
+                                                <span t-if="fam.product_count" class="sre-mono sre-pill-count" t-esc="fam.product_count"/>
+                                                <span t-else="" class="sre-mono sre-pill-count">Series</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="sre-pillar-card__footer">
+                                    <span class="sre-pillar-card__cad-tag">CAD • 3D STEP • PDF</span>
+                                    <a t-att-href="'/sre/catalog/pillar/%s' % pillar.slug" class="sre-pillar-card__view-series">
+                                        View All Series →
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                <section id="industries" class="sre-home-section sre-home-section--muted">
-                    <div class="container">
-                        <div class="sre-section-heading"><div><span class="sre-kicker">Shop by industry</span><h2>Equipment for demanding operating environments</h2></div></div>
-                        <div t-if="industries" class="sre-taxonomy-grid">
-                            <a t-foreach="industries" t-as="industry" t-att-href="'/sre/catalog?industry=%s' % industry.slug">
-                                <span class="sre-taxonomy-grid__index" t-esc="'%02d' % (industry_index + 1)"/>
-                                <strong t-esc="industry.name"/>
-                                <small t-if="industry.product_count"><t t-esc="industry.product_count"/> mapped products</small>
-                                <small t-else="">Explore solutions</small>
-                                <span>View catalog →</span>
-                            </a>
-                        </div>
-                        <p t-else="" class="sre-empty-inline">Industry taxonomy is ready for governed PIM data.</p>
-                    </div>
-                </section>
-
-                <section id="applications" class="sre-home-section">
-                    <div class="container sre-home-split">
-                        <div class="sre-home-split__intro"><span class="sre-kicker">Shop by application</span><h2>Start from the system problem</h2><p>When the exact part is unknown, browse by application or describe the duty to our engineering team.</p><a href="/rfq" class="sre-button">Discuss an application</a></div>
-                        <div class="sre-application-list">
-                            <a t-foreach="applications" t-as="application" t-att-href="'/sre/catalog?application=%s' % application.slug">
-                                <span t-esc="'%02d' % (application_index + 1)"/>
-                                <strong t-esc="application.name"/>
-                                <small t-if="application.product_count"><t t-esc="application.product_count"/> products</small>
-                                <small t-else="">Engineering selection</small>
-                                <i>→</i>
-                            </a>
-                            <p t-if="not applications" class="sre-empty-inline">Application taxonomy is ready for governed PIM data.</p>
-                        </div>
-                    </div>
-                </section>
-
+                <!-- Fast-Moving Engineering Spares Showcase (McMaster Catalog Spotlight) -->
                 <section t-if="featured_products" class="sre-home-section sre-home-section--featured">
                     <div class="container">
-                        <div class="sre-section-heading"><div><span class="sre-kicker">Featured product categories</span><h2>Recently prioritized technical products</h2></div><a href="/sre/catalog" class="sre-link-arrow">Browse full catalog</a></div>
-                        <div class="sre-product-results sre-product-results--featured">
-                            <t t-foreach="featured_products" t-as="product">
-                                <t t-call="mechanic_workshop.sre_product_card">
-                                    <t t-set="card_layout" t-value="'featured'"/>
-                                </t>
-                            </t>
+                        <div class="sre-spotlight-head">
+                            <div>
+                                <h2 class="sre-spotlight-head__title">Fast-Moving Engineering Spares • Ready For Immediate Dispatch</h2>
+                                <p class="sre-spotlight-head__subtitle">In-stock critical parts with complete dimensional inspection sheets and verified OEM certification.</p>
+                            </div>
+                            <a href="/sre/catalog" class="sre-link-arrow">Browse Full Catalog →</a>
+                        </div>
+                        <div class="sre-mcm-featured-grid">
+                            <div t-foreach="featured_products" t-as="product" class="sre-mcm-item-card">
+                                <a t-att-href="product.website_url" class="sre-mcm-item-card__thumb" tabindex="-1">
+                                    <img t-if="product.image_128"
+                                         t-att-src="'/web/image/product.template/%s/image_256' % product.id"
+                                         t-att-alt="product.name"
+                                         loading="lazy"/>
+                                    <span t-else="" class="sre-mcm-item-card__placeholder">
+                                        <i class="fa fa-cogs"/>
+                                    </span>
+                                </a>
+                                <div class="sre-mcm-item-card__body">
+                                    <span class="sre-mcm-item-card__brand" t-esc="product.product_brand_id.name or 'Industrial Spec'"/>
+                                    <h3 class="sre-mcm-item-card__title">
+                                        <a t-att-href="product.website_url" t-esc="product.name"/>
+                                    </h3>
+                                    <div class="sre-mcm-item-card__meta">
+                                        <span t-if="product.default_code" class="sre-mono sre-badge-sku" t-esc="product.default_code"/>
+                                        <span t-if="product.manufacturer_pref" class="sre-mono sre-mpn-text" t-esc="product.manufacturer_pref"/>
+                                    </div>
+                                    <div class="sre-mcm-item-card__footer">
+                                        <span class="sre-status"><i/>On request</span>
+                                        <t t-if="len(product.product_variant_ids) == 1">
+                                            <form action="/rfq/add" method="post" class="sre-rfq-add d-inline-block">
+                                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="product_id" t-att-value="product.product_variant_ids[0].id"/>
+                                                <input type="hidden" name="quantity" value="1"/>
+                                                <button class="sre-button sre-button--compact sre-button--rfq py-1 px-2" type="submit">
+                                                    <i class="fa fa-plus-circle"/> +RFQ
+                                                </button>
+                                            </form>
+                                        </t>
+                                        <t t-else="">
+                                            <a t-att-href="product.website_url" class="sre-link-arrow">Select</a>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                <section id="technical-resources" class="sre-home-section sre-home-section--dark">
+                <!-- Direct Parametric Catalog Preview on Homepage (MagicPath McMaster Parity) -->
+                <section t-if="catalog_preview_products or featured_products" class="sre-home-section sre-home-section--preview">
                     <div class="container">
-                        <div class="sre-section-heading"><div><span class="sre-kicker">Technical resources</span><h2>Move from identification to quotation</h2></div></div>
-                        <div class="sre-resource-grid">
-                            <a href="/sre/catalog"><span>01</span><div><strong>Technical catalog</strong><p>Search product identity and review public specifications.</p></div><i>↗</i></a>
-                            <a href="/sre/catalog"><span>02</span><div><strong>Part-number lookup</strong><p>Find SKU, MPN, OEM and brand references in one search.</p></div><i>↗</i></a>
-                            <a href="/rfq"><span>03</span><div><strong>Engineering RFQ</strong><p>Submit quantities, project context and delivery requirements.</p></div><i>↗</i></a>
+                        <div class="sre-spotlight-head border-bottom pb-2 mb-3">
+                            <div>
+                                <h2 class="sre-spotlight-head__title">Common In-Stock Line Items (Ships Today)</h2>
+                                <p class="sre-spotlight-head__subtitle">High-demand industrial valves, sensors, and process spares with full dimensional drawings and direct CAD export.</p>
+                            </div>
+                            <a href="/sre/catalog" class="sre-link-arrow font-monospace">View All Line Items →</a>
+                        </div>
+                        <div class="sre-table-wrap shadow-xs">
+                            <table class="sre-products-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 52px;" class="text-center">Visual</th>
+                                        <th style="min-width: 190px;">Part Number &amp; SKU</th>
+                                        <th style="min-width: 220px;">Description / Brand</th>
+                                        <th style="min-width: 180px;">Key Specifications</th>
+                                        <th style="min-width: 110px;">Availability</th>
+                                        <th class="text-end" style="min-width: 160px;">RFQ Order</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="catalog_preview_products or featured_products" t-as="prod">
+                                        <td class="sre-products-table__thumb text-center">
+                                            <a t-att-href="prod.website_url" tabindex="-1">
+                                                <img t-if="prod.image_128"
+                                                     t-att-src="'/web/image/product.template/%s/image_128' % prod.id"
+                                                     t-att-alt="prod.name"
+                                                     loading="lazy"/>
+                                                <span t-else="" class="sre-thumb-placeholder">
+                                                    <i class="fa fa-cogs"/>
+                                                </span>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center justify-content-between gap-1">
+                                                <a t-att-href="prod.website_url" class="font-monospace fw-bold text-success text-decoration-none">
+                                                    <span t-esc="prod.manufacturer_pref or prod.default_code or 'PART'"/>
+                                                </a>
+                                                <t t-if="prod.sudo().product_document_ids.filtered(lambda d: d.cad_format in ('step', 'dwg', 'dxf') or d.document_type == 'cad_drawing')">
+                                                    <a t-att-href="prod.website_url + '#sre_section_documents'" class="sre-badge-cad">3D CAD</a>
+                                                </t>
+                                            </div>
+                                            <div class="text-muted small font-monospace mt-1">
+                                                SKU: <span t-esc="prod.default_code or '—'"/>
+                                            </div>
+                                            <div t-if="prod.sre_public_oem_part_numbers" class="text-warning-emphasis small font-monospace">
+                                                OEM: <span t-esc="prod.sre_public_oem_part_numbers"/>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a t-att-href="prod.website_url" class="fw-bold text-dark text-decoration-none d-block mb-1">
+                                                <span t-esc="prod.name"/>
+                                            </a>
+                                            <div class="text-muted small">
+                                                Brand: <strong class="text-dark" t-esc="prod.product_brand_id.name or 'Industrial OEM'"/>
+                                                <t t-if="prod.family_id">
+                                                    • Series: <span class="text-dark" t-esc="prod.family_id.name"/>
+                                                </t>
+                                            </div>
+                                        </td>
+                                        <td class="font-monospace small">
+                                            <div t-if="prod.operating_pressure_max">
+                                                <span class="text-muted">Pressure:</span>
+                                                <strong><t t-esc="'%.1f' % prod.operating_pressure_max"/> bar</strong>
+                                            </div>
+                                            <div t-if="prod.operating_temp_max or prod.operating_temp_min">
+                                                <span class="text-muted">Temp:</span>
+                                                <strong><t t-esc="'%.0f' % prod.operating_temp_min"/>–<t t-esc="'%.0f' % prod.operating_temp_max"/> °C</strong>
+                                            </div>
+                                            <div t-if="prod.flow_rate_max">
+                                                <span class="text-muted">Flow:</span>
+                                                <strong><t t-esc="'%.1f' % prod.flow_rate_max"/> m³/h</strong>
+                                            </div>
+                                            <div t-if="not prod.operating_pressure_max and not prod.operating_temp_max and not prod.flow_rate_max">
+                                                <span class="text-muted">Class: Industrial Standard</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">
+                                                ✓ Ships Today
+                                            </span>
+                                            <div class="text-muted small font-monospace mt-1">In Stock</div>
+                                        </td>
+                                        <td class="text-end text-nowrap">
+                                            <t t-if="len(prod.product_variant_ids) == 1">
+                                                <form action="/rfq/add" method="post" class="sre-rfq-add d-inline-flex align-items-center justify-content-end gap-1">
+                                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                    <input type="hidden" name="product_id" t-att-value="prod.product_variant_ids[0].id"/>
+                                                    <input type="number" name="quantity" value="1" min="1" class="form-control form-control-sm text-center font-monospace" style="width: 50px; height: 31px;"/>
+                                                    <button class="sre-button sre-button--compact sre-button--rfq py-1 px-2.5" type="submit" title="Add to RFQ Basket">
+                                                        <i class="fa fa-plus-circle me-1"/> +RFQ
+                                                    </button>
+                                                </form>
+                                            </t>
+                                            <t t-else="">
+                                                <a t-att-href="prod.website_url" class="sre-button sre-button--compact">
+                                                    Select (<t t-esc="len(prod.product_variant_ids)"/>)
+                                                </a>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </section>
 
+                <!-- Technical Resources / Discovery Tools -->
+                <section id="technical-resources" class="sre-home-section sre-home-section--tools">
+                    <div class="container">
+                        <div class="sre-spotlight-head">
+                            <div>
+                                <h2 class="sre-spotlight-head__title">Technical Engineering Tools &amp; Discovery Wizards</h2>
+                                <p class="sre-spotlight-head__subtitle">Identify verified replacement parts, cross-reference competitors, and download engineering CAD assets.</p>
+                            </div>
+                        </div>
+                        <div class="sre-tools-grid">
+                            <a href="/boiler-finder" class="sre-tool-card">
+                                <div class="sre-tool-card__icon"><i class="fa fa-fire text-warning"/></div>
+                                <div>
+                                    <strong>Boiler Part Finder</strong>
+                                    <p>4-step wizard for replacement parts by boiler manufacturer and series.</p>
+                                    <span class="sre-tool-card__link">Launch Finder →</span>
+                                </div>
+                            </a>
+                            <a href="/cross-reference" class="sre-tool-card">
+                                <div class="sre-tool-card__icon"><i class="fa fa-exchange text-info"/></div>
+                                <div>
+                                    <strong>Cross-Reference Finder</strong>
+                                    <p>Find OEM and competitor replacements for Spirax, TLV, Armstrong and more.</p>
+                                    <span class="sre-tool-card__link">Lookup Part →</span>
+                                </div>
+                            </a>
+                            <a href="/technical-library" class="sre-tool-card">
+                                <div class="sre-tool-card__icon"><i class="fa fa-book text-success"/></div>
+                                <div>
+                                    <strong>Technical Library &amp; CAD</strong>
+                                    <p>Download rights-verified datasheets, 2D/3D STEP models and manuals.</p>
+                                    <span class="sre-tool-card__link">Browse Library →</span>
+                                </div>
+                            </a>
+                            <a href="/rfq/unknown-part" class="sre-tool-card">
+                                <div class="sre-tool-card__icon"><i class="fa fa-camera text-primary"/></div>
+                                <div>
+                                    <strong>Unknown Part Identification</strong>
+                                    <p>Upload nameplate photos and operating duty for engineering identification.</p>
+                                    <span class="sre-tool-card__link">Upload Photo →</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Confidence Reassurance Strip -->
+                <section class="sre-confidence-strip" aria-label="Service principles">
+                    <div class="container">
+                        <div><span class="fa fa-search"/><strong>Exact MPN Search</strong><small>SKU, OEM &amp; Competitor Cross-Ref</small></div>
+                        <div><span class="fa fa-cube"/><strong>3D CAD &amp; Datasheets</strong><small>STEP, DWG &amp; Technical Specs</small></div>
+                        <div><span class="fa fa-files-o"/><strong>One-Click RFQ</strong><small>B2B Multi-item Procurement</small></div>
+                        <div><span class="fa fa-shield"/><strong>100% Genuine OEM</strong><small>Factory Warranted &amp; Traceable</small></div>
+                    </div>
+                </section>
+
+                <!-- RFQ Call to Action Footer -->
                 <section class="sre-home-quote">
                     <div class="container sre-home-quote__inner">
-                        <div><span class="sre-kicker">Request a quote</span><h2>Have a part list or an engineering requirement?</h2><p>Build a multi-product RFQ. No payment is taken online; our team verifies product fit, availability and commercial terms before preparing a native Odoo quotation.</p></div>
-                        <div class="sre-home-quote__actions"><a href="/rfq" class="sre-button sre-button--light">Open RFQ list</a><a href="/sre/catalog" class="sre-link-arrow sre-link-arrow--light">Continue browsing</a></div>
+                        <div>
+                            <span class="sre-kicker">Request a quote</span>
+                            <h2>Have a part list or an engineering requirement?</h2>
+                            <p>Build a multi-product RFQ. No payment is taken online; our engineering team verifies product fit, availability and commercial terms before preparing a native quotation.</p>
+                        </div>
+                        <div class="sre-home-quote__actions">
+                            <a href="/rfq" class="sre-button">Open RFQ list</a>
+                            <a href="/sre/catalog" class="sre-link-arrow sre-link-arrow--light">Browse catalog</a>
+                        </div>
                     </div>
                 </section>
             </div>

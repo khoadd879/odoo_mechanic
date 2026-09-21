@@ -86,6 +86,12 @@ class ProductTemplate(models.Model):
         "product_tmpl_id",
         string="OEM part numbers",
     )
+    boiler_mapping_ids = fields.One2many(
+        "sre.boiler.part.mapping",
+        "product_tmpl_id",
+        string="Boiler Compatibility Mappings",
+        help="Brief §11: Boilers and subsystems this part is verified compatible with.",
+    )
     sre_public_oem_part_numbers = fields.Char(
         string="OEM part numbers (public)",
         compute="_compute_sre_public_oem_part_numbers",
@@ -97,6 +103,72 @@ class ProductTemplate(models.Model):
             "notes and manufacturer records are never exposed to website users."
         ),
     )
+    public_price_approved = fields.Boolean(
+        string="Public Price Approved",
+        default=False,
+        index=True,
+        help=(
+            "Brief §11: When checked, the public catalog displays the "
+            "list_price. When unchecked (default), price is hidden and "
+            "B2B Quote on Request is shown."
+        ),
+    )
+    operating_pressure_min = fields.Float(
+        string="Min Operating Pressure (bar)",
+        digits=(10, 2),
+        index=True,
+        default=0.0,
+        help="Brief §07: Minimum operating/working pressure in bar.",
+    )
+    operating_pressure_max = fields.Float(
+        string="Max Operating Pressure (bar)",
+        digits=(10, 2),
+        index=True,
+        default=0.0,
+        help="Brief §07: Maximum operating/rated pressure in bar.",
+    )
+    operating_temp_min = fields.Float(
+        string="Min Operating Temp (°C)",
+        digits=(10, 2),
+        index=True,
+        default=0.0,
+        help="Brief §07: Minimum operating temperature in degrees Celsius.",
+    )
+    operating_temp_max = fields.Float(
+        string="Max Operating Temp (°C)",
+        digits=(10, 2),
+        index=True,
+        default=0.0,
+        help="Brief §07: Maximum operating temperature in degrees Celsius.",
+    )
+    flow_rate_min = fields.Float(
+        string="Min Flow Rate (m³/h)",
+        digits=(10, 2),
+        index=True,
+        default=0.0,
+        help="Brief §07: Minimum operating flow rate in cubic meters per hour.",
+    )
+    flow_rate_max = fields.Float(
+        string="Max Flow Rate (m³/h)",
+        digits=(10, 2),
+        index=True,
+        default=0.0,
+        help="Brief §07: Maximum operating flow rate in cubic meters per hour.",
+    )
+    cross_reference_ids = fields.One2many(
+        "sre.product.cross.reference",
+        "target_product_id",
+        string="Cross References",
+    )
+    cross_reference_count = fields.Integer(
+        compute="_compute_cross_reference_count",
+        string="Cross References Count",
+    )
+
+    @api.depends("cross_reference_ids")
+    def _compute_cross_reference_count(self) -> None:
+        for product in self:
+            product.cross_reference_count = len(product.cross_reference_ids)
 
     @api.depends("manufacturer_id.display_name")
     def _compute_manufacturer_public_name(self) -> None:
@@ -145,3 +217,18 @@ class ProductTemplate(models.Model):
             if f not in detail["search_fields"]:
                 detail["search_fields"].append(f)
         return detail
+
+    def _get_b2b_contract_price(self, user=None):
+        """Brief §18: Returns B2B contract price if user has an assigned pricelist, else False."""
+        user = user or self.env.user
+        if not user or user._is_public():
+            return False
+        partner = user.partner_id
+        pricelist = partner.property_product_pricelist
+        if not pricelist:
+            return False
+        self.ensure_one()
+        if self.list_price <= 0:
+            return False
+        return self.with_context(pricelist=pricelist.id)._get_contextual_price()
+

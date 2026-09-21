@@ -49,13 +49,13 @@ no_foreign_mount() {
 http_contains() {
   local url="$1"
   local marker="$2"
-  curl -fsS --max-time 15 "${url}" | rg -qF "${marker}"
+  curl -fsS --max-time 15 "${url}" | rg -F "${marker}" >/dev/null
 }
 
 http_excludes() {
   local url="$1"
   local marker="$2"
-  ! curl -fsS --max-time 15 "${url}" | rg -qF "${marker}"
+  ! curl -fsS --max-time 15 "${url}" | rg -F "${marker}" >/dev/null
 }
 
 shop_redirects_to_catalog() {

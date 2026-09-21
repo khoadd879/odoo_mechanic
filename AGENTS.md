@@ -52,7 +52,7 @@ starts empty and grows feature by feature as documented in
 
 A feature is done only when:
 
-- code/config is committed in this repo;
+- code/config is verified and ready (committed ONLY upon explicit user instruction, per RULES.md);
 - `docker compose -p odoo_mechanic up -d` succeeds;
 - the relevant module install/update succeeds;
 - no new traceback or critical log entry exists;

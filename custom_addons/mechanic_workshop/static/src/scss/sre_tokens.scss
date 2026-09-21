@@ -6,25 +6,29 @@
 
 :root {
     --sre-bg: #ffffff;
-    --sre-bg-alt: #f6f6f6;
-    --sre-bg-page: #fafafa;
-    --sre-fg: #111111;
+    --sre-bg-alt: #fafaf8;
+    --sre-bg-page: #ffffff;
+    --sre-fg: #1a1a1a;
     --sre-fg-muted: #555555;
-    --sre-fg-faint: #888888;
-    --sre-border: #d4d4d4;
-    --sre-border-soft: #ebebeb;
+    --sre-fg-faint: #777777;
+    --sre-border: #e2e2e0;
+    --sre-border-soft: #f0f0ee;
     --sre-border-strong: #1a1a1a;
-    --sre-accent: #003c71;
-    --sre-accent-hover: #002a52;
-    --sre-accent-soft: #f0f4f9;
-    --sre-row-hover: #f4f7fb;
-    --sre-table-head: #ebebeb;
+    --sre-accent: #004b2b;
+    --sre-accent-hover: #00351e;
+    --sre-accent-medium: #006838;
+    --sre-accent-soft: #f0f7f4;
+    --sre-gold: #f59e0b;
+    --sre-gold-hover: #d97706;
+    --sre-cad-blue: #2563eb;
+    --sre-row-hover: #fef9e7;
+    --sre-table-head: #f2f4f5;
     --sre-rule: #1a1a1a;
 
     /* Status — used sparingly on availability dots and CTA. */
-    --sre-ok: #1a7f37;
+    --sre-ok: #16814b;
     --sre-warn: #b8770a;
-    --sre-err: #b1271b;
+    --sre-err: #dc2626;
 
     --sre-font-sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
     --sre-font-mono: "JetBrains Mono", "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;

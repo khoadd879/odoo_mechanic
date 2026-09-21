@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- ========================================================= -->
+        <!-- BOILER MANUFACTURERS                                      -->
+        <!-- ========================================================= -->
+        <record id="sre_boiler_mfg_miura" model="sre.boiler.manufacturer">
+            <field name="name">Miura</field>
+            <field name="slug">miura</field>
+            <field name="country_name">Japan</field>
+            <field name="sequence">10</field>
+            <field name="description">World leader in modular, once-through water tube steam boilers and low-water-volume technology.</field>
+        </record>
+
+        <record id="sre_boiler_mfg_cleaver_brooks" model="sre.boiler.manufacturer">
+            <field name="name">Cleaver-Brooks</field>
+            <field name="slug">cleaver-brooks</field>
+            <field name="country_name">United States</field>
+            <field name="sequence">20</field>
+            <field name="description">Premier North American manufacturer of packaged firetube, watertube, and industrial steam systems.</field>
+        </record>
+
+        <record id="sre_boiler_mfg_fulton" model="sre.boiler.manufacturer">
+            <field name="name">Fulton</field>
+            <field name="slug">fulton</field>
+            <field name="country_name">United States</field>
+            <field name="sequence">30</field>
+            <field name="description">Specialist manufacturer of rugged vertical tubeless steam boilers and thermal fluid heating skids.</field>
+        </record>
+
+        <record id="sre_boiler_mfg_hurst" model="sre.boiler.manufacturer">
+            <field name="name">Hurst Boiler</field>
+            <field name="slug">hurst</field>
+            <field name="country_name">United States</field>
+            <field name="sequence">40</field>
+            <field name="description">Global manufacturer of heavy-duty scotch marine firetube and biomass industrial boilers.</field>
+        </record>
+
+        <record id="sre_boiler_mfg_viessmann" model="sre.boiler.manufacturer">
+            <field name="name">Viessmann</field>
+            <field name="slug">viessmann</field>
+            <field name="country_name">Germany</field>
+            <field name="sequence">50</field>
+            <field name="description">Leading European engineering group specializing in high-efficiency industrial steam and hot water generators.</field>
+        </record>
+
+        <!-- ========================================================= -->
+        <!-- BOILER TYPES / ARCHITECTURES                              -->
+        <!-- ========================================================= -->
+        <record id="sre_boiler_type_watertube" model="sre.boiler.type">
+            <field name="name">Modular Watertube</field>
+            <field name="slug">modular-watertube</field>
+            <field name="sequence">10</field>
+            <field name="description">Once-through or natural circulation water tube designs offering rapid cold-start within 5 minutes.</field>
+        </record>
+
+        <record id="sre_boiler_type_firetube" model="sre.boiler.type">
+            <field name="name">Packaged Firetube</field>
+            <field name="slug">packaged-firetube</field>
+            <field name="sequence">20</field>
+            <field name="description">Scotch Marine multi-pass firetube boilers with large water buffer capacity for fluctuating steam demands.</field>
+        </record>
+
+        <record id="sre_boiler_type_vertical_tubeless" model="sre.boiler.type">
+            <field name="name">Vertical Tubeless</field>
+            <field name="slug">vertical-tubeless</field>
+            <field name="sequence">30</field>
+            <field name="description">Top-fired vertical tubeless units designed for small footprints and long operational lifespans.</field>
+        </record>
+
+        <record id="sre_boiler_type_waste_heat" model="sre.boiler.type">
+            <field name="name">Waste Heat Recovery</field>
+            <field name="slug">waste-heat-recovery</field>
+            <field name="sequence">40</field>
+            <field name="description">Heat recovery steam generators (HRSG) capturing industrial flue gases and thermal exhaust.</field>
+        </record>
+
+        <!-- ========================================================= -->
+        <!-- BOILER SUBSYSTEMS / COMPONENT GROUPS                      -->
+        <!-- ========================================================= -->
+        <record id="sre_boiler_sub_feedwater" model="sre.boiler.subsystem">
+            <field name="name">Feedwater &amp; Pumps</field>
+            <field name="slug">feedwater-pumps</field>
+            <field name="icon">fa-tint</field>
+            <field name="sequence">10</field>
+            <field name="description">High-pressure multistage boiler feed pumps, condensate return units, and feed control check valves.</field>
+        </record>
+
+        <record id="sre_boiler_sub_level" model="sre.boiler.subsystem">
+            <field name="name">Water Level Control</field>
+            <field name="slug">water-level-control</field>
+            <field name="icon">fa-sliders</field>
+            <field name="sequence">20</field>
+            <field name="description">Electrode level probes, low-water cutoff (LWCO) sensors, sight glass assemblies, and gauge cocks.</field>
+        </record>
+
+        <record id="sre_boiler_sub_combustion" model="sre.boiler.subsystem">
+            <field name="name">Burner &amp; Combustion</field>
+            <field name="slug">burner-combustion</field>
+            <field name="icon">fa-fire</field>
+            <field name="sequence">30</field>
+            <field name="description">Gas trains, ignition transformers, flame scanners, combustion air actuators, and burner nozzles.</field>
+        </record>
+
+        <record id="sre_boiler_sub_blowdown" model="sre.boiler.subsystem">
+            <field name="name">Blowdown &amp; Heat Recovery</field>
+            <field name="slug">blowdown-system</field>
+            <field name="icon">fa-recycle</field>
+            <field name="sequence">40</field>
+            <field name="description">Continuous TDS surface blowdown valves, bottom blowoff valves, and flash steam recovery vessels.</field>
+        </record>
+
+        <record id="sre_boiler_sub_safety" model="sre.boiler.subsystem">
+            <field name="name">ASME Safety &amp; Relief Valves</field>
+            <field name="slug">safety-valves</field>
+            <field name="icon">fa-shield</field>
+            <field name="sequence">50</field>
+            <field name="description">ASME Section I certified full-lift steam safety valves and thermal overpressure protection valves.</field>
+        </record>
+
+        <record id="sre_boiler_sub_steam" model="sre.boiler.subsystem">
+            <field name="name">Steam Trapping &amp; Distribution</field>
+            <field name="slug">steam-trapping</field>
+            <field name="icon">fa-filter</field>
+            <field name="sequence">60</field>
+            <field name="description">Thermodynamic steam traps, inverted bucket traps, mainline stop valves, and check valves.</field>
+        </record>
+
+        <!-- ========================================================= -->
+        <!-- BOILER MODELS / SERIES                                    -->
+        <!-- ========================================================= -->
+        <record id="sre_boiler_model_miura_lx200" model="sre.boiler.model">
+            <field name="name">Miura LX-200</field>
+            <field name="slug">miura-lx-200</field>
+            <field name="manufacturer_id" ref="sre_boiler_mfg_miura"/>
+            <field name="boiler_type_id" ref="sre_boiler_type_watertube"/>
+            <field name="steam_capacity_kg_h">3100</field>
+            <field name="design_pressure_bar">16.0</field>
+            <field name="sequence">10</field>
+            <field name="description">High-efficiency modular water tube steam boiler with ultra-low NOx burner and 5-minute cold startup.</field>
+        </record>
+
+        <record id="sre_boiler_model_miura_ex" model="sre.boiler.model">
+            <field name="name">Miura EX-Series</field>
+            <field name="slug">miura-ex-series</field>
+            <field name="manufacturer_id" ref="sre_boiler_mfg_miura"/>
+            <field name="boiler_type_id" ref="sre_boiler_type_watertube"/>
+            <field name="steam_capacity_kg_h">1500</field>
+            <field name="design_pressure_bar">16.0</field>
+            <field name="sequence">20</field>
+            <field name="description">Once-through compact industrial steam boiler designed for flexible on-demand steam networks.</field>
+        </record>
+
+        <record id="sre_boiler_model_cb_200" model="sre.boiler.model">
+            <field name="name">Cleaver-Brooks CB-200</field>
+            <field name="slug">cleaver-brooks-cb-200</field>
+            <field name="manufacturer_id" ref="sre_boiler_mfg_cleaver_brooks"/>
+            <field name="boiler_type_id" ref="sre_boiler_type_firetube"/>
+            <field name="steam_capacity_kg_h">6800</field>
+            <field name="design_pressure_bar">17.2</field>
+            <field name="sequence">10</field>
+            <field name="description">Packaged 4-pass scotch marine firetube boiler built for heavy process steam and long duty life.</field>
+        </record>
+
+        <record id="sre_boiler_model_cb_cbm" model="sre.boiler.model">
+            <field name="name">Cleaver-Brooks CBM-100</field>
+            <field name="slug">cleaver-brooks-cbm-100</field>
+            <field name="manufacturer_id" ref="sre_boiler_mfg_cleaver_brooks"/>
+            <field name="boiler_type_id" ref="sre_boiler_type_firetube"/>
+            <field name="steam_capacity_kg_h">3400</field>
+            <field name="design_pressure_bar">10.3</field>
+            <field name="sequence">20</field>
+            <field name="description">Medium-capacity packaged firetube boiler for manufacturing, food processing, and district heating.</field>
+        </record>
+
+        <record id="sre_boiler_model_fulton_fba" model="sre.boiler.model">
+            <field name="name">Fulton FB-A Series</field>
+            <field name="slug">fulton-fb-a</field>
+            <field name="manufacturer_id" ref="sre_boiler_mfg_fulton"/>
+            <field name="boiler_type_id" ref="sre_boiler_type_vertical_tubeless"/>
+            <field name="steam_capacity_kg_h">1200</field>
+            <field name="design_pressure_bar">10.0</field>
+            <field name="sequence">10</field>
+            <field name="description">Vertical tubeless design eliminating tubes that can foul, blister, or suffer thermal shock.</field>
+        </record>
+
+        <record id="sre_boiler_model_hurst_scotch" model="sre.boiler.model">
+            <field name="name">Hurst Scotch Marine 3-Pass</field>
+            <field name="slug">hurst-scotch-3pass</field>
+            <field name="manufacturer_id" ref="sre_boiler_mfg_hurst"/>
+            <field name="boiler_type_id" ref="sre_boiler_type_firetube"/>
+            <field name="steam_capacity_kg_h">5000</field>
+            <field name="design_pressure_bar">15.0</field>
+            <field name="sequence">10</field>
+            <field name="description">Rugged 3-pass wetback scotch marine boiler for industrial and commercial steam applications.</field>
+        </record>
+
+        <record id="sre_boiler_model_viessmann_vitomax" model="sre.boiler.model">
+            <field name="name">Viessmann Vitomax 200-HS</field>
+            <field name="slug">viessmann-vitomax-200hs</field>
+            <field name="manufacturer_id" ref="sre_boiler_mfg_viessmann"/>
+            <field name="boiler_type_id" ref="sre_boiler_type_firetube"/>
+            <field name="steam_capacity_kg_h">8000</field>
+            <field name="design_pressure_bar">25.0</field>
+            <field name="sequence">10</field>
+            <field name="description">High-pressure steam boiler with low combustion chamber loading for clean combustion and high efficiency.</field>
+        </record>
+
+        <!-- ========================================================= -->
+        <!-- VERIFIED PART MAPPINGS                                    -->
+        <!-- ========================================================= -->
+        <!-- Miura LX-200 Mappings -->
+        <record id="sre_mapping_miura_p001" model="sre.boiler.part.mapping">
+            <field name="boiler_model_id" ref="sre_boiler_model_miura_lx200"/>
+            <field name="subsystem_id" ref="sre_boiler_sub_feedwater"/>
+            <field name="product_tmpl_id" ref="sre_demo.product_template_demo_p_001"/>
+            <field name="position_ref">BFP-01 Primary Feedwater Pump</field>
+            <field name="is_critical_spare" eval="True"/>
+            <field name="notes">Direct fit replacement for Miura LX-200 high-pressure multistage boiler feed assembly. Check impeller clearance upon mounting.</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="sre_mapping_miura_v001" model="sre.boiler.part.mapping">
+            <field name="boiler_model_id" ref="sre_boiler_model_miura_lx200"/>
+            <field name="subsystem_id" ref="sre_boiler_sub_safety"/>
+            <field name="product_tmpl_id" ref="sre_demo.product_template_demo_v_001"/>
+            <field name="position_ref">SV-01 Primary Steam Drum Relief Valve</field>
+            <field name="is_critical_spare" eval="True"/>
+            <field name="notes">ASME Section I certified safety relief valve calibrated for 16.0 bar design threshold.</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="sre_mapping_miura_v002" model="sre.boiler.part.mapping">
+            <field name="boiler_model_id" ref="sre_boiler_model_miura_lx200"/>
+            <field name="subsystem_id" ref="sre_boiler_sub_blowdown"/>
+            <field name="product_tmpl_id" ref="sre_demo.product_template_demo_v_002"/>
+            <field name="position_ref">BDV-01 Bottom Surface Blowdown Valve</field>
+            <field name="is_critical_spare" eval="False"/>
+            <field name="notes">Continuous TDS blowdown valve with hardened trim for throttling high-temperature saturated steam.</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <!-- Cleaver-Brooks CB-200 Mappings -->
+        <record id="sre_mapping_cb_p003" model="sre.boiler.part.mapping">
+            <field name="boiler_model_id" ref="sre_boiler_model_cb_200"/>
+            <field name="subsystem_id" ref="sre_boiler_sub_feedwater"/>
+            <field name="product_tmpl_id" ref="sre_demo.product_template_demo_p_003"/>
+            <field name="position_ref">BFP-02 Boiler Feed Circulation Pump</field>
+            <field name="is_critical_spare" eval="True"/>
+            <field name="notes">Engineered replacement for Cleaver-Brooks skid-mounted feed pump assembly. Mechanical seal rated to 140°C.</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="sre_mapping_cb_v001" model="sre.boiler.part.mapping">
+            <field name="boiler_model_id" ref="sre_boiler_model_cb_200"/>
+            <field name="subsystem_id" ref="sre_boiler_sub_safety"/>
+            <field name="product_tmpl_id" ref="sre_demo.product_template_demo_v_001"/>
+            <field name="position_ref">SV-02 Main Steam Header Safety Valve</field>
+            <field name="is_critical_spare" eval="True"/>
+            <field name="notes">Flanged ASME Section I steam safety valve. Includes lifting lever and drain connection.</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="sre_mapping_cb_v002" model="sre.boiler.part.mapping">
+            <field name="boiler_model_id" ref="sre_boiler_model_cb_200"/>
+            <field name="subsystem_id" ref="sre_boiler_sub_blowdown"/>
+            <field name="product_tmpl_id" ref="sre_demo.product_template_demo_v_002"/>
+            <field name="position_ref">BDV-02 Quick-Opening Blowoff Valve</field>
+            <field name="is_critical_spare" eval="True"/>
+            <field name="notes">Fast-acting bottom blowoff valve with rack-and-pinion operator for sludge removal.</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <!-- Fulton FB-A Mappings -->
+        <record id="sre_mapping_fulton_p001" model="sre.boiler.part.mapping">
+            <field name="boiler_model_id" ref="sre_boiler_model_fulton_fba"/>
+            <field name="subsystem_id" ref="sre_boiler_sub_feedwater"/>
+            <field name="product_tmpl_id" ref="sre_demo.product_template_demo_p_001"/>
+            <field name="position_ref">F-BFP Feedwater Supply</field>
+            <field name="is_critical_spare" eval="False"/>
+            <field name="notes">Direct fit for Fulton vertical tubeless compact feed base mounting.</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="sre_mapping_fulton_v002" model="sre.boiler.part.mapping">
+            <field name="boiler_model_id" ref="sre_boiler_model_fulton_fba"/>
+            <field name="subsystem_id" ref="sre_boiler_sub_blowdown"/>
+            <field name="product_tmpl_id" ref="sre_demo.product_template_demo_v_002"/>
+            <field name="position_ref">F-BDV Bottom Drain Blowoff</field>
+            <field name="is_critical_spare" eval="True"/>
+            <field name="notes">High-durability blowdown valve for vertical sediment collector chamber.</field>
+            <field name="sequence">20</field>
+        </record>
+    </data>
+</odoo>

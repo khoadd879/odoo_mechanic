@@ -44,6 +44,11 @@ class SreHome(Website):
             order="website_sequence asc, name asc",
             limit=3,
         )
+        catalog_preview_products = request.env["product.template"].search(
+            request.website.sale_product_domain(),
+            order="website_sequence asc, name asc",
+            limit=8,
+        )
         return request.render(
             "mechanic_workshop.sre_home_page",
             {
@@ -51,5 +56,6 @@ class SreHome(Website):
                 "industries": industries,
                 "applications": applications,
                 "featured_products": featured_products,
+                "catalog_preview_products": catalog_preview_products,
             },
         )

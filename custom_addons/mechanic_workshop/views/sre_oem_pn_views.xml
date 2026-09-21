@@ -31,6 +31,21 @@
                     <field name="family_id"/>
                     <field name="industry_ids" widget="many2many_tags"/>
                     <field name="application_ids" widget="many2many_tags"/>
+                    <field name="public_price_approved"/>
+                </group>
+                <group string="Technical Duty Parameters (Brief §07)">
+                    <group string="Operating Pressure (bar)">
+                        <field name="operating_pressure_min"/>
+                        <field name="operating_pressure_max"/>
+                    </group>
+                    <group string="Operating Temperature (°C)">
+                        <field name="operating_temp_min"/>
+                        <field name="operating_temp_max"/>
+                    </group>
+                    <group string="Flow Rate (m³/h)">
+                        <field name="flow_rate_min"/>
+                        <field name="flow_rate_max"/>
+                    </group>
                 </group>
             </xpath>
             <xpath expr="//notebook" position="inside">
