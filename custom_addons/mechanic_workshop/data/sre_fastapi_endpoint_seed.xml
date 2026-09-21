@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="0">
+        <record id="fastapi_endpoint_universal_orm" model="fastapi.endpoint">
+            <field name="name">Universal Odoo ORM REST API</field>
+            <field name="description"><![CDATA[
+# Universal Odoo ORM REST API
+
+Interactive RESTful CRUD and introspection endpoints for 100% of all Odoo models.
+Works directly with Odoo ORM (search_read, fields_get, create, write, unlink).
+]]></field>
+            <field name="app">universal_orm</field>
+            <field name="root_path">/api/v1</field>
+            <field name="user_id" ref="base.user_admin" />
+        </record>
+    </data>
+</odoo>

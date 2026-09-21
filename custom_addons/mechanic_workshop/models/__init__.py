@@ -15,3 +15,4 @@ from . import sre_product_document
 from . import sre_customer_equipment
 
 from . import website
+from . import fastapi_endpoint

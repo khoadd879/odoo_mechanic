@@ -1334,6 +1334,96 @@ Investigation revealed two primary causes:
   - Captured full-page screenshots of homepage (`homepage_final.png`, `homepage_scroll.png`) and catalog table (`catalog_table_fixed.png`).
   - Confirmed 100% visual fidelity matching MagicPath design canvas: pure white background, crisp 64x64px equipment thumbnails, dense parametric tables, zero mock data.
 
+## 2026-09-21 — Offline Full Project Backup & OCA `rest-framework` Integration
+
+1. **Full Project Backup**:
+   - Created full database dump `mechanic_workshop_dump_20260921_145454.sql` (32 MB) via `pg_dump`.
+   - Packaged entire project codebase, git configuration, and database dump into `/home/khoa/Company/odoo_mechanic_backup_20260921_145454.zip` (19 MB).
+   - Verified archive integrity with `unzip -t` (0 errors).
+   - Removed temporary dump file from the working tree.
+
+2. **OCA `rest-framework` (19.0) Submodule**:
+   - Added submodule `oca_addons/rest-framework` tracking branch `19.0` (`https://github.com/OCA/rest-framework.git`).
+   - Added submodule `oca_addons/web-api` tracking branch `19.0` (`https://github.com/OCA/web-api.git`) for dependency `endpoint_route_handler`.
+   - Created `Dockerfile` and `.env` building `odoo_mechanic_custom:19.0` with all required Python dependencies: `packaging`, `fastapi>=0.110.0`, `pydantic`, `python-multipart`, `ujson`, `a2wsgi>=1.10.6`, `parse-accept-language`.
+   - Updated `odoo.conf` and `scripts/update-module.sh` with `/mnt/oca_addons/rest-framework` and `/mnt/oca_addons/web-api`.
+   - Successfully installed modules `endpoint_route_handler` and `fastapi` (v19.0.1.1.0).
+   - Created demo FastAPI endpoint at root path `/fastapi_demo` with API Key authentication.
+   - Verified live Swagger UI at `http://localhost:8080/fastapi_demo/docs` (HTTP 200 OK) and ReDoc at `http://localhost:8080/fastapi_demo/redoc` (HTTP 200 OK).
+
+## 2026-09-21 — Universal Generic ORM REST API & Interactive Swagger UI
+
+1. **Universal ORM Router (`custom_addons/mechanic_workshop/api/generic_router.py`)**:
+   - Implemented dynamic endpoints covering 100% of Odoo models:
+     - `GET /api/v1/models`: List all tables in Odoo.
+     - `GET /api/v1/{model}/fields`: Inspect full field schema and data types.
+     - `POST /api/v1/{model}/search_read`: Domain search, pagination, field projection.
+     - `GET /api/v1/{model}/{id}`: Read record by ID.
+     - `POST /api/v1/{model}`: Create new record.
+     - `PUT /api/v1/{model}/{id}`: Update record by ID.
+     - `DELETE /api/v1/{model}/{id}`: Unlink record by ID.
+   - Built-in support for optional `api-key` header matching Odoo User API Keys.
+   - Robust datetime, date, and binary serializer for clean JSON responses.
+
+2. **FastAPI Endpoint Integration**:
+   - Extended `fastapi.endpoint` with `app="universal_orm"`.
+   - Seeded endpoint `fastapi_endpoint_universal_orm` at root path `/api/v1`.
+   - Added `fastapi` to `depends` in `custom_addons/mechanic_workshop/__manifest__.py` and bumped version to `19.0.1.14.0`.
+
+3. **Live Verification**:
+   - `curl -I http://localhost:8080/api/v1/docs` -> **200 OK** (Interactive Swagger UI).
+   - `curl -I http://localhost:8080/api/v1/openapi.json` -> **200 OK**.
+   - Verified live calls on `res.partner`, `product.template` (153 fields inspected, search_read successful).
+   - `./scripts/agent_check.sh`: **30/30 PASS, 0 FAIL** (exit 0).
+
+## 2026-09-21 — Modern Developer Portal (Scalar 3-Column UI) & Business Resource CRUD
+
+1. **Modern Developer Portal (Scalar UI)**:
+   - Integrated Scalar 3-column developer documentation portal at `GET /api/v1/scalar`.
+   - Dark mode modern theme with interactive API testing console.
+   - Live multi-language code generation tabs: Flutter (Dart), JavaScript (Fetch/Axios), Python (Requests), cURL, Swift, Go.
+   - API Gateway root endpoint (`GET /api/v1/`): returns JSON API directory for programmatic clients and automatically redirects browsers (`Accept: text/html`) to the Scalar portal.
+   - Traditional Swagger UI accessible at `GET /api/v1/docs`.
+
+2. **Explicit Business Domain CRUD Endpoints**:
+   - **Customers (`/api/v1/customers`)**:
+     - `GET /customers`: Filter and search customers with pagination.
+     - `GET /customers/{id}`: Detailed customer profile.
+     - `POST /customers`: Create new customer (validated via Pydantic).
+     - `PUT /customers/{id}`: Update customer profile.
+     - `DELETE /customers/{id}`: Safe archiving (`active=False`) with optional hard delete.
+   - **Products & Catalog (`/api/v1/products`)**:
+     - `GET /products`: Filter workshop catalog by keyword, brand, SKU.
+     - `GET /products/{id}`: Detailed product specifications and pricing.
+     - `POST /products`: Create new product.
+     - `PUT /products/{id}`: Update product details.
+   - **RFQs & Quotes (`/api/v1/rfqs`)**:
+     - `GET /rfqs`: List workshop RFQs by state.
+     - `GET /rfqs/{id}`: Retrieve full RFQ detail including all requested line items and products.
+     - `POST /rfqs`: Submit new customer RFQ with line item validation.
+   - **Boilers & Assets (`/api/v1/boilers`)**:
+     - `GET /boilers`: List boiler models with specifications.
+     - `GET /boilers/manufacturers`: List boiler equipment manufacturers.
+     - `GET /boilers/{id}`: Retrieve boiler model details along with mapped verified replacement parts.
+   - **Universal Dynamic ORM (`/api/v1/orm/{model}`)**:
+     - Complete dynamic CRUD reflection for all 500+ database models in Odoo.
+
+3. **Verification & Testing**:
+   - Live HTTP 200 responses verified on:
+     - `GET /api/v1/` (JSON gateway index + HTML redirect)
+     - `GET /api/v1/scalar` (Modern 3-column portal)
+     - `GET /api/v1/docs` (Swagger UI)
+     - `POST /api/v1/customers` (Created customer ID 47)
+     - `PUT /api/v1/customers/47` (Updated customer)
+     - `DELETE /api/v1/customers/47` (Archived customer)
+     - `POST /api/v1/products` (Created product ID 129)
+     - `PUT /api/v1/products/129` (Updated price)
+     - `POST /api/v1/rfqs` (Created RFQ ID 28: RFQ-000028 with line items)
+     - `GET /api/v1/rfqs/28` (Retrieved RFQ detail with line items)
+     - `GET /api/v1/boilers/1` (Retrieved Miura LX-200 with 3 verified compatible parts)
+   - `./scripts/agent_check.sh`: **30/30 PASS, 0 FAIL** (exit 0).
+
+
 
 
 

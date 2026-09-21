@@ -22,7 +22,7 @@ cd "${REPO_ROOT}"
 MODULE="${1:-mechanic_workshop}"
 INSTALL_FLAG="${2:-}"
 
-ADDONS_PATH="/usr/lib/python3/dist-packages/odoo/addons,/mnt/custom_addons,/mnt/oca_addons/brand,/mnt/oca_addons/product-attribute"
+ADDONS_PATH="/usr/lib/python3/dist-packages/odoo/addons,/mnt/custom_addons,/mnt/oca_addons/brand,/mnt/oca_addons/product-attribute,/mnt/oca_addons/rest-framework,/mnt/oca_addons/web-api"
 DATABASE="mechanic_workshop"
 
 if [ "${INSTALL_FLAG}" = "--install" ]; then
