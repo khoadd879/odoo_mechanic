@@ -5,6 +5,10 @@ access_sre_pillar_public,SRE Pillar public,model_sre_navigation_pillar,base.grou
 access_sre_pillar_sales,SRE Pillar sales,model_sre_navigation_pillar,sales_team.group_sale_salesman,1,1,1,0
 access_sre_family_public,SRE Family public,model_sre_product_family,base.group_public,1,0,0,0
 access_sre_family_sales,SRE Family sales,model_sre_product_family,sales_team.group_sale_salesman,1,1,1,0
+access_sre_category_public,SRE Category public,model_sre_product_category,base.group_public,1,0,0,0
+access_sre_category_sales,SRE Category sales,model_sre_product_category,sales_team.group_sale_salesman,1,1,1,1
+access_sre_type_public,SRE Type public,model_sre_product_type,base.group_public,1,0,0,0
+access_sre_type_sales,SRE Type sales,model_sre_product_type,sales_team.group_sale_salesman,1,1,1,1
 access_sre_attr_profile_public,SRE Attribute Profile public disabled,model_sre_attribute_profile,base.group_public,0,0,0,0
 access_sre_attr_profile_sales,SRE Attribute Profile sales,model_sre_attribute_profile,sales_team.group_sale_salesman,1,1,1,0
 access_sre_attr_profile_line_public,SRE Attribute Profile Line public disabled,model_sre_attribute_profile_attribute,base.group_public,0,0,0,0

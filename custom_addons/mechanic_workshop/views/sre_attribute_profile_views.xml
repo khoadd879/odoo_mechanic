@@ -23,7 +23,10 @@
                         <list editable="bottom">
                             <field name="sequence" widget="handle"/>
                             <field name="attribute_id"/>
+                            <field name="is_required"/>
                             <field name="is_filter_shown"/>
+                            <field name="is_display_shown"/>
+                            <field name="creates_variant"/>
                             <field name="value_ids" widget="many2many_tags"/>
                         </list>
                     </field>

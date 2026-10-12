@@ -1,0 +1,68 @@
+<odoo>
+    <record id="sre_type_list" model="ir.ui.view">
+        <field name="name">sre.product.type.list</field>
+        <field name="model">sre.product.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="pillar_id"/>
+                <field name="category_id"/>
+                <field name="family_id"/>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="slug"/>
+                <field name="product_count"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sre_type_form" model="ir.ui.view">
+        <field name="name">sre.product.type.form</field>
+        <field name="model">sre.product.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="slug"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="family_id"/>
+                            <field name="category_id"/>
+                            <field name="pillar_id"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                        <page string="Products">
+                            <field name="product_tmpl_ids" readonly="1">
+                                <list>
+                                    <field name="default_code"/>
+                                    <field name="name"/>
+                                    <field name="manufacturer_pref"/>
+                                    <field name="product_brand_id"/>
+                                    <field name="is_published"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sre_type_action" model="ir.actions.act_window">
+        <field name="name">Product Types</field>
+        <field name="res_model">sre.product.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="sre_type_menu_items" name="Product Types"
+              parent="sre_pillar_menu" action="sre_type_action"
+              sequence="25"/>
+</odoo>

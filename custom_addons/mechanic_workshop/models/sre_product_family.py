@@ -36,6 +36,13 @@ class SreProductFamily(models.Model):
         help="URL slug, e.g. 'valve'. Lowercase, hyphenated.",
     )
     sequence = fields.Integer(default=10, index=True)
+    category_id = fields.Many2one(
+        "sre.product.category",
+        string="Category",
+        ondelete="set null",
+        index=True,
+        help="Parent category (Level 2) under a Pillar.",
+    )
     pillar_id = fields.Many2one(
         "sre.navigation.pillar",
         string="Pillar",
@@ -61,6 +68,15 @@ class SreProductFamily(models.Model):
             "filters to be per-family; leave empty to render no facet."
         ),
     )
+    type_ids = fields.One2many(
+        "sre.product.type",
+        "family_id",
+        string="Product Types",
+    )
+    type_count = fields.Integer(
+        compute="_compute_type_count",
+        string="Product Types Count",
+    )
     is_published = fields.Boolean(default=True, index=True)
     active = fields.Boolean(default=True)
     product_count = fields.Integer(
@@ -72,6 +88,16 @@ class SreProductFamily(models.Model):
         "UNIQUE(slug)",
         "Family slug must be unique.",
     )
+
+    @api.onchange("category_id")
+    def _onchange_category_id(self) -> None:
+        if self.category_id and self.category_id.pillar_id:
+            self.pillar_id = self.category_id.pillar_id
+
+    @api.depends("type_ids")
+    def _compute_type_count(self) -> None:
+        for family in self:
+            family.type_count = len(family.type_ids)
 
     @api.depends("name")
     def _compute_product_count(self) -> None:
@@ -87,12 +113,21 @@ class SreProductFamily(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list: list[dict]) -> models.Model:
+        Category = self.env["sre.product.category"]
         for vals in vals_list:
             if vals.get("slug"):
                 vals["slug"] = self._normalize_slug(vals["slug"])
+            if vals.get("category_id") and not vals.get("pillar_id"):
+                cat = Category.browse(vals["category_id"])
+                if cat.pillar_id:
+                    vals["pillar_id"] = cat.pillar_id.id
         return super().create(vals_list)
 
     def write(self, vals: dict) -> bool:
         if vals.get("slug"):
             vals["slug"] = self._normalize_slug(vals["slug"])
+        if vals.get("category_id") and not vals.get("pillar_id"):
+            cat = self.env["sre.product.category"].browse(vals["category_id"])
+            if cat.pillar_id:
+                vals["pillar_id"] = cat.pillar_id.id
         return super().write(vals)

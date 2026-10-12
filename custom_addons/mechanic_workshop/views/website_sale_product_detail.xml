@@ -114,7 +114,9 @@
                                     <t t-if="product.manufacturer_pref"><dt>Manufacturer PN</dt><dd class="sre-mono" t-esc="product.manufacturer_pref"/></t>
                                     <t t-if="product.default_code"><dt>SRE SKU</dt><dd class="sre-mono" t-esc="product.default_code"/></t>
                                     <t t-if="product.sre_public_oem_part_numbers"><dt>OEM / cross reference</dt><dd class="sre-mono" t-esc="product.sre_public_oem_part_numbers"/></t>
+                                    <t t-if="product.sre_category_id"><dt>Category</dt><dd><a t-att-href="'/sre/catalog/category/%s' % product.sre_category_id.slug" t-esc="product.sre_category_id.name"/></dd></t>
                                     <t t-if="product.family_id"><dt>Product family</dt><dd><a t-att-href="'/sre/catalog/family/%s' % product.family_id.slug" t-esc="product.family_id.name"/></dd></t>
+                                    <t t-if="product.product_type_id"><dt>Product type</dt><dd t-esc="product.product_type_id.name"/></t>
                                     <t t-if="product.public_categ_ids"><dt>Public category</dt><dd><t t-foreach="product.public_categ_ids" t-as="category"><span t-esc="category.name"/><t t-if="not category_last"> · </t></t></dd></t>
                                 </dl>
                             </div>
@@ -149,25 +151,40 @@
                         <main>
                             <section class="sre-tech-section">
                                 <div class="sre-tech-section__head"><span>01</span><div><h2>Technical specification</h2><p>Public product data prepared for technical review.</p></div></div>
-                                <table t-if="product.operating_pressure_max or product.operating_temp_max or product.operating_temp_min or product.flow_rate_max or product.attribute_line_ids" class="sre-tech-table">
-                                    <tbody>
-                                        <tr t-if="product.operating_pressure_max">
-                                            <th>Operating Pressure</th>
-                                            <td><t t-esc="'%.1f' % product.operating_pressure_min"/> – <t t-esc="'%.1f' % product.operating_pressure_max"/> bar</td>
-                                        </tr>
-                                        <tr t-if="product.operating_temp_max or product.operating_temp_min">
-                                            <th>Operating Temperature</th>
-                                            <td><t t-esc="'%.0f' % product.operating_temp_min"/> to <t t-esc="'%.0f' % product.operating_temp_max"/> °C</td>
-                                        </tr>
-                                        <tr t-if="product.flow_rate_max">
-                                            <th>Operating Flow Rate</th>
-                                            <td><t t-esc="'%.1f' % product.flow_rate_min"/> – <t t-esc="'%.1f' % product.flow_rate_max"/> m³/h</td>
-                                        </tr>
-                                        <tr t-foreach="product.attribute_line_ids" t-as="attribute_line"><th t-esc="attribute_line.attribute_id.name"/><td t-esc="', '.join(attribute_line.value_ids.mapped('name'))"/></tr>
-                                    </tbody>
-                                </table>
+                                <t t-set="tech_specs" t-value="product._get_technical_specifications()"/>
+                                <t t-if="tech_specs['has_specs']">
+                                    <!-- Key / Core Specifications -->
+                                    <div t-if="tech_specs['key_specs']" class="sre-tech-group mb-3">
+                                        <h3 class="h6 text-uppercase text-primary fw-bold mb-2 pb-1 border-bottom">
+                                            <i class="fa fa-star me-1" aria-hidden="true"/> Key Specifications
+                                        </h3>
+                                        <table class="sre-tech-table">
+                                            <tbody>
+                                                <tr t-foreach="tech_specs['key_specs']" t-as="spec">
+                                                    <th t-esc="spec['name']"/>
+                                                    <td class="fw-semibold" t-esc="spec['value']"/>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <!-- Additional Specifications -->
+                                    <div t-if="tech_specs['additional_specs']" class="sre-tech-group mb-3">
+                                        <h3 class="h6 text-uppercase text-muted fw-bold mb-2 pb-1 border-bottom">
+                                            <i class="fa fa-sliders me-1" aria-hidden="true"/> Additional Specifications
+                                        </h3>
+                                        <table class="sre-tech-table">
+                                            <tbody>
+                                                <tr t-foreach="tech_specs['additional_specs']" t-as="spec">
+                                                    <th t-esc="spec['name']"/>
+                                                    <td t-esc="spec['value']"/>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </t>
                                 <div t-if="product.description" class="sre-product-description" t-field="product.description"/>
-                                <p t-if="not product.operating_pressure_max and not product.operating_temp_max and not product.operating_temp_min and not product.flow_rate_max and not product.attribute_line_ids and not product.description" class="sre-tech-empty">Structured technical data has not been published for this item. Include your operating conditions in the RFQ for verification.</p>
+                                <p t-if="not tech_specs['has_specs'] and not product.description" class="sre-tech-empty">Structured technical data has not been published for this item. Include your operating conditions in the RFQ for verification.</p>
                             </section>
 
                             <section class="sre-tech-section" id="sre_section_documents">

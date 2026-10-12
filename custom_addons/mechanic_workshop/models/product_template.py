@@ -65,6 +65,21 @@ class ProductTemplate(models.Model):
             "and the navigation entry for this product. Brief §04."
         ),
     )
+    sre_category_id = fields.Many2one(
+        related="family_id.category_id",
+        string="SRE Category",
+        store=True,
+        readonly=True,
+        index=True,
+        help="Parent SRE Category (Level 2) derived from family.",
+    )
+    product_type_id = fields.Many2one(
+        "sre.product.type",
+        string="SRE Product Type",
+        ondelete="set null",
+        index=True,
+        help="Specific product type under the family (Level 4).",
+    )
     industry_ids = fields.Many2many(
         "sre.industry",
         "sre_industry_product_rel",
@@ -231,4 +246,116 @@ class ProductTemplate(models.Model):
         if self.list_price <= 0:
             return False
         return self.with_context(pricelist=pricelist.id)._get_contextual_price()
+
+    def _get_technical_specifications(self) -> dict[str, object]:
+        """Return structured technical specifications grouped into Key and Additional Specs.
+
+        Attributes are filtered by is_display_shown=True and sorted by sequence defined in the
+        family's Attribute Profile.
+        """
+        self.ensure_one()
+        key_specs: list[dict[str, object]] = []
+        additional_specs: list[dict[str, object]] = []
+
+        # 1. Base measured operating conditions
+        if self.operating_pressure_max:
+            val = (
+                f"{self.operating_pressure_min:.1f} – {self.operating_pressure_max:.1f} bar"
+                if self.operating_pressure_min
+                else f"Up to {self.operating_pressure_max:.1f} bar"
+            )
+            key_specs.append({
+                "name": "Operating Pressure",
+                "value": val,
+                "is_key": True,
+                "sequence": 1,
+            })
+
+        if self.operating_temp_max or self.operating_temp_min:
+            val = f"{self.operating_temp_min:.0f} to {self.operating_temp_max:.0f} °C"
+            key_specs.append({
+                "name": "Operating Temperature",
+                "value": val,
+                "is_key": True,
+                "sequence": 2,
+            })
+
+        if self.flow_rate_max:
+            val = (
+                f"{self.flow_rate_min:.1f} – {self.flow_rate_max:.1f} m³/h"
+                if self.flow_rate_min
+                else f"Up to {self.flow_rate_max:.1f} m³/h"
+            )
+            key_specs.append({
+                "name": "Operating Flow Rate",
+                "value": val,
+                "is_key": True,
+                "sequence": 3,
+            })
+
+        # 2. Level 4 Product Type
+        if self.product_type_id:
+            key_specs.append({
+                "name": "Product Type",
+                "value": self.product_type_id.name,
+                "is_key": True,
+                "sequence": 4,
+            })
+
+        # 3. Dynamic attributes from Attribute Profile
+        profile = (
+            self.family_id.attribute_profile_id.sudo()
+            if self.family_id and self.family_id.attribute_profile_id
+            else None
+        )
+        profile_lines_map: dict[int, object] = {}
+        if profile:
+            for pl in profile.line_ids:
+                profile_lines_map[pl.attribute_id.id] = pl
+
+        for p_line in self.attribute_line_ids:
+            attr = p_line.attribute_id
+            values_str = ", ".join(p_line.value_ids.mapped("name"))
+            if not values_str:
+                continue
+
+            if profile_lines_map:
+                p_meta = profile_lines_map.get(attr.id)
+                if p_meta:
+                    if not p_meta.is_display_shown:
+                        continue
+                    spec_item = {
+                        "name": attr.name,
+                        "value": values_str,
+                        "is_key": p_meta.is_required,
+                        "sequence": p_meta.sequence or attr.sequence or 10,
+                    }
+                    if p_meta.is_required:
+                        key_specs.append(spec_item)
+                    else:
+                        additional_specs.append(spec_item)
+                else:
+                    additional_specs.append({
+                        "name": attr.name,
+                        "value": values_str,
+                        "is_key": False,
+                        "sequence": attr.sequence or 20,
+                    })
+            else:
+                additional_specs.append({
+                    "name": attr.name,
+                    "value": values_str,
+                    "is_key": False,
+                    "sequence": attr.sequence or 20,
+                })
+
+        key_specs.sort(key=lambda x: (x.get("sequence", 10), str(x.get("name", ""))))
+        additional_specs.sort(key=lambda x: (x.get("sequence", 10), str(x.get("name", ""))))
+
+        return {
+            "key_specs": key_specs,
+            "additional_specs": additional_specs,
+            "all_specs": key_specs + additional_specs,
+            "has_specs": bool(key_specs or additional_specs),
+        }
 

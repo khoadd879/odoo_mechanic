@@ -65,8 +65,13 @@
                     <field name="line_ids" readonly="order_id">
                         <list editable="bottom">
                             <field name="product_id"/>
+                            <field name="sku" optional="show"/>
+                            <field name="mpn" optional="show"/>
+                            <field name="brand_id" optional="show"/>
+                            <field name="model_name" optional="show"/>
                             <field name="quantity"/>
                             <field name="uom_id"/>
+                            <field name="technical_notes" optional="show"/>
                         </list>
                     </field>
                     <field name="notes" placeholder="Technical requirements, operating conditions..."/>

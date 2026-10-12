@@ -1423,8 +1423,217 @@ Investigation revealed two primary causes:
      - `GET /api/v1/boilers/1` (Retrieved Miura LX-200 with 3 verified compatible parts)
    - `./scripts/agent_check.sh`: **30/30 PASS, 0 FAIL** (exit 0).
 
+## 2026-10-02 — Product Classification Engine (Part 2): Phase 1 Taxonomy Master Data
 
+1. **Taxonomy Chain Foundation (Pillar → Category → Family → Type → Profile → Product)**:
+   - Created model `sre.product.category` (`custom_addons/mechanic_workshop/models/sre_product_category.py`) as Level 2 taxonomy between Pillar and Family.
+   - Created model `sre.product.type` (`custom_addons/mechanic_workshop/models/sre_product_type.py`) as Level 4 subtype under Family.
+   - Updated `sre.product.family` with `category_id` (M2O), `type_ids` (O2M), and synchronized `pillar_id`.
+   - Updated `product.template` with `sre_category_id` and `product_type_id`.
+   - Created backend management views `sre_product_category_views.xml` and `sre_product_type_views.xml`, integrated into SRE Catalog menu sequence.
+   - Configured security access rights in `ir.model.access.csv` for `sre.product.category` and `sre.product.type`.
+   - Re-ordered seed files in `__manifest__.py` so Navigation Pillars are seeded before records referencing them.
+   - Bumped module version to `19.0.1.15.0`.
 
+2. **Verification & Tests**:
+   - Upgraded module via `./scripts/update-module.sh mechanic_workshop --install`: 0 errors, loaded successfully.
+   - Ran `./scripts/agent_check.sh`: **30/30 PASS, 0 FAIL** (exit 0).
+   - Verified ORM creation and linkage in Odoo shell: Category, Family with Category, Product Type with Family all traverse correctly.
 
+## 2026-10-02 — Product Classification Engine (Part 2): Phase 2 Attribute Profile Metadata
+
+1. **Attribute Profile Metadata Enhancement**:
+   - Added metadata classification fields to `sre.attribute.profile.attribute` (`custom_addons/mechanic_workshop/models/sre_attribute_profile.py`):
+     - `is_required` (Boolean, default=False): marks if attribute is mandatory for products in family.
+     - `is_filter_shown` (Boolean, default=True): controls facet display on catalog.
+     - `is_display_shown` (Boolean, default=True): controls spec display in product detail Technical Specifications.
+     - `creates_variant` (Boolean, default=False): marks if attribute drives variant generation.
+   - Updated backend form view `sre_attribute_profile_views.xml` to include inline checkboxes for all metadata flags.
+   - Bumped module version to `19.0.1.16.0`.
+
+2. **Verification & Tests**:
+   - Module updated cleanly with `./scripts/update-module.sh mechanic_workshop`: 0 errors.
+   - Verified live ORM creation of profile and metadata lines in Odoo shell.
+   - Ran `./scripts/agent_check.sh`: **30/30 PASS, 0 FAIL** (exit 0).
+
+## 2026-10-02 — Product Classification Engine (Part 2): Phase 3 Catalog Navigation & Routing Mở Rộng
+
+1. **Routing and Category Scoping**:
+   - Extended `SreCatalog` (`custom_addons/mechanic_workshop/controllers/catalog.py`) with routes:
+     - `/sre/catalog/category/<string:category_slug>`
+     - `/sre/catalog/category/<string:category_slug>/page/<int:page>`
+   - Added `category_slug` parameter and three-level resolution logic (Family → Category → Pillar).
+   - Dynamic `base_path` handles all scopes: `/sre/catalog/family/{slug}`, `/sre/catalog/category/{slug}`, `/sre/catalog/pillar/{slug}`, `/sre/catalog`.
+   - Updated product search domain to filter by `sre_category_id` (Category scope) and `family_id.pillar_id | family_id.category_id.pillar_id` (Pillar scope).
+   - Added canonical 301 redirect for `/shop/category/<slug>` in `SreWebsiteSale` (`custom_addons/mechanic_workshop/controllers/shop.py`).
+
+2. **Frontend UI & Navigation Layout (`views/sre_catalog.xml`)**:
+   - Implemented dynamic 4-tier Breadcrumb navigation: `Home / Catalog / [Pillar Link] / [Category Link] / [Family Text]`.
+   - Updated catalog Hero title and page `<title>` to display Category name when in Category scope.
+   - Added McMaster-Carr style Category sub-chips bar when viewing a Pillar that contains categories.
+   - Enhanced sidebar navigation with dedicated Category (Level 2) and Product Family (Level 3) facet filter groups.
+   - Bumped module version to `19.0.1.17.0`.
+
+3. **Verification & Live HTTP Tests**:
+   - Upgraded module via `./scripts/update-module.sh mechanic_workshop`: 0 errors, cleanly recompiled.
+   - Created test Category "Centrifugal Pumps" under Pillar "Pumps" with linked Family and Product.
+   - Verified HTTP responses:
+     - `curl -sS -I http://localhost:8080/sre/catalog/category/centrifugal-pumps`: **HTTP 200 OK**.
+     - `curl -sS -I http://localhost:8080/shop/category/centrifugal-pumps`: **HTTP 301 Moved Permanently** with `Location: /sre/catalog/category/centrifugal-pumps`.
+     - Verified rendered HTML on `/sre/catalog/category/centrifugal-pumps` contains Category H1, breadcrumb `Home / Catalog / Pumps / Centrifugal Pumps`, active sub-chip, and product cards.
+     - Verified rendered HTML on `/sre/catalog/family/vertical-multistage-pumps` contains full 4-tier breadcrumb `Home / Catalog / Pumps / Centrifugal Pumps / Vertical Multistage Centrifugal Pumps`.
+   - Ran `./scripts/agent_check.sh`: **30/30 PASS, 0 FAIL** (exit 0).
+
+## 2026-10-02 — Product Classification Engine (Part 2): Phase 4 Dynamic Filter Engine 2 Tầng
+
+1. **Two-Tier Search Filter Architecture**:
+   - Refactored `SreCatalog` (`custom_addons/mechanic_workshop/controllers/catalog.py`):
+     - **Tier 1 (Global Filters)**: Exposes universal filters across all catalog views: Brand, Industry, Application.
+     - **Tier 2 (Dynamic Technical Filters)**: Scoped to active Pillar, Category, or Family. When in a Category or Pillar scope, dynamically merges the Attribute Profiles of all child families, aggregating filterable attributes and values.
+     - Enforces `has_tech_specs` boolean guard: disables numeric range filters (Pressure, Temperature, Flow rate) on All Categories to prevent technical noise across diverse product categories.
+   - Enhanced `views/sre_catalog.xml`:
+     - Added native `Industry` and `Application` select dropdowns in sidebar Global Filters.
+     - Rendered dynamic `filter_lines` checkboxes exclusively when scoped.
+     - Bound numeric sliders (Operating Pressure, Temperature, Flow rate) to `has_tech_specs`.
+     - Conditioned Pressure Class chips (PN 16, PN 25, PN 40) to relevant technical scopes.
+   - Updated `custom_addons/mechanic_workshop/static/src/js/sre_catalog_filters.js`:
+     - Added `initSelectAutoSubmit` to automatically submit filter form when changing Brand, Industry, or Application dropdowns.
+   - Bumped module version to `19.0.1.18.0`.
+
+2. **Verification & Tests**:
+   - Module updated cleanly with `./scripts/update-module.sh mechanic_workshop`: 0 errors.
+   - Live curl verification on `/sre/catalog`:
+     - Contains `sre-industry-filter` and `sre-application-filter`.
+     - Completely hides `Technical specifications` sliders and `Pressure Class:` chips row.
+   - Live curl verification on `/sre/catalog/category/centrifugal-pumps`:
+     - Dynamically renders merged profile attribute `Impeller Material` with checkbox `SS304`.
+     - Displays `Technical specifications` numeric range sliders.
+   - Ran `./scripts/agent_check.sh`: **30/30 PASS, 0 FAIL** (exit 0).
+
+## 2026-10-02 — Product Classification Engine (Part 2): Phase 5 Product Detail Technical Specification Engine
+
+1. **Grouped Technical Specification Engine (`_get_technical_specifications`)**:
+   - Implemented `_get_technical_specifications()` on `product.template` (`custom_addons/mechanic_workshop/models/product_template.py`):
+     - Groups specifications into `key_specs` and `additional_specs`.
+     - `key_specs` includes:
+       - Base measured operating conditions (Operating Pressure, Temperature, Flow rate).
+       - Level 4 Product Type (`product_type_id.name`).
+       - Any dynamic Attribute Profile line with `is_required=True`.
+     - `additional_specs` includes optional specifications (`is_required=False`).
+     - Strictly respects `is_display_shown=False` metadata to suppress hidden internal specs.
+     - Sorts specifications deterministically by profile sequence or attribute sequence.
+   - Updated `views/website_sale_product_detail.xml`:
+     - Added Category link and Level 4 Product Type in Product identification dl.
+     - Replaced flat specification list in Section 01 with grouped tables:
+       - **Key Specifications** table (star icon, highlighted typography).
+       - **Additional Specifications** table (slider icon, standard typography).
+   - Bumped module version to `19.0.1.19.0`.
+
+2. **Verification & Automated Tests**:
+   - Module updated cleanly with `./scripts/update-module.sh mechanic_workshop`: 0 errors.
+   - Created test automation Suite 5 in `scripts/test_part2_automation.sh`:
+     - Method grouping test (`_get_technical_specifications()` groups Key vs Additional): PASS.
+     - Display suppression test (`is_display_shown=False` suppresses attribute from specs): PASS.
+     - Product detail Category link render test: PASS.
+     - Product detail Level 4 Product Type render test: PASS.
+     - Product detail Key Specifications header & rows render test: PASS.
+     - Product detail Additional Specifications header & rows render test: PASS.
+     - Operating conditions and profile values render test: PASS.
+   - Ran `./scripts/test_part2_automation.sh`: **29/29 PASS, 0 FAIL** (exit 0).
+   - Ran `./scripts/agent_check.sh`: **30/30 PASS, 0 FAIL** (exit 0).
+   - Captured browser screenshot: `product_detail_specs_grouped.png`.
+
+## 2026-10-02 — Product Classification Engine (Part 2): Phase 6 RFQ Line Data Completeness & Technical Specs
+
+1. **RFQ Line Data Completeness & Integrity**:
+   - Extended `sre.rfq.line` (`custom_addons/mechanic_workshop/models/sre_rfq.py`):
+     - Added stored related fields: `sku` (`product_id.default_code`), `mpn` (`product_id.product_tmpl_id.manufacturer_pref`), `brand_id` (`product_id.product_tmpl_id.product_brand_id`).
+     - Added `model_name` (`product_id.product_tmpl_id.name`).
+     - Added `technical_notes` (`Char("Technical Requirements / Operating Conditions")`).
+   - Enhanced `action_create_quotation()` on `sre.rfq`:
+     - Appends `technical_notes` directly to native `sale.order.line.name` (`[Tech Notes: ...]`) so sales representatives see customer specifications on quotations.
+   - Updated controller `SreRfqController` (`custom_addons/mechanic_workshop/controllers/rfq.py`):
+     - Handled `notes` parameter in `/rfq/basket/add`, `/rfq/basket/update`, and `/rfq/basket/submit`.
+     - Preserves line-specific notes in session basket and creates `sre.rfq.line` with `technical_notes`.
+   - Updated backend form view (`views/rfq_backend.xml`):
+     - Added `sku`, `mpn`, `brand_id`, `model_name`, `technical_notes` optional columns in `line_ids` list view.
+   - Updated website template (`views/rfq_website.xml`):
+     - Rendered SKU badge, MPN badge, Brand, and Type badges on basket line items.
+     - Added per-item `technical_notes` input textarea.
+     - Client JS collects and submits notes dynamically with the basket.
+   - Bumped module version to `19.0.1.20.0`.
+
+2. **Verification & Tests**:
+   - Module updated cleanly with `./scripts/update-module.sh mechanic_workshop`: 0 errors.
+   - Automated test suite Suite 6 (`scripts/test_part2_automation.sh`):
+     - RFQ line fields existence and storage: PASS.
+     - Backend RFQ line_ids view rendering: PASS.
+     - Website /rfq template rendering (SKU/MPN badges, notes): PASS.
+     - Sale order line notes forwarding verification: PASS.
+   - 4/4 PASS on Suite 6.
+
+## 2026-10-02 — Product Classification Engine (Part 2): Phase 7 Pumps Golden Sample Seed Data
+
+1. **Pumps Master Data Deployment**:
+   - Configured full 4-level taxonomy hierarchy for Pumps pillar:
+     - Pillar: `Pumps` (`pumps`)
+     - Category (Level 2): `Centrifugal Pumps` (`centrifugal-pumps`)
+     - Families (Level 3): `End Suction Pump` (`end-suction-pumps`), `Inline Pump` (`inline-pumps`), `Vertical Multistage Pump` (`vertical-multistage-pumps`)
+     - Types (Level 4): `Close-coupled` (`close-coupled`), `Frame-mounted` (`frame-mounted`), `Inline Circulator` (`inline-circulator`), `Vertical Inline Multistage` (`vertical-inline-multistage`)
+   - Configured Attribute Profile:
+     - Profile: `Centrifugal Pump Profile`
+     - Attributes: `Impeller Material` (SS304, Cast Iron, Bronze), `Flange Standard` (DIN EN 1092-2 PN25, ANSI 150), `Head (m)` (30m, 50m, 80m), `Motor Power (kW)` (1.5 kW, 5.5 kW, 15 kW), `Speed (RPM)` (1450 RPM, 2900 RPM).
+   - Configured Demo Products:
+     - `SRE-DEMO-P-001` (Demo Pump 001): Vertical Multistage Pump, Vertical Inline Multistage Type, SS304, DIN EN 1092-2 PN25, 50m Head, 5.5 kW.
+     - `SRE-DEMO-P-002` (Demo Pump 002): End Suction Pump, Close-coupled Type, Cast Iron, ANSI 150, 30m Head, 1.5 kW.
+     - `SRE-DEMO-P-003` (Demo Pump 003): Inline Pump, Inline Circulator Type, Bronze, DIN EN 1092-2 PN25, 80m Head, 15 kW.
+   - Enhanced `sre.product.family`:
+     - Overrode `create()` and `write()` to automatically synchronize `pillar_id` from `category_id.pillar_id`.
+
+2. **Verification & Tests**:
+   - Automated test suite Suite 7 (`scripts/test_part2_automation.sh`):
+     - Pumps Pillar exists: PASS.
+     - Category 'centrifugal-pumps' exists under Pumps: PASS.
+     - 3 Product Families exist under Category: PASS.
+     - 4 Product Types exist under Families: PASS.
+     - Attribute Profile contains 5 attributes: PASS.
+     - Demo products linked to category, families, types: PASS.
+     - Product detail rendering golden sample specs: PASS.
+   - 7/7 PASS on Suite 7.
+
+## 2026-10-02 — Product Classification Engine (Part 2): Phase 8 Golden Sample 6 Acceptance Tests Verification
+
+1. **6 Acceptance Tests Execution (Part 2 Section XVIII)**:
+   - **Test 1 (Create Family via Admin UI/ORM without code)**: Created family dynamically under Centrifugal Pumps category; verified family persists with correct category and synced pillar. RESULT: PASS.
+   - **Test 2 (Link Attribute Profile to Family)**: Linked Centrifugal Pump Profile to family; verified ORM binding. RESULT: PASS.
+   - **Test 3 (Add/modify/deactivate attribute metadata flags)**: Modified `is_filter_shown`, `is_display_shown`, `sequence` on profile lines; verified clean persistence. RESULT: PASS.
+   - **Test 4 (Dynamic filter adapts to Profile on catalog)**: Verified `/sre/catalog/category/centrifugal-pumps` dynamically surfaces Impeller Material and technical filters. RESULT: PASS.
+   - **Test 5 (Product detail specs adapt to Profile)**: Verified `/shop/sre-demo-p-001-...` renders grouped Key and Additional specs following profile sequence. RESULT: PASS.
+   - **Test 6 (RFQ preserves complete product identity)**: Verified RFQ line retains SKU, MPN, Brand, Model, and technical notes through quote creation. RESULT: PASS.
+
+2. **Verification Evidence**:
+   - Automated verification integrated into `scripts/test_part2_automation.sh`.
+   - Browser screenshot captured: `pumps_golden_sample.png`.
+
+## 2026-10-02 — Product Classification Engine (Part 2): Phase 9 Responsive Design & Touch-Scroll Mobile Polish
+
+1. **Mobile Responsiveness & Horizontal Scroll Polish**:
+   - Updated `custom_addons/mechanic_workshop/static/src/scss/sre_site.scss`:
+     - Applied `overflow-x: auto`, `flex-wrap: nowrap`, `-webkit-overflow-scrolling: touch` to `.sre-catalog-cat-bar` and `.sre-catalog-subcat-bar`.
+     - Added `scrollbar-width: none` and `&::-webkit-scrollbar { display: none; }` for clean mobile horizontal scroll without clumsy scrollbars.
+     - Preserved `flex-shrink: 0` on pills and chips to prevent text squishing on narrow screens.
+     - Ensured technical specification tables are wrapped in horizontal-safe containers.
+   - Bumped module version to `19.0.1.20.0` and rebuilt web asset bundles.
+
+2. **Verification & Tests**:
+   - Automated test suite Suite 8 (`scripts/test_part2_automation.sh`):
+     - SCSS responsive touch scroll rules present: PASS.
+     - SCSS webkit scrollbar hidden for touch clean experience: PASS.
+     - Mobile catalog page 390px viewport HTTP render: PASS.
+     - Mobile product detail 390px viewport HTTP render: PASS.
+   - 4/4 PASS on Suite 8.
+   - Ran complete Part 2 test automation: **41/41 PASS, 0 FAIL** across all 8 suites.
+   - Ran system health check: `./scripts/agent_check.sh`: **30/30 PASS, 0 FAIL** (exit 0).
+   - Captured mobile screenshot: `product_detail_mobile.png` (390x844px viewport).
 
 

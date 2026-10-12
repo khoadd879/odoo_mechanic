@@ -5,10 +5,12 @@
         <field name="arch" type="xml">
             <list>
                 <field name="pillar_id"/>
+                <field name="category_id"/>
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="slug"/>
                 <field name="attribute_profile_id"/>
+                <field name="type_count"/>
                 <field name="product_count"/>
                 <field name="is_published"/>
                 <field name="active"/>
@@ -31,6 +33,7 @@
                             <field name="sequence"/>
                         </group>
                         <group>
+                            <field name="category_id"/>
                             <field name="pillar_id"/>
                             <field name="attribute_profile_id"/>
                             <field name="active"/>
@@ -39,6 +42,17 @@
                     <notebook>
                         <page string="Description">
                             <field name="description"/>
+                        </page>
+                        <page string="Product Types">
+                            <field name="type_ids">
+                                <list>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="slug"/>
+                                    <field name="product_count"/>
+                                    <field name="active"/>
+                                </list>
+                            </field>
                         </page>
                     </notebook>
                 </sheet>

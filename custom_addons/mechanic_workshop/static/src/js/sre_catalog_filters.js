@@ -123,10 +123,22 @@
         });
     }
 
+    function initSelectAutoSubmit() {
+        var filterForm = document.querySelector(".sre-filter-form");
+        if (!filterForm) return;
+        var autoSelects = filterForm.querySelectorAll("#sre-brand-filter, #sre-industry-filter, #sre-application-filter");
+        autoSelects.forEach(function (sel) {
+            sel.addEventListener("change", function () {
+                filterForm.submit();
+            });
+        });
+    }
+
     function initAll() {
         initRangeSliders();
         initExpandableRows();
         initDetailMultiView();
+        initSelectAutoSubmit();
     }
 
     if (document.readyState === "loading") {

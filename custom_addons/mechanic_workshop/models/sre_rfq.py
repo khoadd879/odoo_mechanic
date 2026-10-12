@@ -120,6 +120,7 @@ class SreRfq(models.Model):
                     "product_id": line.product_id.id,
                     "product_uom_qty": line.quantity,
                     "product_uom_id": line.uom_id.id,
+                    "name": f"{line.product_id.display_name}{(' [' + line.technical_notes + ']') if line.technical_notes else ''}",
                 }) for line in self.line_ids],
             })
             self.write({"order_id": order.id, "state": "quoted"})
@@ -135,6 +136,11 @@ class SreRfqLine(models.Model):
     rfq_id = fields.Many2one("sre.rfq", required=True, ondelete="cascade", index=True)
     company_id = fields.Many2one(related="rfq_id.company_id", store=True)
     product_id = fields.Many2one("product.product", required=True, check_company=True)
+    sku = fields.Char(related="product_id.default_code", string="SKU", store=True, readonly=True)
+    mpn = fields.Char(related="product_id.product_tmpl_id.manufacturer_pref", string="MPN", store=True, readonly=True)
+    brand_id = fields.Many2one(related="product_id.product_tmpl_id.product_brand_id", string="Brand", store=True, readonly=True)
+    model_name = fields.Char(related="product_id.product_tmpl_id.name", string="Model / Specification", readonly=True)
+    technical_notes = fields.Char(string="Technical Requirements / Operating Conditions")
     quantity = fields.Float(required=True, default=1, digits="Product Unit")
     uom_id = fields.Many2one(related="product_id.uom_id", store=True)
 

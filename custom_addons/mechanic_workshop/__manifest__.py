@@ -1,6 +1,6 @@
 {
     "name": "Mechanic Workshop",
-    "version": "19.0.1.14.0",
+    "version": "19.0.1.20.0",
     "category": "Sales",
     "summary": "SRE technical catalog and customer RFQ on native Odoo Sales.",
     "description": """
@@ -36,15 +36,17 @@ Sprint 1 visual (McMaster-Carr reference):
     ],
     "data": [
         "security/ir.model.access.csv",
-        "data/sre_home_seed.xml",
         "data/sre_pim_seed.xml",
+        "data/sre_home_seed.xml",
         "data/sre_boiler_seed.xml",
         "data/sre_cross_reference_seed.xml",
         "data/sre_documents_seed.xml",
         "data/sre_portal_seed.xml",
         "data/sre_fastapi_endpoint_seed.xml",
         "views/sre_navigation_pillar_views.xml",
+        "views/sre_product_category_views.xml",
         "views/sre_product_family_views.xml",
+        "views/sre_product_type_views.xml",
         "views/sre_attribute_profile_views.xml",
         "views/sre_industry_views.xml",
         "views/sre_oem_pn_views.xml",

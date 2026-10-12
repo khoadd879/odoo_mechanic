@@ -97,6 +97,7 @@
         <t t-call="website.layout">
             <t t-set="additional_title">
                 <t t-if="family" t-esc="family.name"/>
+                <t t-elif="category" t-esc="category.name"/>
                 <t t-elif="pillar" t-esc="pillar.name"/>
                 <t t-elif="search">Search results</t>
                 <t t-else="">Technical product catalog</t>
@@ -107,14 +108,35 @@
                         <nav class="sre-breadcrumb" aria-label="Breadcrumb">
                             <a href="/">Home</a><span>/</span>
                             <a href="/sre/catalog">Catalog</a>
-                            <t t-if="pillar"><span>/</span><span t-esc="pillar.short_label or pillar.name"/></t>
-                            <t t-if="family"><span>/</span><span t-esc="family.name"/></t>
+                            <t t-if="pillar">
+                                <span>/</span>
+                                <t t-if="category or family">
+                                    <a t-att-href="'/sre/catalog/pillar/%s' % pillar.slug" t-esc="pillar.short_label or pillar.name"/>
+                                </t>
+                                <t t-else="">
+                                    <span t-esc="pillar.short_label or pillar.name"/>
+                                </t>
+                            </t>
+                            <t t-if="category">
+                                <span>/</span>
+                                <t t-if="family">
+                                    <a t-att-href="'/sre/catalog/category/%s' % category.slug" t-esc="category.name"/>
+                                </t>
+                                <t t-else="">
+                                    <span t-esc="category.name"/>
+                                </t>
+                            </t>
+                            <t t-if="family">
+                                <span>/</span>
+                                <span t-esc="family.name"/>
+                            </t>
                         </nav>
                         <div class="sre-catalog-hero__row">
                             <div>
                                 <span class="sre-kicker">SRE technical distribution</span>
                                 <h1>
                                     <t t-if="family" t-esc="family.name"/>
+                                    <t t-elif="category" t-esc="category.name"/>
                                     <t t-elif="pillar" t-esc="pillar.name"/>
                                     <t t-elif="industry" t-esc="industry.name"/>
                                     <t t-elif="application" t-esc="application.name"/>
@@ -147,7 +169,7 @@
                         'industrial-spare-parts': '/mechanic_workshop/static/src/img/cat_gaskets.svg',
                     }"/>
                     <div class="sre-catalog-cat-bar">
-                        <a href="/sre/catalog" t-att-class="'sre-cat-chip ' + ('is-active' if not pillar else '')">
+                        <a href="/sre/catalog" t-att-class="'sre-cat-chip ' + ('is-active' if not pillar and not category and not family else '')">
                             <div class="sre-cat-chip__thumb">
                                 <span class="fa fa-th text-muted"/>
                             </div>
@@ -170,6 +192,23 @@
                             </a>
                         </t>
                     </div>
+
+                    <!-- Category Sub-Chips Bar (if pillar has categories) -->
+                    <t t-if="pillar and categories">
+                        <div class="sre-catalog-subcat-bar mt-2 d-flex flex-wrap gap-2">
+                            <a t-att-href="'/sre/catalog/pillar/%s' % pillar.slug"
+                               t-att-class="'btn btn-sm py-1 px-2 border ' + ('btn-dark text-white fw-bold' if not category and not family else 'btn-light text-dark')">
+                                All <t t-esc="pillar.short_label or pillar.name"/>
+                            </a>
+                            <t t-foreach="categories" t-as="cat_item">
+                                <a t-att-href="'/sre/catalog/category/%s' % cat_item.slug"
+                                   t-att-class="'btn btn-sm py-1 px-2 border ' + ('btn-dark text-white fw-bold' if category and category.id == cat_item.id else 'btn-light text-dark')">
+                                    <t t-esc="cat_item.name"/>
+                                    <span class="badge bg-secondary ms-1" style="font-size: 0.7rem;" t-esc="cat_item.product_count"/>
+                                </a>
+                            </t>
+                        </div>
+                    </t>
                 </div>
 
                 <div class="container sre-catalog-shell">
@@ -179,9 +218,29 @@
                             <a t-att-href="query_url(brand=None, attr=None, pressure_min=None, pressure_max=None, temp_min=None, temp_max=None, flow_min=None, flow_max=None, page=None)">Clear</a>
                         </div>
 
-                        <section t-if="pillar and families" class="sre-filter-group">
+                        <!-- Category Filter (Level 2) -->
+                        <section t-if="categories" class="sre-filter-group">
+                            <h2>Category</h2>
+                            <a t-if="pillar"
+                               t-att-href="'/sre/catalog/pillar/%s' % pillar.slug"
+                               t-att-class="'sre-filter-link ' + ('is-active' if not category and not family else '')">All <t t-esc="pillar.short_label or pillar.name"/></a>
+                            <a t-foreach="categories"
+                               t-as="cat_option"
+                               t-att-href="'/sre/catalog/category/%s' % cat_option.slug"
+                               t-att-class="'sre-filter-link ' + ('is-active' if category and category.id == cat_option.id else '')">
+                                <span t-esc="cat_option.name"/>
+                                <small t-esc="cat_option.product_count"/>
+                            </a>
+                        </section>
+
+                        <!-- Product Family Filter (Level 3) -->
+                        <section t-if="families" class="sre-filter-group">
                             <h2>Product family</h2>
-                            <a t-att-href="'/sre/catalog/pillar/%s' % pillar.slug"
+                            <a t-if="category"
+                               t-att-href="'/sre/catalog/category/%s' % category.slug"
+                               t-att-class="'sre-filter-link ' + ('is-active' if not family else '')">All <t t-esc="category.name"/></a>
+                            <a t-elif="pillar"
+                               t-att-href="'/sre/catalog/pillar/%s' % pillar.slug"
                                t-att-class="'sre-filter-link ' + ('is-active' if not family else '')">All <t t-esc="pillar.short_label or pillar.name"/></a>
                             <a t-foreach="families"
                                t-as="family_option"
@@ -197,9 +256,8 @@
                             <input type="hidden" name="layout_mode" t-att-value="layout_mode"/>
                             <input type="hidden" name="order" t-att-value="sort_key"/>
                             <input type="hidden" name="per_page" t-att-value="per_page"/>
-                            <input t-if="industry" type="hidden" name="industry" t-att-value="industry.slug"/>
-                            <input t-if="application" type="hidden" name="application" t-att-value="application.slug"/>
 
+                            <!-- Tier 1: Global Filters -->
                             <section t-if="brands" class="sre-filter-group">
                                 <label for="sre-brand-filter">Brand</label>
                                 <select id="sre-brand-filter" name="brand">
@@ -212,6 +270,31 @@
                                 </select>
                             </section>
 
+                            <section t-if="industries" class="sre-filter-group">
+                                <label for="sre-industry-filter">Industry</label>
+                                <select id="sre-industry-filter" name="industry">
+                                    <option value="">All industries</option>
+                                    <option t-foreach="industries"
+                                            t-as="ind_opt"
+                                            t-att-value="ind_opt.slug"
+                                            t-att-selected="industry and industry.id == ind_opt.id"
+                                            t-esc="ind_opt.name"/>
+                                </select>
+                            </section>
+
+                            <section t-if="applications" class="sre-filter-group">
+                                <label for="sre-application-filter">Application</label>
+                                <select id="sre-application-filter" name="application">
+                                    <option value="">All applications</option>
+                                    <option t-foreach="applications"
+                                            t-as="app_opt"
+                                            t-att-value="app_opt.slug"
+                                            t-att-selected="application and application.id == app_opt.id"
+                                            t-esc="app_opt.name"/>
+                                </select>
+                            </section>
+
+                            <!-- Tier 2: Dynamic Technical Specifications (Scoped only) -->
                             <section t-foreach="filter_lines" t-as="filter_line" class="sre-filter-group">
                                 <h2 t-esc="filter_line['attribute'].name"/>
                                 <label t-foreach="filter_line['values']" t-as="filter_value" class="sre-filter-check">
@@ -223,7 +306,7 @@
                                 </label>
                             </section>
 
-                            <section class="sre-filter-group sre-filter-group--numeric">
+                            <section t-if="has_tech_specs" class="sre-filter-group sre-filter-group--numeric">
                                 <h2>Technical specifications</h2>
 
                                 <!-- Pressure Range (bar) -->
@@ -374,7 +457,7 @@
                                     </t>
                                 </div>
                             </div>
-                            <div class="sre-filter-chips-row">
+                            <div t-if="has_tech_specs and ((pillar and pillar.slug in ('valves', 'boiler-thermal', 'hvac-building', 'pumps')) or pressure_max is not None)" class="sre-filter-chips-row">
                                 <span class="sre-chips-label">Pressure Class:</span>
                                 <div class="sre-chips-group">
                                     <a t-att-href="query_url(pressure_max=None, page=None)" t-att-class="'sre-chip ' + ('is-active' if pressure_max is None else '')">All</a>

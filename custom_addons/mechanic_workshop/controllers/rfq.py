@@ -40,16 +40,19 @@ class CustomerRfq(http.Controller):
     @http.route("/rfq", type="http", auth="public", website=True, methods=["GET"], sitemap=False)
     def basket(self, **kw):
         basket = request.session.get(self._basket_key(), {})
+        basket_notes = request.session.get(self._basket_key() + "_notes", {})
         products = self._products([int(key) for key in basket])
         removed = len(products) != len(basket)
         if removed:
             basket = {str(p.id): basket[str(p.id)] for p in products}
+            basket_notes = {str(p.id): basket_notes[str(p.id)] for p in products if str(p.id) in basket_notes}
             request.session[self._basket_key()] = basket
+            request.session[self._basket_key() + "_notes"] = basket_notes
         token_key = self._basket_key() + "_token"
         if not request.session.get(token_key):
             request.session[token_key] = secrets.token_hex(32)
         return request.render("mechanic_workshop.rfq_basket", {
-            "lines": [(p, basket[str(p.id)]) for p in products],
+            "lines": [(p, basket[str(p.id)], basket_notes.get(str(p.id), "")) for p in products],
             "submission_key": request.session[token_key], "removed": removed,
         })
 
@@ -69,6 +72,10 @@ class CustomerRfq(http.Controller):
             request.session.pop(self._basket_key() + "_reference", None)
         basket[str(product_id)] = self._quantity(basket.get(str(product_id), 0) + self._quantity(quantity))
         request.session[self._basket_key()] = basket
+        if kw.get("notes"):
+            basket_notes = dict(request.session.get(self._basket_key() + "_notes", {}))
+            basket_notes[str(product_id)] = str(kw.get("notes", "")).strip()[:500]
+            request.session[self._basket_key() + "_notes"] = basket_notes
         if kw.get("ajax") == "1":
             return request.make_json_response({"line_count": len(basket)})
         return request.redirect("/rfq")
@@ -76,13 +83,18 @@ class CustomerRfq(http.Controller):
     @http.route("/rfq/update", type="http", auth="public", website=True, methods=["POST"])
     def update(self, product_id=None, quantity="1", remove=None, **kw):
         basket = dict(request.session.get(self._basket_key(), {}))
+        basket_notes = dict(request.session.get(self._basket_key() + "_notes", {}))
         if product_id not in basket:
             raise BadRequest("Unknown basket line")
         if remove:
             basket.pop(product_id)
+            basket_notes.pop(product_id, None)
         else:
             basket[product_id] = self._quantity(quantity)
+            if "notes" in kw:
+                basket_notes[product_id] = str(kw.get("notes", "")).strip()[:500]
         request.session[self._basket_key()] = basket
+        request.session[self._basket_key() + "_notes"] = basket_notes
         return request.redirect("/rfq")
 
     @http.route("/rfq/submit", type="http", auth="public", website=True, methods=["POST"])
@@ -114,13 +126,18 @@ class CustomerRfq(http.Controller):
                 raise BadRequest("Invalid delivery date") from None
             values["required_delivery_date"] = delivery
         basket = request.session.get(self._basket_key(), {})
+        basket_notes = request.session.get(self._basket_key() + "_notes", {})
         products = self._products([int(key) for key in basket])
         if not products or len(products) != len(basket):
             raise BadRequest("Your basket is empty or contains unavailable products")
         values.update({
             "company_id": request.website.company_id.id, "website_id": request.website.id,
             "submission_key": expected,
-            "line_ids": [Command.create({"product_id": p.id, "quantity": self._quantity(basket[str(p.id)])}) for p in products],
+            "line_ids": [Command.create({
+                "product_id": p.id,
+                "quantity": self._quantity(basket[str(p.id)]),
+                "technical_notes": str(post.get(f"line_notes_{p.id}") or basket_notes.get(str(p.id)) or "").strip()[:500],
+            }) for p in products],
         })
         uploaded_file = request.httprequest.files.get("nameplate_file")
         if uploaded_file and uploaded_file.filename:
@@ -133,6 +150,7 @@ class CustomerRfq(http.Controller):
         rfq = Rfq.create(values)
         rfq._create_opportunity()
         request.session[self._basket_key()] = {}
+        request.session[self._basket_key() + "_notes"] = {}
         request.session[self._basket_key() + "_reference"] = rfq.name
         return request.redirect("/rfq/thanks")
 

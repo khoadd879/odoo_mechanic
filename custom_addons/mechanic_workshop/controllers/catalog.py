@@ -139,6 +139,8 @@ class SreCatalog(http.Controller):
             "/sre/catalog/page/<int:page>",
             "/sre/catalog/pillar/<string:pillar_slug>",
             "/sre/catalog/pillar/<string:pillar_slug>/page/<int:page>",
+            "/sre/catalog/category/<string:category_slug>",
+            "/sre/catalog/category/<string:category_slug>/page/<int:page>",
             "/sre/catalog/family/<string:family_slug>",
             "/sre/catalog/family/<string:family_slug>/page/<int:page>",
         ],
@@ -151,14 +153,18 @@ class SreCatalog(http.Controller):
         self,
         page: int | str = 1,
         pillar_slug: str | None = None,
+        category_slug: str | None = None,
         family_slug: str | None = None,
         **kw: object,
     ) -> http.Response:
         """Render the catalogue with real search, filters and pagination."""
 
         Pillar = request.env["sre.navigation.pillar"].sudo()
+        Category = request.env["sre.product.category"].sudo()
         Family = request.env["sre.product.family"].sudo()
+
         pillar = Pillar
+        category = Category
         family = Family
         if family_slug:
             family = Family.search(
@@ -171,7 +177,20 @@ class SreCatalog(http.Controller):
             )
             if not family:
                 return request.not_found()
-            pillar = family.pillar_id
+            category = family.category_id
+            pillar = family.pillar_id or (category.pillar_id if category else Pillar)
+        elif category_slug:
+            category = Category.search(
+                [
+                    ("slug", "=", category_slug),
+                    ("is_published", "=", True),
+                    ("active", "=", True),
+                ],
+                limit=1,
+            )
+            if not category:
+                return request.not_found()
+            pillar = category.pillar_id
         elif pillar_slug:
             pillar = Pillar.search(
                 [
@@ -187,6 +206,8 @@ class SreCatalog(http.Controller):
         base_path = "/sre/catalog"
         if family:
             base_path = f"{base_path}/family/{family.slug}"
+        elif category:
+            base_path = f"{base_path}/category/{category.slug}"
         elif pillar:
             base_path = f"{base_path}/pillar/{pillar.slug}"
         query_url: Callable[..., str] = lambda **updates: self._query_url(
@@ -209,8 +230,13 @@ class SreCatalog(http.Controller):
         domain = Domain(request.website.sale_product_domain())
         if family:
             domain &= Domain("family_id", "=", family.id)
+        elif category:
+            domain &= Domain("sre_category_id", "=", category.id)
         elif pillar:
-            domain &= Domain("family_id.pillar_id", "=", pillar.id)
+            domain &= (
+                Domain("family_id.pillar_id", "=", pillar.id)
+                | Domain("family_id.category_id.pillar_id", "=", pillar.id)
+            )
 
         industry_slug = self._text(kw.get("industry"), 80)
         application_slug = self._text(kw.get("application"), 80)
@@ -250,6 +276,13 @@ class SreCatalog(http.Controller):
             brand = available_brands.filtered(lambda item: item.id == brand_id)
             domain &= Domain("product_brand_id", "=", brand.id) if brand else Domain.FALSE
 
+        industries = request.env["sre.industry"].sudo().search(
+            [("active", "=", True)], order="sequence, name"
+        )
+        applications = request.env["sre.application"].sudo().search(
+            [("active", "=", True)], order="sequence, name"
+        )
+
         selected_attributes: dict[int, set[int]] = {}
         for raw_value in request.httprequest.args.getlist("attr"):
             try:
@@ -258,21 +291,64 @@ class SreCatalog(http.Controller):
                 continue
             selected_attributes.setdefault(attribute_id, set()).add(value_id)
 
+        # Tier 2: Dynamic Technical Filters based on active scope (Family, Category, Pillar)
         filter_lines: list[dict[str, object]] = []
         valid_attributes: dict[int, set[int]] = {}
+        target_profiles = request.env["sre.attribute.profile"].sudo()
+
         if family and family.attribute_profile_id:
-            for line in family.attribute_profile_id.sudo().line_ids.filtered(
-                "is_filter_shown"
-            ):
-                values = line.value_ids or line.attribute_id.value_ids
-                value_ids = set(values.ids)
-                valid_attributes[line.attribute_id.id] = value_ids
+            target_profiles = family.attribute_profile_id
+        elif category:
+            cat_families = Family.search(
+                [
+                    ("category_id", "=", category.id),
+                    ("is_published", "=", True),
+                    ("active", "=", True),
+                ]
+            )
+            target_profiles = cat_families.mapped("attribute_profile_id")
+        elif pillar:
+            pillar_families = Family.search(
+                [
+                    ("pillar_id", "=", pillar.id),
+                    ("is_published", "=", True),
+                    ("active", "=", True),
+                ]
+            )
+            target_profiles = pillar_families.mapped("attribute_profile_id")
+
+        if target_profiles:
+            attr_map: dict[int, dict[str, object]] = {}
+            for profile in target_profiles:
+                for line in profile.line_ids.filtered("is_filter_shown"):
+                    attr = line.attribute_id
+                    if not attr:
+                        continue
+                    values = line.value_ids or attr.value_ids
+                    if attr.id not in attr_map:
+                        attr_map[attr.id] = {
+                            "attribute": attr,
+                            "values": values,
+                            "sequence": line.sequence or attr.sequence or 10,
+                        }
+                    else:
+                        attr_map[attr.id]["values"] |= values
+                        if line.sequence and line.sequence < attr_map[attr.id]["sequence"]:
+                            attr_map[attr.id]["sequence"] = line.sequence
+
+            sorted_attrs = sorted(
+                attr_map.values(),
+                key=lambda x: (x["sequence"], x["attribute"].name or ""),
+            )
+            for item in sorted_attrs:
+                valid_attributes[item["attribute"].id] = set(item["values"].ids)
                 filter_lines.append(
                     {
-                        "attribute": line.attribute_id,
-                        "values": values,
+                        "attribute": item["attribute"],
+                        "values": item["values"],
                     }
                 )
+
         selected_attributes = {
             attribute_id: value_ids & valid_attributes[attribute_id]
             for attribute_id, value_ids in selected_attributes.items()
@@ -282,6 +358,7 @@ class SreCatalog(http.Controller):
         for value_ids in selected_attributes.values():
             domain &= Domain("attribute_line_ids.value_ids", "in", list(value_ids))
 
+        has_tech_specs = bool(family or category or pillar)
         pressure_min = self._float_or_none(kw.get("pressure_min"))
         pressure_max = self._float_or_none(kw.get("pressure_max"))
         temp_min = self._float_or_none(kw.get("temp_min"))
@@ -289,26 +366,29 @@ class SreCatalog(http.Controller):
         flow_min = self._float_or_none(kw.get("flow_min"))
         flow_max = self._float_or_none(kw.get("flow_max"))
 
-        if pressure_min is not None:
-            domain &= Domain("operating_pressure_max", ">=", pressure_min)
-        if pressure_max is not None:
-            domain &= Domain("operating_pressure_max", ">", 0)
-            domain &= Domain("operating_pressure_max", "<=", pressure_max)
+        if has_tech_specs:
+            if pressure_min is not None:
+                domain &= Domain("operating_pressure_max", ">=", pressure_min)
+            if pressure_max is not None:
+                domain &= Domain("operating_pressure_max", ">", 0)
+                domain &= Domain("operating_pressure_max", "<=", pressure_max)
 
-        if temp_min is not None:
-            domain &= Domain("operating_temp_max", ">=", temp_min)
-        if temp_max is not None:
-            domain &= Domain("operating_temp_min", "<=", temp_max)
-            domain &= (
-                Domain("operating_temp_min", "!=", 0)
-                | Domain("operating_temp_max", "!=", 0)
-            )
+            if temp_min is not None:
+                domain &= Domain("operating_temp_max", ">=", temp_min)
+            if temp_max is not None:
+                domain &= Domain("operating_temp_min", "<=", temp_max)
+                domain &= (
+                    Domain("operating_temp_min", "!=", 0)
+                    | Domain("operating_temp_max", "!=", 0)
+                )
 
-        if flow_min is not None:
-            domain &= Domain("flow_rate_max", ">=", flow_min)
-        if flow_max is not None:
-            domain &= Domain("flow_rate_max", ">", 0)
-            domain &= Domain("flow_rate_max", "<=", flow_max)
+            if flow_min is not None:
+                domain &= Domain("flow_rate_max", ">=", flow_min)
+            if flow_max is not None:
+                domain &= Domain("flow_rate_max", ">", 0)
+                domain &= Domain("flow_rate_max", "<=", flow_max)
+        else:
+            pressure_min = pressure_max = temp_min = temp_max = flow_min = flow_max = None
 
         if brand:
             domain &= Domain("product_brand_id", "=", brand.id)
@@ -355,8 +435,74 @@ class SreCatalog(http.Controller):
         page_window_start = max(1, current_page - 2)
         page_window_end = min(total_pages, current_page + 2)
         pager_pages = list(range(page_window_start, page_window_end + 1))
+        categories = Category
         families = Family
-        if pillar:
+        if family:
+            if family.category_id:
+                categories = (
+                    Category.search(
+                        [
+                            ("pillar_id", "=", family.category_id.pillar_id.id),
+                            ("is_published", "=", True),
+                            ("active", "=", True),
+                        ],
+                        order="sequence, name",
+                    )
+                    if family.category_id.pillar_id
+                    else Category
+                )
+                families = Family.search(
+                    [
+                        ("category_id", "=", family.category_id.id),
+                        ("is_published", "=", True),
+                        ("active", "=", True),
+                    ],
+                    order="sequence, name",
+                )
+            elif family.pillar_id:
+                categories = Category.search(
+                    [
+                        ("pillar_id", "=", family.pillar_id.id),
+                        ("is_published", "=", True),
+                        ("active", "=", True),
+                    ],
+                    order="sequence, name",
+                )
+                families = Family.search(
+                    [
+                        ("pillar_id", "=", family.pillar_id.id),
+                        ("is_published", "=", True),
+                        ("active", "=", True),
+                    ],
+                    order="sequence, name",
+                )
+        elif category:
+            if category.pillar_id:
+                categories = Category.search(
+                    [
+                        ("pillar_id", "=", category.pillar_id.id),
+                        ("is_published", "=", True),
+                        ("active", "=", True),
+                    ],
+                    order="sequence, name",
+                )
+            families = Family.search(
+                [
+                    ("category_id", "=", category.id),
+                    ("is_published", "=", True),
+                    ("active", "=", True),
+                ],
+                order="sequence, name",
+            )
+        elif pillar:
+            categories = Category.search(
+                [
+                    ("pillar_id", "=", pillar.id),
+                    ("is_published", "=", True),
+                    ("active", "=", True),
+                ],
+                order="sequence, name",
+            )
             families = Family.search(
                 [
                     ("pillar_id", "=", pillar.id),
@@ -379,10 +525,15 @@ class SreCatalog(http.Controller):
                 "per_page": per_page,
                 "page_sizes": self.PAGE_SIZES,
                 "pillar": pillar,
+                "category": category,
+                "categories": categories,
                 "family": family,
                 "families": families,
                 "industry": industry,
+                "industries": industries,
                 "application": application,
+                "applications": applications,
+                "has_tech_specs": has_tech_specs,
                 "brands": available_brands,
                 "brand": brand,
                 "filter_lines": filter_lines,

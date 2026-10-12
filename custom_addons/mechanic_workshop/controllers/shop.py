@@ -18,6 +18,8 @@ class SreWebsiteSale(http.Controller):
             "/shop/page/<int:page>",
             "/shop/pillar/<string:pillar_slug>",
             "/shop/pillar/<string:pillar_slug>/page/<int:page>",
+            "/shop/category/<string:category_slug>",
+            "/shop/category/<string:category_slug>/page/<int:page>",
             "/shop/family/<string:family_slug>",
             "/shop/family/<string:family_slug>/page/<int:page>",
         ],
@@ -30,12 +32,15 @@ class SreWebsiteSale(http.Controller):
         self,
         page: int = 0,
         pillar_slug: str | None = None,
+        category_slug: str | None = None,
         family_slug: str | None = None,
         **kw: object,
     ) -> http.Response:
         del kw
         target = "/sre/catalog"
-        if pillar_slug:
+        if category_slug:
+            target = f"/sre/catalog/category/{category_slug}"
+        elif pillar_slug:
             target = f"/sre/catalog/pillar/{pillar_slug}"
         elif family_slug:
             target = f"/sre/catalog/family/{family_slug}"

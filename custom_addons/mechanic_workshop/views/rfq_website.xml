@@ -159,9 +159,20 @@
                                         <span t-else="" class="fa fa-cogs" aria-hidden="true"/>
                                     </div>
                                     <div class="sre-rfq-line__identity">
-                                        <code t-esc="line[0].default_code or 'NO SKU'"/>
+                                        <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+                                            <code t-if="line[0].default_code" class="sre-badge-sku" t-esc="line[0].default_code"/>
+                                            <span t-if="line[0].product_tmpl_id.manufacturer_pref" class="badge bg-light text-dark border font-monospace">
+                                                MPN: <t t-esc="line[0].product_tmpl_id.manufacturer_pref"/>
+                                            </span>
+                                        </div>
                                         <h3 t-esc="line[0].display_name"/>
-                                        <small t-if="line[0].product_tmpl_id.product_brand_id" t-esc="line[0].product_tmpl_id.product_brand_id.name"/>
+                                        <div class="small text-muted d-flex gap-2 flex-wrap mb-2">
+                                            <span t-if="line[0].product_tmpl_id.product_brand_id">Brand: <strong t-esc="line[0].product_tmpl_id.product_brand_id.name"/></span>
+                                            <span t-if="line[0].product_tmpl_id.product_type_id">· Type: <t t-esc="line[0].product_tmpl_id.product_type_id.name"/></span>
+                                        </div>
+                                        <div class="sre-rfq-line__notes">
+                                            <input type="text" name="notes" class="form-control form-control-sm" placeholder="Line specs / operating notes (duty, pressure, connection)..." t-att-value="line[2] if len(line) &gt; 2 else ''"/>
+                                        </div>
                                     </div>
                                     <div class="sre-rfq-line__quantity">
                                         <label t-att-for="'qty_%s' % line[0].id">Quantity (<t t-esc="line[0].uom_id.name"/>)</label>
@@ -170,6 +181,29 @@
                                     <div class="sre-rfq-line__actions"><button class="sre-link-button" type="submit">Update</button><button class="sre-link-button sre-link-button--danger" type="submit" name="remove" value="1" formnovalidate="formnovalidate">Remove</button></div>
                                 </form>
                             </div>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const submitForm = document.querySelector('.sre-rfq-contact');
+                                    if (submitForm) {
+                                        submitForm.addEventListener('submit', function() {
+                                            document.querySelectorAll('.sre-rfq-line').forEach(function(lineForm) {
+                                                const prodId = lineForm.querySelector('input[name="product_id"]')?.value;
+                                                const notesInput = lineForm.querySelector('input[name="notes"]');
+                                                if (prodId &amp;&amp; notesInput &amp;&amp; notesInput.value) {
+                                                    let hidden = submitForm.querySelector('input[name="line_notes_' + prodId + '"]');
+                                                    if (!hidden) {
+                                                        hidden = document.createElement('input');
+                                                        hidden.type = 'hidden';
+                                                        hidden.name = 'line_notes_' + prodId;
+                                                        submitForm.appendChild(hidden);
+                                                    }
+                                                    hidden.value = notesInput.value;
+                                                }
+                                            });
+                                        });
+                                    }
+                                });
+                            </script>
                             <a href="/sre/catalog" class="sre-link-arrow">Continue browsing</a>
                         </main>
 

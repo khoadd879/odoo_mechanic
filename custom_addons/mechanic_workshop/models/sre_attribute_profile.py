@@ -68,9 +68,25 @@ class SreAttributeProfileAttribute(models.Model):
             "as facets on the category page."
         ),
     )
+    is_required = fields.Boolean(
+        string="Required",
+        default=False,
+        help="Whether this attribute is mandatory for products in this family.",
+    )
     is_filter_shown = fields.Boolean(
+        string="Filterable",
         default=True,
-        help="If False, attribute is in the profile but hidden from facets.",
+        help="If True, attribute values are rendered as facets on the catalog page.",
+    )
+    is_display_shown = fields.Boolean(
+        string="Technical Display",
+        default=True,
+        help="If True, displayed in Technical Specifications on product detail page.",
+    )
+    creates_variant = fields.Boolean(
+        string="Variant Relevant",
+        default=False,
+        help="If True, this attribute determines distinct product variants.",
     )
     value_ids = fields.Many2many(
         "product.attribute.value",
